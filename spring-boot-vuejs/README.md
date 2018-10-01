@@ -43,14 +43,14 @@ vue init webpack frontend
 ```
 bash$ vue init webpack frontend 
     
-? Project name frontend
-? Project description A Vue.js project 
-? Author bkjeon1614@gmail.com 
-? Vue build standalone 
-? Install vue-router? Yes 
-? Use ESLint to lint your code? Yes 
-? Pick an ESLint preset Airbnb 
-? Set up unit tests Yes 
+? Project name frontend    → 프로젝트 이름
+? Project description A Vue.js project   → 프로젝트 정보 
+? Author bkjeon1614@gmail.com   → 제작자명
+? Vue build standalone    → 빌드방식  
+? Install vue-router? Yes    → 뷰 라우터 설치여부
+? Use ESLint to lint your code? Yes   → 문법 검사 라이브러리 설치 여부
+? Pick an ESLint preset Airbnb     
+? Set up unit tests Yes   → 단위 테스트 라이브러리 설치 여부
 ? Pick a test runner karma 
 ? Setup e2e tests with Nightwatch? Yes 
 
