@@ -16,7 +16,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.sample'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.0'
 sourceCompatibility = 1.8
 
 repositories {
@@ -25,6 +25,8 @@ repositories {
 
 
 dependencies {
+    compile project(':sample-common')
+
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
     implementation('org.springframework.boot:spring-boot-starter-web')
