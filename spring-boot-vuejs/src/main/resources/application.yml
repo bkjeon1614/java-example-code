@@ -1,0 +1,17 @@
+spring:
+  profiles: local
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto : update
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+  devtools:
+    livereload:
+      enabled: true
+
+server:
+  port: 8080
