@@ -1,31 +1,60 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.5.RELEASE'
+        springBootVersion = '2.0.6.RELEASE'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
+
     }
 }
 
 subprojects {
-    group 'com.sample'
-    version '0.0.0'
 
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
+    group = 'com.bkjeon.admin'
+    version = '0.0.0'
     sourceCompatibility = 1.8
 
     repositories {
         mavenCentral()
     }
 
+
+    task initSourceFolders {
+        sourceSets*.java.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+
+        sourceSets*.resources.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+    }
+
     dependencies {
-        testCompile group: 'junit', name: 'junit', version: '4.12'
+        compileOnly('org.projectlombok:lombok')
+    }
+}
+
+project(':admin-api') {
+    dependencies {
+        compile project(':admin-common')
+    }
+}
+
+project(':admin-web') {
+    dependencies {
+        compile project(':admin-common')
     }
 }

@@ -1,3 +1,2 @@
-rootProject.name = 'sample-multi-module'
-
-include 'sample-common', 'sample-api', 'sample-web'
+rootProject.name = 'bkjeon-admin'
+include 'admin-common', 'admin-api', 'admin-web'

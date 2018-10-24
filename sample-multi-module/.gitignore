@@ -1,6 +1,10 @@
 .gradle
 /build/
 !gradle/wrapper/gradle-wrapper.jar
+#!dist/bundle.js
+src/main/webapp/dist/js/*.js
+#!src/main/webapp/dist/jsbundle.js
+#!src/main/webapp/dist/jslogin.js
 
 ### STS ###
 .apt_generated
@@ -9,30 +13,27 @@
 .project
 .settings
 .springBeans
-.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
-/out/
-*.log
-*.gz
 
 ### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+nbproject/private/
+build/
+nbbuild/
+nbdist/
+.nb-gradle/
 
+###
+node_modules/
+out
+/lib
+*.log
+
+*.map
+/classes
 rebel.xml
-.DS_Store
-
-## custom ##
-.gradle/*
-*/out/
-*/gradle/
-*/build/
+src/main/webapp/dist
