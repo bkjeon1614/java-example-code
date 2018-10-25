@@ -6,3 +6,4 @@ Sample Code
 
 ### Spring Boot
 * [Spring Boot + Vuejs + Gradle](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-vuejs)
+* [Spring Boot + Mybatis + Gradle]
