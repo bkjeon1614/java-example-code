@@ -17,3 +17,6 @@ sample-multi-module <br>
 
 ## 3. Swagger URL
 admin-api : http://localhost:8080/swagger-ui.html
+
+## 4. Description
+해당 프로젝트는(=Gradle Multi Project) IntelliJ IDEA에서만 지원가능합니다.
