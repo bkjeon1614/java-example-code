@@ -1,4 +1,4 @@
-Spring Boot + Vuejs + Gradle
+Spring Boot + Vuejs(Combine) + Gradle
 =========
 
 https://bkjeon1614.tistory.com/39
