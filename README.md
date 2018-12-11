@@ -8,3 +8,6 @@ Sample Code
 * [Spring Boot + Vuejs + Gradle (Frontend and Backend Combine)](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-vuejs)
 * [Spring Boot + Vuejs + Gradle (Frontend and Backend Division)]
 * [Spring Boot + Mybatis + Gradle]
+
+### Spring Security
+* [Spring Boot + Spring Security + Thymeleaf + Mybatis + Gradle]
