@@ -10,4 +10,4 @@ Sample Code
 * [Spring Boot + Mybatis + Gradle]
 
 ### Spring Security
-* [Spring Boot + Spring Security + Thymeleaf + Mybatis + Gradle]
+* [Spring Boot + Spring Security + Thymeleaf + Mybatis + Gradle](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-security-mybatis)
