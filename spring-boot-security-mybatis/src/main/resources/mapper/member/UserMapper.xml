@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bkjeon.member.mapper.UserMapper">
+
+    <resultMap id="User" type="com.bkjeon.member.entity.User">
+        <result property="id" column="user_id" />
+        <result property="active" column="active" />
+        <result property="loginId" column="login_id" />
+        <result property="userName" column="user_name" />
+        <result property="password" column="password" />
+        <result property="accessToken" column="access_token" />
+    </resultMap>
+
+    <select id="findUserByLoginId" resultMap="User">
+        SELECT
+            user_id, active, login_id, user_name, password
+        FROM
+            user
+
+        <where>
+
+            <if test=" loginId != null and loginId != '' ">
+                AND login_id = #{loginId}
+            </if>
+
+        </where>
+
+    </select>
+
+    <insert id="setUserInfo" parameterType="com.bkjeon.member.entity.User" useGeneratedKeys="true" keyProperty="param.id">
+        INSERT INTO user
+        (
+            active, login_id, user_name, password
+        )
+        VALUES
+        (
+            #{param.active}, #{param.loginId}, #{param.userName}, #{param.password}
+        )
+    </insert>
+
+</mapper>

@@ -1,12 +1,14 @@
-package com.example.sample;
+package com.bkjeon.member;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SampleApplication {
+public class MemberApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SampleApplication.class, args);
+        SpringApplication.run(MemberApplication.class, args);
     }
+
 }
+
