@@ -7,13 +7,16 @@ spring:
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://13.125.29.10:3000/hs_product?useSSL=false&characterEncoding=utf8
+    url: jdbc:mysql://ec2-13-125-29-10.ap-northeast-2.compute.amazonaws.com:3000/hs_product?useSSL=false&characterEncoding=utf8
     username: hsdev
     password: wmp2018!@#
     driver-class-name: com.mysql.jdbc.Driver
   thymeleaf:
-    cache: false
     mode: LEGACYHTML5
+    cache: false
+  devtools:
+    livereload:
+      enabled: true
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml

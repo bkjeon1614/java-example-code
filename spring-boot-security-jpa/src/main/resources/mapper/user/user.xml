@@ -2,15 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.member.mapper.UserMapper">
+<mapper namespace="com.bkjeon.example.mapper.user.UserMapper">
 
-    <resultMap id="User" type="com.example.member.entity.User">
+    <resultMap id="User" type="com.bkjeon.example.entity.user.User">
         <result property="id" column="user_id" />
         <result property="active" column="active" />
         <result property="loginId" column="login_id" />
         <result property="userName" column="user_name" />
         <result property="password" column="password" />
-        <result property="accessToken" column="access_token" />
     </resultMap>
 
     <select id="findUserByLoginId" resultMap="User">
@@ -29,7 +28,7 @@
 
     </select>
 
-    <insert id="setUserInfo" parameterType="com.example.member.entity.User" useGeneratedKeys="true" keyProperty="param.id">
+    <insert id="setUserInfo" parameterType="com.bkjeon.example.entity.user.User" useGeneratedKeys="true" keyProperty="param.id">
         INSERT INTO user
         (
             active, login_id, user_name, password
