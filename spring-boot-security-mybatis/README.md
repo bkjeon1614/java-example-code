@@ -6,7 +6,7 @@ Spring Boot + Spring Security + Mybatis + Thymeleaf + Gradle 로그인 기능 �
 
 
 ## [Document]
-- Tistory: -
+- Tistory: https://bkjeon1614.tistory.com/76
 - Github: https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-security-mybatis
 
 
@@ -15,7 +15,7 @@ Spring Boot + Spring Security + Mybatis + Thymeleaf + Gradle 로그인 기능 �
 - SpringBoot 2.1.2.RELEASE
 - Java8
 - Gradle
-- [Lombok](http://www.naver.com)
+- [Lombok](https://bkjeon1614.tistory.com/75)
 
 
 ## [Project]
