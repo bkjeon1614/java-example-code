@@ -962,13 +962,13 @@ Spring Boot 에서는 기본적으로 resources 를 기본 경로로 지정한�
 ### 결과
 
 - Structure
-  - ![spring-security-5](./document/image/spring-security-5.png)
-  - ![spring-security-6](./document/image/spring-security-6.png)
+  ![spring-security-5](./document/image/spring-security-5.png)
+  ![spring-security-6](./document/image/spring-security-6.png)
 
 - 로그인
-  - ![spring-security-7](./document/image/spring-security-7.png)
-  - ![spring-security-8](./document/image/spring-security-8.png)
-  - ![spring-security-9](./document/image/spring-security-9.png)
+  ![spring-security-7](./document/image/spring-security-7.png)
+  ![spring-security-8](./document/image/spring-security-8.png)
+  ![spring-security-9](./document/image/spring-security-9.png)
 
 > SecurityConfiguration.java 에서 원하는 기능들을 커스텀하여 사용할 수 있다.
 
