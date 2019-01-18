@@ -7,9 +7,9 @@ spring:
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://ec2-13-125-29-10.ap-northeast-2.compute.amazonaws.com:3000/hs_product?useSSL=false&characterEncoding=utf8
-    username: hsdev
-    password: wmp2018!@#
+    url: jdbc:mysql://localhost:3306/bk_db?useSSL=false&characterEncoding=utf8
+    username: test
+    password: test!@#
     driver-class-name: com.mysql.jdbc.Driver
   devtools:
     livereload:

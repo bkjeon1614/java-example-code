@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,8 +21,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // @GetMapping(value = {"/", "login"})
-    @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/", "login"})
     public ModelAndView getLoginPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/login");
@@ -38,7 +38,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @PostMapping("registration")
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
 
@@ -61,7 +61,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/home", method = RequestMethod.GET)
+    @GetMapping("home")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
 
