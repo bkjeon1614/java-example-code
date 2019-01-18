@@ -11,9 +11,6 @@ spring:
     username: hsdev
     password: wmp2018!@#
     driver-class-name: com.mysql.jdbc.Driver
-  thymeleaf:
-    mode: LEGACYHTML5
-    cache: false
   devtools:
     livereload:
       enabled: true

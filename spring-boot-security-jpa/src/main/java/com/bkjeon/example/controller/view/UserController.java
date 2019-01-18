@@ -1,9 +1,12 @@
-package com.bkjeon.example.controller;
+package com.bkjeon.example.controller.view;
 
+import com.bkjeon.example.domain.user.UserPrincipal;
 import com.bkjeon.example.entity.user.User;
 import com.bkjeon.example.service.UserService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +20,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = {"/", "login"})
+    // @GetMapping(value = {"/", "login"})
+    @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView getLoginPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/login");
@@ -55,6 +59,30 @@ public class UserController {
         }
 
         return modelAndView;
+    }
+
+    @RequestMapping(value="/home", method = RequestMethod.GET)
+    public ModelAndView home(){
+        ModelAndView modelAndView = new ModelAndView();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal userPrincipal = (UserPrincipal) auth.getPrincipal();
+
+        System.out.println(userPrincipal.toString());
+
+        modelAndView.addObject("userName", "Welcome " + userPrincipal.getName() + " (" + userPrincipal.getId() + ")");
+        modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
+        modelAndView.setViewName("user/home");
+        return modelAndView;
+    }
+
+    @GetMapping("exception")
+    public ModelAndView getUserPermissionExceptionPage() {
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("user/access-denied");
+
+        return mv;
     }
 
 }
