@@ -1,7 +1,7 @@
 Swagger를 사용한 API문서 자동화
 =========
 
-![spring_security](./document/image/java-swagger-1.png)
+![java-swagger-1](./document/image/java-swagger-1.png)
 
 ## [Document]
 - Tistory: https://bkjeon1614.tistory.com/??
@@ -179,8 +179,8 @@ Swagger를 사용한 API문서 자동화
     }
   ```  
   
-- 결과
-![spring_security](./document/image/java-swagger-3.png)
+- 결과  
+![java-swagger-2](./document/image/java-swagger-3.png)  
 
-- 구조
-![spring_security](./document/image/java-swagger-2.png)
+- 구조  
+![java-swagger-3](./document/image/java-swagger-2.png)
