@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bkjeon.example.feature.example.ExampleMapper">
+  
+    <resultMap id="exampleList" type="com.bkjeon.example.feature.example.Example">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="age" column="age" />
+    </resultMap>
+
+    <resultMap id="exampleInfo" type="com.bkjeon.example.feature.example.Example">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="age" column="age" />
+    </resultMap>
+  
+    <select id="selectExampleList" resultMap="exampleList" parameterType="map">
+        SELECT id, name, age
+        FROM oy_api_example
+
+        <where>
+            <if test=" param.name != null and param.name != '' ">
+                name = #{param.name}
+            </if>
+
+            <if test=" param.age != null and param.age != '' ">
+                AND age = #{param.age}
+            </if>
+        </where>
+
+        <if test="size != null and offset != null">
+            LIMIT #{size} OFFSET #{offset}
+        </if>
+    </select>
+
+    <select id="selectExampleListTotalCnt" resultType="java.lang.Integer" parameterType="map">
+        SELECT COUNT(*)
+        FROM oy_api_example
+
+        <where>
+            <if test=" param.name != null and param.name != '' ">
+                name = #{param.name}
+            </if>
+
+            <if test=" param.age != null and param.age != '' ">
+                AND age = #{param.age}
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectExampleInfo" resultMap="exampleInfo" parameterType="map">
+        SELECT id, name, age
+        FROM oy_api_example
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertExample" parameterType="map">
+        INSERT INTO oy_api_example
+        (
+            name, age
+        )
+        VALUES
+        (
+            #{data.name}, #{data.age}
+        )
+    </insert>
+
+    <update id="updateExample" parameterType="map">
+        UPDATE oy_api_example
+        SET name = #{data.name},
+            age = #{data.age}
+        WHERE id = #{data.id}
+    </update>
+
+    <update id="updateExampleName" parameterType="map">
+        UPDATE oy_api_example
+        SET name = #{data.name}
+        WHERE id = #{data.id}
+    </update>
+
+    <delete id="deleteExample" parameterType="map">
+        DELETE FROM oy_api_example
+        WHERE id = #{data.id}
+    </delete>
+
+</mapper>

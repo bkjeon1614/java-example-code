@@ -1,0 +1,53 @@
+spring:
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  datasource:
+    mysql:
+      driverClassName: com.mysql.jdbc.Driver
+      connectionTestQuery: SELECT 1 FROM DUAL
+      maxActive: 5
+      maxAge: 1
+      minIdle: 1
+      maxIdle: 5
+      maximumPoolSize: 5
+  oracle:
+    datasource:
+      driverClassName: oracle.jdbc.driver.OracleDriver
+      connectionTestQuery: SELECT 1 FROM DUAL
+      maximumPoolSize: 3
+
+mybatis:
+  mapper-locations: classpath:mybatis/**/*.xml
+  type-aliases-package: com.bkjeon.example.feature
+  configuration:
+    cacheEnabled: false
+    useGeneratedKeys: true
+    defaultExecutorType: REUSE
+    aggressiveLazyLoading: false
+    default-statement-timeout: 30
+    map-underscore-to-camel-case: true
+
+server:
+  port: 8080
+
+logging:
+  config: classpath:config/logback-config.xml
+
+---
+
+spring:
+  profiles: local
+  oracle:
+    datasource:
+      jdbcUrl: jdbc:oracle:thin:@localhost:1522/xe
+      username: test
+      password: test1234
+  mysql:
+    datasource:
+      jdbcUrl: jdbc:mysql://localhost:3306/test?socketTimeout=30000&amp;connectTimeout=30000
+      username: test
+      password: test1234
