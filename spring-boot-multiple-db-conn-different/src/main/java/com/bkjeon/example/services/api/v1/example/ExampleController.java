@@ -2,9 +2,9 @@ package com.bkjeon.example.services.api.v1.example;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import com.bkjeon.example.common.enums.ResponseResult;
-import com.bkjeon.example.common.model.ApiResponseMessage;
-import com.bkjeon.example.feature.example.ExampleParam;
+import kr.co.oliveyoung.oyapi.common.enums.ResponseResult;
+import kr.co.oliveyoung.oyapi.common.model.ApiResponseMessage;
+import kr.co.oliveyoung.oyapi.feature.example.ExampleParam;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,8 +50,11 @@ public class ExampleController {
         )
         @RequestBody ExampleParam param
     ) {
+        ApiResponseMessage result = new ApiResponseMessage(ResponseResult.SUCCESS, "등록이 완료되었습니다.", null);
+        result.setParams(param);
+
         exampleService.insertExample(param);
-        return new ApiResponseMessage(ResponseResult.SUCCESS, "등록이 완료되었습니다.", null);
+        return result;
     }
 
     @ApiOperation("Example Put API")
@@ -64,8 +67,11 @@ public class ExampleController {
         )
         @RequestBody ExampleParam param
     ) {
+        ApiResponseMessage result = new ApiResponseMessage(ResponseResult.SUCCESS, "변경이 완료되었습니다.", null);
+        result.setParams(param);
+
         exampleService.updateExample(id, param);
-        return new ApiResponseMessage(ResponseResult.SUCCESS, "변경이 완료되었습니다.", null);
+        return result;
     }
 
     @ApiOperation("Example Patch API")
