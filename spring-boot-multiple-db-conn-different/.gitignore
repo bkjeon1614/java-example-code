@@ -1,8 +1,25 @@
+# Compiled Class
+.class
+
+# Package Files
+*.jar
+*.war
+*.ear
+*.tar.gz
+
+# Build Path
+*/build/
+*/out/
+**/src/main/resources/public/
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+
+# Log
+*.log
+hs_err_pid*
 
 ### STS ###
 .apt_generated
