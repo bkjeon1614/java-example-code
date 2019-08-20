@@ -49,8 +49,9 @@ bash$ vue init webpack frontend
 ? Use ESLint to lint your code? Yes   → 문법 검사 라이브러리 설치 여부
 ? Pick an ESLint preset Airbnb     
 ? Set up unit tests Yes   → 단위 테스트 라이브러리 설치 여부
-? Pick a test runner karma 
 ? Setup e2e tests with Nightwatch? Yes 
+? Should we run `npm install` for you after the project has been created? (recommended) (Use arrow keys) Yes, use NPM
+? Pick a test runner karma 
 
     vue-cli · Generated "vue-test". 
 
