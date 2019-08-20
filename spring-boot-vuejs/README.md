@@ -81,5 +81,5 @@ spring-boot-vuejs
 │ ├── src
 │ ├── config
 │       └── index.js    → build path ( move: resources/templates/* )
-└── build.gradle     → Maven parent pom managing both modules
+└── build.gradle    
 ```
