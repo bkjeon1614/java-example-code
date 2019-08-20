@@ -22,8 +22,6 @@ npm install -g vue-cli
 vue init webpack frontend
 ```
 
-
-
 #### Linux
 ```
 sudo apt-get update
