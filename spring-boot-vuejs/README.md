@@ -84,3 +84,27 @@ spring-boot-vuejs
 │       └── index.js    → build path ( move: resources/templates/* )
 └── build.gradle    
 ```
+
+# [Additional Information]
+## Spring Boot Vuejs Multi Project (intellij)
+
+Step 1. File -> New -> Project -> Empty Project 선택 후 Next
+![1.png](docs/img/1.png)
+
+Step 2. 아래 그림과 같이 경로를 맞추어 root 프로젝트 생성
+![2.png](docs/img/2.png)
+
+Step 3. 아래 그림과 같은 창이 나오면 Cancel 선택
+![3.png](docs/img/3.png)
+
+Step 4. 필요한 정보를 입력한다.
+![4.png](docs/img/4.png)
+
+Step 5. 필요한 모듈을 선택한다.
+![5.png](docs/img/5.png)
+
+Step 6. back-end api로 구성할 프로젝트를 생성한다. 경로는 위의 2번의 root 프로젝트 경로 하위에 생성하자
+![6.png](docs/img/6.png)
+
+> Project Structure
+![7.png](docs/img/7.png)
