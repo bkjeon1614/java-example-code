@@ -6,7 +6,6 @@ Sample Code
 
 ### Spring Boot
 - [Spring Boot + Vuejs + Gradle (Frontend and Backend Combine)](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-vuejs)
-- [Spring Boot + Vuejs + Gradle (Frontend and Backend Multi Project) *** New ***]
 - [Swagger를 사용한 API문서 자동화](https://github.com/bkjeon1614/java-example-code/tree/master/swagger-example)
 - [Spring Boot Multiple Connection (Mysql, Oracle)](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-multiple-db-conn-different)
 
