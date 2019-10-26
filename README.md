@@ -13,4 +13,4 @@
 - [Spring Boot + Spring Security + Thymeleaf + JPA + Gradle]
 
 ## Etc
-- [Design Pattern](https://github.com/bkjeon1614/java-example-code/tree/master/design-pattern)
+- [Design Pattern](https://github.com/bkjeon1614/java-example-code/tree/master/etc/design-pattern)
