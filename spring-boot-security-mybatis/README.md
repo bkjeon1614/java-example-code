@@ -489,38 +489,40 @@ Spring Boot 에서는 기본적으로 resources 를 기본 경로로 지정한�
 - login.html
   ```
   <!DOCTYPE html>
-  <html xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:th="http://www.thymeleaf.org">
-  
+  <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
-      <title>Admin Page</title>
-      <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>WS Product Management System</title>
+    <link rel="icon" th:href="@{/img/spring_icon.png}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
-  
   <body>
-  <div class="container">
-  
-      <form th:action="@{/logout}" method="get">
-          <button class="btn btn-md btn-danger btn-block" name="registration"
-                  type="Submit">Logout</button>
+    <form th:action="@{/registration}" method="get">
+      <button class="btn btn-md btn-warning btn-block" type="submit">Go To Registration Page</button>
+    </form>
+
+    <div class="container">
+      <img th:src="@{/img/logo.png}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
+          <form th:action="@{/login}" method="POST" class="form-signin" id="login_form" name="login_form">
+        <h3 class="form-signin-heading">Product Management System</h3>
+        <br/>
+
+        <input type="text" id="loginId" name="loginId"  th:placeholder="LoginId" class="form-control" /> <br/>
+        <input type="password" th:placeholder="Password" id="password" name="password" class="form-control" /> <br />
+
+              <div align="center" th:if="${param.error}">
+                  <p style="font-size: 20; color: #FF1C19;">아이디 패스워드가 올바르지 않거나 비활성화된 회원입니다.</p>
+              </div>
+
+              <div align="center" th:if="${param.authError}">
+                  <p style="font-size: 20; color: #FF1C19;">만료된 토큰이거나 토큰값을 갱신하여 주시길 바랍니다.</p>
+              </div>
+
+        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
       </form>
-  
-      <div class="panel-group" style="margin-top:40px">
-          <div class="panel panel-primary">
-              <div class="panel-heading">
-                  <span th:utext="${userName}"></span>
-              </div>
-              <div class="panel-body">
-                  <img th:src="@{/img/welcome.png}" class="img-responsive center-block" width="400" height="400" alt="Beer" />
-              </div>
-              <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
-          </div>
-      </div>
-  
-  </div>
+    </div>
   </body>
   </html>
   ```

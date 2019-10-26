@@ -97,7 +97,7 @@ Step 2. 아래 그림과 같이 경로를 맞추어 root 프로젝트 생성
 Step 3. 아래 그림과 같은 창이 나오면 Cancel 선택  
 ![3.png](./docs/img/3.PNG)
 
-Step 4. 필요한 정보를 입력한다.  
+Step 4. 필요한 정보를 입력한다. ( New -> Project -> Spring Initializr )
 ![4.png](./docs/img/4.PNG)
 
 Step 5. 필요한 모듈을 선택한다.  
