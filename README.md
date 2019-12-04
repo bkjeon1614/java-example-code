@@ -11,6 +11,3 @@
 ## Spring Security
 - [Spring Boot + Spring Security + Thymeleaf + Mybatis + Gradle](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-security-mybatis)
 - [Spring Boot + Spring Security + Thymeleaf + JPA + Gradle]
-
-## Etc
-- [Design Pattern](https://github.com/bkjeon1614/java-example-code/tree/master/etc/design-pattern)
