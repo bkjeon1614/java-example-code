@@ -1,5 +1,8 @@
 # Sample Code
 
+## Code Base
+- [API Code Base](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-api-base)
+
 ## Gradle
 - [Gradle Multi Project](https://github.com/bkjeon1614/java-example-code/tree/master/sample-multi-module)
 
@@ -10,4 +13,3 @@
 
 ## Spring Security
 - [Spring Boot + Spring Security + Thymeleaf + Mybatis + Gradle](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-security-mybatis)
-- [Spring Boot + Spring Security + Thymeleaf + JPA + Gradle]
