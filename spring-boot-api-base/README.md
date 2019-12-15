@@ -3,6 +3,7 @@
 ## Domain
 - Application: http://localhost:8080
 - H2 DB: http://localhost:8080/h2-console
+- Swagger: http://localhost:8080/swagger-ui.html
 
 ## Development Environment 
 * IDE : IntelliJ IDEA Ultimate
