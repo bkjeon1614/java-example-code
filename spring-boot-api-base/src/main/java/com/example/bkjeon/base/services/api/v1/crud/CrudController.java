@@ -8,31 +8,31 @@ import org.springframework.web.bind.annotation.*;
 public class CrudController {
 
     @ApiOperation("Request Get API")
-    @GetMapping
+    @GetMapping("examples")
     public String getCallMethod() {
         return "Request Get";
     }
 
     @ApiOperation("Request Post API")
-    @PostMapping
+    @PostMapping("examples")
     public String setCallMethod() {
         return "Request Post";
     }
 
     @ApiOperation("Request Put API")
-    @PutMapping
+    @PutMapping("examples")
     public String putCallMethod() {
         return "Request Put";
     }
 
     @ApiOperation("Request Patch API")
-    @PatchMapping
+    @PatchMapping("examples")
     public String patchCallMethod() {
         return "Request Patch";
     }
 
     @ApiOperation("Request Del API")
-    @DeleteMapping
+    @DeleteMapping("examples")
     public String delCallMethod() {
         return "Request Delete";
     }

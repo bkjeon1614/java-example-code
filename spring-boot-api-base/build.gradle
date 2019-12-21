@@ -23,6 +23,7 @@ def swaggerVersion = '2.9.2'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -36,6 +37,15 @@ dependencies {
     // swagger
     implementation 'io.springfox:springfox-swagger2:' + swaggerVersion
     implementation 'io.springfox:springfox-swagger-ui:' + swaggerVersion
+
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.apache.commons:commons-lang3:3.1'
+
+    // .xls
+    implementation 'org.apache.poi:poi:4.1.1'
 
 }
 
