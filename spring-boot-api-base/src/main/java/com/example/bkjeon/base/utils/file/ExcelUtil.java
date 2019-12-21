@@ -6,6 +6,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class ExcelUtil {
@@ -102,6 +103,11 @@ public class ExcelUtil {
 
     public static void excelUpLoad(MultipartFile uploadFile) {
         try {
+            String[] fileNameArr = uploadFile.getOriginalFilename().split("\\.");
+            if (!fileNameArr[1].equals(".xls")) {
+                // ms office 2007 이전 버전 또는 올바른 확장자 파일을 업로드 하세요.
+            }
+
             Workbook workbook = new HSSFWorkbook(uploadFile.getInputStream());
             for (Row row: workbook.getSheetAt(0)) {
                 if (row.getRowNum() < 1) {
@@ -112,17 +118,10 @@ public class ExcelUtil {
                     break;
                 }
 
-//                System.out.println("No: " + Optional.ofNullable(row.getCell(0)).map(String::valueOf).orElse(""));
-//                System.out.println("Title: " + Optional.ofNullable(row.getCell(1)).map(String::valueOf).orElse(""));
-//                System.out.println("Writer: " + Optional.ofNullable(row.getCell(2)).map(String::valueOf).orElse(""));
-//                System.out.println("RegDate: " + Optional.ofNullable(row.getCell(3)).map(String::valueOf).orElse(""));
-
-
-                System.out.println(Integer.parseInt(row.getCell(0).toString()));
-                System.out.println(row.getCell(1).toString());
-                System.out.println(row.getCell(2).toString());
-                System.out.println(row.getCell(3).toString());
-                System.out.println("------------------------");
+                System.out.println("No: " + (int) Double.parseDouble(row.getCell(0).toString()));
+                System.out.println("Title: " + Optional.ofNullable(row.getCell(1)).map(String::valueOf).orElse(""));
+                System.out.println("Writer: " + Optional.ofNullable(row.getCell(2)).map(String::valueOf).orElse(""));
+                System.out.println("RegDate: " + Optional.ofNullable(row.getCell(3)).map(String::valueOf).orElse(LocalDateTime.now().toString()));
             }
         } catch (Exception e) {
             //
