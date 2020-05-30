@@ -2,28 +2,42 @@ spring:
   profiles:
     active: local
 
-# Local Env
+mybatis:
+  mapper-locations: classpath:mybatis/**/*.xml
+  type-aliases-package: com.example.bkjeon.feature
+  configuration:
+    cacheEnabled: false
+    useGeneratedKeys: true
+    defaultExecutorType: REUSE
+    aggressiveLazyLoading: false
+    default-statement-timeout: 30
+    map-underscore-to-camel-case: true
+
+# Local Env (Mysql DB)
 ---
 
 spring:
   profiles: local
   datasource:
-    url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-  h2:
-    console:
-      enabled: true
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
-  port: 8080
+  port: 9090
+
 
 # Production Env
 ---
 
 spring:
   profiles: prod
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
-  port: 8080
+  port: 9090

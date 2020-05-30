@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 @Order(Ordered.LOWEST_PRECEDENCE)
-public class ExampleAspect {
+public class CommonLogAspect {
 
 //    // @AfterReturning(pointcut = "execution(* com.example.bkjeon.base.services.api.example.ExampleService.*(..) && args(example))", returning = "result")
 //    @AfterReturning(pointcut = "execution(* kr.co.oliveyoung.oms.services.api.example.ExampleService.*(..))", returning = "result")

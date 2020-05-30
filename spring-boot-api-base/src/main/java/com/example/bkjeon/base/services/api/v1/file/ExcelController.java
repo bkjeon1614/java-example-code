@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-@RequestMapping("v1/file")
+@RequestMapping("v1/file/excel")
 public class ExcelController {
 
     @GetMapping("excelDownLoad")

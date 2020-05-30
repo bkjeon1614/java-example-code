@@ -1,8 +1,6 @@
 package com.example.bkjeon.base.common.model;
 
 import com.example.bkjeon.base.common.enums.ResponseResult;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
