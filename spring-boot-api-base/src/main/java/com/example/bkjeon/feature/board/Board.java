@@ -14,8 +14,8 @@ public class Board {
 
     private Long boardNo;
     private Long groupNo;
-    private Long sortSeq;
-    private Long boardLvl;
+    private Integer sortSeq;
+    private Integer boardLvl;
     private String boardTitle;
     private String boardContents;
 

@@ -88,8 +88,8 @@ public class BoardService {
 
         try {
             Board board = Board.builder()
-                .sortSeq(0L)
-                .boardLvl(1L)
+                .sortSeq(0)
+                .boardLvl(1)
                 .boardTitle(boardDTO.getBoardTitle())
                 .boardContents(boardDTO.getBoardContents())
                 .sysRegrId(boardDTO.getUserId())
@@ -127,8 +127,8 @@ public class BoardService {
         }
 
         try {
-            Long sortSeq = null;
-            Long boardLvl = null;
+            Integer sortSeq = null;
+            Integer boardLvl = null;
 
             // CASE 1: 원글의 GROUP_NO, SORT_SEQ, BOARD_LVL 기준으로 답글의 저장될 데이터를 계산한다.
             Board board = boardMapper.selectBoard(boardNo);

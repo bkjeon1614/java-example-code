@@ -10,6 +10,6 @@ public interface BoardMapper {
     Board selectBoard(Long boardNo);
     Long selectBoardGroupCnt(Long groupNo);
     void updateBoardGroupSort(Long groupNo);
-    void updateBoardReplyGroupSort(Long groupNo, Long sortSeq);
+    void updateBoardReplyGroupSort(Long groupNo, Integer sortSeq);
 
 }
