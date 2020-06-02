@@ -21,6 +21,7 @@ repositories {
 // const
 def swaggerVersion = '2.9.2'
 def swaggerExceptionVersion = '1.5.21'
+def logbackVersion = '1.2.3'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -50,6 +51,9 @@ dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 
+    // logback
+    compile 'ch.qos.logback:logback-classic:' + logbackVersion
+    compile 'ch.qos.logback:logback-core:' + logbackVersion
 }
 
 test {

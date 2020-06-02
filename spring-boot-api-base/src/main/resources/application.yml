@@ -27,6 +27,19 @@ spring:
 server:
   port: 9090
 
+# Dev Env
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 9090
 
 # Production Env
 ---
