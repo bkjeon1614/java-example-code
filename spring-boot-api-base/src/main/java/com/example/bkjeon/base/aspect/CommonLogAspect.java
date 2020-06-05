@@ -31,10 +31,13 @@ public class CommonLogAspect {
         try {
             Signature signature = joinPoint.getSignature();
             // 로그 출력
-            log.info("------------ Request Service Method: {}", signature.toShortString());
+            log.info("------------ CommonLogAspect Request Service Method: {}", signature.toShortString());
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
-                log.error("------------ outputCommonServiceLogging(Aspect) ERROR !! {}", e.getMessage());
+                log.error(
+                    "------------ CommonLogAspect outputCommonServiceLogging(Aspect) ERROR !! {}",
+                    e.getMessage()
+                );
             }
         }
     }
@@ -80,7 +83,7 @@ public class CommonLogAspect {
             }
         } catch (Throwable throwable) {
             if (log.isErrorEnabled()) {
-                log.error("setCommonControllerLogging(Aspect) ERROR !! {}", throwable.getMessage());
+                log.error("CommonLogAspect setCommonControllerLogging(Aspect) ERROR !! {}", throwable.getMessage());
             }
         }
 

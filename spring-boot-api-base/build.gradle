@@ -52,8 +52,8 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
 
     // logback
-    compile 'ch.qos.logback:logback-classic:' + logbackVersion
-    compile 'ch.qos.logback:logback-core:' + logbackVersion
+    implementation 'ch.qos.logback:logback-classic:' + logbackVersion
+    implementation 'ch.qos.logback:logback-core:' + logbackVersion
 }
 
 test {
