@@ -1,7 +1,7 @@
 package com.example.bkjeon.base.services.api.v1.board;
 
-import com.example.bkjeon.base.common.enums.ResponseResult;
-import com.example.bkjeon.base.common.model.ApiResponseMessage;
+import com.example.bkjeon.common.enums.ResponseResult;
+import com.example.bkjeon.common.model.ApiResponseMessage;
 import com.example.bkjeon.feature.board.Board;
 import com.example.bkjeon.feature.board.BoardDTO;
 import com.example.bkjeon.feature.board.BoardMapper;

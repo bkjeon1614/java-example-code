@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.board;
 
-import com.example.bkjeon.base.common.model.ApiResponseMessage;
+import com.example.bkjeon.common.model.ApiResponseMessage;
 import com.example.bkjeon.feature.board.BoardDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;

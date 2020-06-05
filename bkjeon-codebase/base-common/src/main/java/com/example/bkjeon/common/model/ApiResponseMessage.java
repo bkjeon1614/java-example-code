@@ -1,9 +1,7 @@
-package com.example.bkjeon.base.common.model;
+package com.example.bkjeon.common.model;
 
-import com.example.bkjeon.base.common.enums.ResponseResult;
-import lombok.AllArgsConstructor;
+import com.example.bkjeon.common.enums.ResponseResult;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
