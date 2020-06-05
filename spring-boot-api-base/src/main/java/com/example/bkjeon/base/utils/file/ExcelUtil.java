@@ -1,5 +1,6 @@
 package com.example.bkjeon.base.utils.file;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Slf4j
 public class ExcelUtil {
 
     private ExcelUtil() {

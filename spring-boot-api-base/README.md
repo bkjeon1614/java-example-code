@@ -1,4 +1,4 @@
-# API Code Base
+# API Code Base (삭제예정 멀티 프로젝트로 전환)
 
 ## Domain
 - Application: http://localhost:8080
