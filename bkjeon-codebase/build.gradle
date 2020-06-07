@@ -45,10 +45,13 @@ subprojects {
     def logbackVersion = '1.2.3'
 
     dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
 
         // logback
         implementation 'ch.qos.logback:logback-classic:' + logbackVersion

@@ -1,8 +1,4 @@
-# API Code Base
-
-## Info
-- Application: http://localhost:8080
-- Swagger: http://localhost:8080/swagger-ui.html
+# Batch Code Base
 
 ## Development Environment 
 * IDE : IntelliJ IDEA Ultimate
@@ -24,13 +20,8 @@
     $ git add .
     $ git commit
   ```
-
-## Build
-```
-gradle fullBuild
-```
-
-## App Start
-```
-java -jar -Dspring.profiles.active=local -Dfile.encoding=UTF-8 -Xms256M -Xmx512M
-```
+  
+ ## Batch Start
+ ```
+ java -jar -Dspring.profiles.active=local -Dfile.encoding=UTF-8 --job.name={jobName} version={versionNum} -Xms256M -Xmx512M
+ ```

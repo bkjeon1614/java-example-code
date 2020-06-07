@@ -22,3 +22,7 @@ dependencies {
     // .xls
     implementation 'org.apache.poi:poi:4.1.1'
 }
+
+test {
+    useJUnitPlatform()
+}

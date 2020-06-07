@@ -1,0 +1,60 @@
+spring:
+  profiles:
+    active: local
+  batch:
+    job:
+      names: ${job.name:NONE}
+
+
+mybatis:
+  mapper-locations: classpath:mybatis/**/*.xml
+  type-aliases-package: com.example.bkjeon.feature
+  configuration:
+    cacheEnabled: false
+    useGeneratedKeys: true
+    defaultExecutorType: REUSE
+    aggressiveLazyLoading: false
+    default-statement-timeout: 30
+    map-underscore-to-camel-case: true
+
+# Local Env (Mysql DB)
+---
+
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 9091
+
+# Dev Env
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 9091
+
+# Production Env
+---
+
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 9091
