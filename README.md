@@ -1,7 +1,7 @@
 # Sample Code
 
 ## Code Base
-- [Code Base](https://github.com/bkjeon1614/java-example-code/tree/master/bkjeon-codebase)
+- [Code Base (Gradle Multi Project)](https://github.com/bkjeon1614/java-example-code/tree/master/bkjeon-codebase)
 
 ## Gradle
 - [Gradle Multi Project](https://github.com/bkjeon1614/java-example-code/tree/master/sample-multi-module)

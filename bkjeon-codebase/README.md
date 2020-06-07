@@ -29,4 +29,4 @@ bkjeon-codebase <br>
   ```
 
 ## 5. Description
-해당 프로젝트는(=Gradle Multi Project) IntelliJ IDEA에서만 지원가능합니다.
+해당 프로젝트는(=Code Base) IntelliJ IDEA에서만 지원가능합니다.
