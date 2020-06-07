@@ -1,7 +1,7 @@
 # Sample Code
 
 ## Code Base
-- [API Code Base](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-api-base)
+- [Code Base](https://github.com/bkjeon1614/java-example-code/tree/master/bkjeon-codebase)
 
 ## Gradle
 - [Gradle Multi Project](https://github.com/bkjeon1614/java-example-code/tree/master/sample-multi-module)
