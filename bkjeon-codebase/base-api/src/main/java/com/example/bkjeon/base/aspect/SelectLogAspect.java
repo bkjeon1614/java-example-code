@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
 @Slf4j
+@Component
 @Aspect
 public class SelectLogAspect {
 

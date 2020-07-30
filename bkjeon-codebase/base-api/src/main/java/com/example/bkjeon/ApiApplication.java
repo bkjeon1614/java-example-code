@@ -17,14 +17,4 @@ public class ApiApplication {
         SpringApplication.run(ApiApplication.class, args);
     }
 
-    @Bean
-    public CommonLogAspect commonLogAspect() {
-        return new CommonLogAspect();
-    }
-
-    @Bean
-    public SelectLogAspect selectLogAspect() {
-        return new SelectLogAspect();
-    }
-
 }

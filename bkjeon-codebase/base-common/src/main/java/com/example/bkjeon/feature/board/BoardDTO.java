@@ -8,7 +8,6 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class BoardDTO {
 
     @NotEmpty(message = "제목을 입력하여 주시길 바랍니다.")
