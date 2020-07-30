@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("boards")
+@RequestMapping("v1/boards")
 public class BoardController {
 
     private final BoardService boardService;

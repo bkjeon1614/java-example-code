@@ -24,6 +24,9 @@ spring:
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+kafka:
+  brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092
+
 server:
   port: 9090
 
@@ -38,6 +41,9 @@ spring:
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+kafka:
+  brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092
+
 server:
   port: 9090
 
@@ -51,6 +57,9 @@ spring:
     username: test
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+kafka:
+  brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092
 
 server:
   port: 9090

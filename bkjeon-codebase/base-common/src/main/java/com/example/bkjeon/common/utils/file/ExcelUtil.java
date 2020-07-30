@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.utils.file;
+package com.example.bkjeon.common.utils.file;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;

@@ -12,15 +12,6 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:' + swaggerVersion
     implementation("io.swagger:swagger-annotations:" + swaggerExceptionVersion)
     implementation("io.swagger:swagger-models:" + swaggerExceptionVersion)
-
-    // jwt
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    implementation 'org.apache.commons:commons-lang3:3.1'
-
-    // .xls
-    implementation 'org.apache.poi:poi:4.1.1'
 }
 
 test {

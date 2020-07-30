@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.utils;
+package com.example.bkjeon.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
 

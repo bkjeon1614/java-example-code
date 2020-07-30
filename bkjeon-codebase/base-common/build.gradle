@@ -9,4 +9,13 @@ jar {
 dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+
+    // .xls
+    implementation 'org.apache.poi:poi:4.1.1'
+
+    // Windows
+    compile group: 'org.jodconverter', name: 'jodconverter-core', version: '4.0.0-RELEASE'
+
+    // Linux
+    compile group: 'com.artofsolving', name: 'jodconverter', version: '2.2.0'
 }
