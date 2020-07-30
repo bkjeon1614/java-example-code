@@ -16,6 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
+@Component
 @Aspect
 public class CommonLogAspect {
 
