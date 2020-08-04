@@ -29,3 +29,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+base-api/build/**
+base-common/build/**
