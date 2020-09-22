@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("v1/kafka")
-public class KafkaProducerExample {
+public class KafkaProducerController {
 
     private final KafkaProducerService kafkaProducerService;
 

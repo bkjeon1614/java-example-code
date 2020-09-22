@@ -12,6 +12,9 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:' + swaggerVersion
     implementation("io.swagger:swagger-annotations:" + swaggerExceptionVersion)
     implementation("io.swagger:swagger-models:" + swaggerExceptionVersion)
+
+    // https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams
+    compile group: 'org.apache.kafka', name: 'kafka-streams', version: '2.5.0'
 }
 
 test {
