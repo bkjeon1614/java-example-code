@@ -1,5 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.board;
 
+import com.example.bkjeon.common.enums.ResponseResult;
 import com.example.bkjeon.common.model.ApiResponseMessage;
 import com.example.bkjeon.feature.board.BoardDTO;
 import io.swagger.annotations.ApiOperation;
@@ -50,17 +51,51 @@ public class BoardController {
         @RequestBody @Valid BoardDTO boardDTO,
         BindingResult bindingResult
     ) {
-        return boardService.setBoard(boardDTO, bindingResult);
+        ApiResponseMessage result = new ApiResponseMessage(
+            ResponseResult.SUCCESS,
+            "게시글 등록이 완료되었습니다.",
+            null
+        );
+        result.setParams(boardDTO);
+
+        if (bindingResult.hasErrors()) {
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage(bindingResult.getFieldError().getDefaultMessage());
+            return result;
+        }
+
+        if (!boardService.setBoard(boardDTO)) {
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage("게시글 등록에 실패하였습니다.");
+        }
+        return result;
     }
 
-    @ApiOperation("서브 게시글 등록")
+    @ApiOperation("답글 등록")
     @PostMapping("{boardNo}/replies")
     public ApiResponseMessage setBoardReply(
         @ApiParam(value = "boardNo", name = "boardNo", required = true) @PathVariable Long boardNo,
         @RequestBody @Valid BoardDTO boardDTO,
         BindingResult bindingResult
     ) {
-        return boardService.setBoardReply(boardNo, boardDTO, bindingResult);
+        ApiResponseMessage result = new ApiResponseMessage(
+            ResponseResult.SUCCESS,
+            "답글 등록이 완료되었습니다.",
+            null
+        );
+        result.setParams(boardDTO);
+
+        if (bindingResult.hasErrors()) {
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage(bindingResult.getFieldError().getDefaultMessage());
+            return result;
+        }
+
+        if (!boardService.setBoardReply(boardNo, boardDTO)) {
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage("게시글 등록에 실패하였습니다.");
+        }
+        return result;
     }
 
 }

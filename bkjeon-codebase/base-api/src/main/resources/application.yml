@@ -19,9 +19,9 @@ mybatis:
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
-    username: test
-    password: test
+    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: bkjeon
+    password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 kafka:

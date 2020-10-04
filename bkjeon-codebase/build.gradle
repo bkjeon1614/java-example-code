@@ -26,7 +26,6 @@ subprojects {
         mavenCentral()
     }
 
-
     task initSourceFolders {
         sourceSets*.java.srcDirs*.each {
             if( !it.exists() ) {
@@ -46,10 +45,7 @@ subprojects {
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
-        testImplementation('org.springframework.boot:spring-boot-starter-test') {
-            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-        }
-        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
+
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 

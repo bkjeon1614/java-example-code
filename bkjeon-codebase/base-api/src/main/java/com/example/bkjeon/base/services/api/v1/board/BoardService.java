@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -72,20 +71,7 @@ public class BoardService {
 
     // 메인 게시물 등록
     @Transactional
-    public ApiResponseMessage setBoard(BoardDTO boardDTO, BindingResult bindingResult) {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "게시글 등록이 완료되었습니다.",
-            null
-        );
-        result.setParams(boardDTO);
-
-        if (bindingResult.hasErrors()) {
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(bindingResult.getFieldError().getDefaultMessage());
-            return result;
-        }
-
+    public boolean setBoard(BoardDTO boardDTO) {
         try {
             Board board = Board.builder()
                 .sortSeq(0)
@@ -101,31 +87,16 @@ public class BoardService {
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("setBoard ERROR {}", e.getMessage());
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage(e.getMessage());
-                return result;
             }
+            return false;
         }
 
-        return result;
+        return true;
     }
 
     // 서브 게시물 등록
     @Transactional
-    public ApiResponseMessage setBoardReply(Long boardNo, BoardDTO boardDTO, BindingResult bindingResult) {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "게시글 등록이 완료되었습니다.",
-            null
-        );
-        result.setParams(boardDTO);
-
-        if (bindingResult.hasErrors()) {
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(bindingResult.getFieldError().getDefaultMessage());
-            return result;
-        }
-
+    public boolean setBoardReply(Long boardNo, BoardDTO boardDTO) {
         try {
             Integer sortSeq = null;
             Integer boardLvl = null;
@@ -133,9 +104,10 @@ public class BoardService {
             // CASE 1: 원글의 GROUP_NO, SORT_SEQ, BOARD_LVL 기준으로 답글의 저장될 데이터를 계산한다.
             Board board = boardMapper.selectBoard(boardNo);
             if (board == null) {
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage("잘못된 접근입니다.");
-                return result;
+                if (log.isErrorEnabled()) {
+                    log.error("원글이 존재하지 않습니다. boardNo: " + board.getBoardNo());
+                    return false;
+                }
             }
 
             if (board.getBoardLvl() == 1 && board.getSortSeq() == 0) {
@@ -197,13 +169,11 @@ public class BoardService {
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("setBoardReply ERROR {}", e.getMessage());
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage(e.getMessage());
-                return result;
+                return false;
             }
         }
 
-        return result;
+        return true;
     }
 
 }
