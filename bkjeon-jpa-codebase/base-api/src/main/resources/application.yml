@@ -1,0 +1,49 @@
+spring:
+  profiles:
+    active: local
+
+# Local Env (H2 DB)
+---
+
+spring:
+  profiles: local
+  datasource:
+    data: classpath:data-h2.sql
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true # url: jdbc:h2:mem:testdb
+
+server:
+  port: 9090
+
+# Dev Env
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 9090
+
+# Production Env
+---
+
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: test
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+server:
+  port: 9090
