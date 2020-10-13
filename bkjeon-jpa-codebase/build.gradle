@@ -44,6 +44,8 @@ subprojects {
     def logbackVersion = '1.2.3'
 
     dependencies {
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 

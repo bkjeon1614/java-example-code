@@ -8,7 +8,7 @@ spring:
 spring:
   profiles: local
   datasource:
-    data: classpath:data-h2.sql
+    data: classpath:sql/data-h2.sql
   jpa:
     show-sql: true
     hibernate:
