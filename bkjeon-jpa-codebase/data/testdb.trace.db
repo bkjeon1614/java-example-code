@@ -1,0 +1,3 @@
+2020-10-12 23:37:59 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE POSTS (ID BIGINT NOT NULL AUTO_INCREMENT, AUTHOR VARCHAR(255), CONTENT TEXT NOT NULL, TITLE VARCHAR(500) NOT NULL, PRIMARY KEY (ID)) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+create table posts (id bigint not null auto_increment, author varchar(255), content TEXT not null, title varchar(500) not null, primary key (id)) engine=InnoDB [42001-200]

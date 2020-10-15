@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: local
+  batch:
+    job:
+      names: ${job.name:NONE}
+
+# Local Env (Mysql DB)
+---
+
+spring:
+  profiles: local
+
+server:
+  port: 9091
+
+# Dev Env
+---
+
+spring:
+  profiles: dev
+
+server:
+  port: 9091
+
+# Production Env
+---
+
+spring:
+  profiles: prod
+
+server:
+  port: 9091

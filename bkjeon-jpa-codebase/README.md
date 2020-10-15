@@ -1,8 +1,8 @@
-Code Base
+Mybatis Code Base
 =========
 
 ## 1. Project Structure
-bkjeon-codebase <br>
+bkjeon-mybatis-codebase <br>
 &nbsp;&nbsp; |- [base-common](/base-common) : 공통 클래스 모듈 <br>
 &nbsp;&nbsp; |- [base-api](/base-api) : API <br>
 &nbsp;&nbsp; |- [base-batch](/base-batch) : Batch <br>
@@ -29,4 +29,4 @@ bkjeon-codebase <br>
   ```
 
 ## 5. Description
-해당 프로젝트는(=Code Base) IntelliJ IDEA에서만 지원가능합니다.
+- 해당 프로젝트는(=Code Base) IntelliJ IDEA에서만 지원가능합니다.
