@@ -3,15 +3,13 @@ spring:
     active: local
 
 server:
-  port: 8080
+  port: 9000
 
-# Local Env (H2 DB)
+# Local Env
 ---
 
 spring:
   profiles: local
-  datasource:
-    data: classpath:sql/data-h2.sql
   jpa:
     show-sql: true
     hibernate:
@@ -19,6 +17,9 @@ spring:
   h2:
     console:
       enabled: true # url: jdbc:h2:mem:testdb
+  devtools:
+    livereload:
+      enabled: true
 
 # Dev Env
 ---
@@ -33,7 +34,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
 
 # Production Env
 ---
