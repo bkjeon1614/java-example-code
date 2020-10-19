@@ -11,14 +11,16 @@ buildscript {
     }
 }
 
-subprojects {
+// dependencies const
+def logbackVersion = '1.2.3'
 
+subprojects {
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
 
-    group 'com.bkjeon.codebase'
+    group 'com.example.bkjeon'
     version '0.0.0'
     sourceCompatibility = 11
 
@@ -40,9 +42,6 @@ subprojects {
         }
     }
 
-    // dependencies const
-    def logbackVersion = '1.2.3'
-
     dependencies {
         testImplementation('org.springframework.boot:spring-boot-starter-test')
 
@@ -62,6 +61,12 @@ project(':base-api') {
 }
 
 project(':base-batch') {
+    dependencies {
+        compile project(':base-common')
+    }
+}
+
+project(':base-web') {
     dependencies {
         compile project(':base-common')
     }

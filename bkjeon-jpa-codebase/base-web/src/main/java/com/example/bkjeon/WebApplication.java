@@ -2,13 +2,12 @@ package com.example.bkjeon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@SpringBootApplication
-public class ApiApplication {
+@SpringBootApplication(scanBasePackages = "com.example.bkjeon.base")
+public class WebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApiApplication.class, args);
+        SpringApplication.run(WebApplication.class, args);
     }
 
 }
