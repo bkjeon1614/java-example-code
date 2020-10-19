@@ -1,0 +1,51 @@
+spring:
+  profiles:
+    active: local
+
+server:
+  port: 9000
+
+# Local Env
+---
+
+spring:
+  profiles: local
+  jpa:
+    show-sql: on
+    hibernate:
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: on # url: jdbc:h2:mem:testdb
+  devtools:
+    livereload:
+      enabled: on
+
+# Dev Env
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: bkjeon
+    password: wjsqhdrms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: on
+    hibernate:
+      ddl-auto: update
+
+# Production Env
+---
+
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: bkjeon
+    password: wjsqhdrms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate

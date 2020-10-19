@@ -1,0 +1,73 @@
+buildscript {
+    ext {
+        springBootVersion = '2.2.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
+    }
+}
+
+// dependencies const
+def logbackVersion = '1.2.3'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group 'com.example.bkjeon'
+    version '0.0.0'
+    sourceCompatibility = 11
+
+    repositories {
+        mavenCentral()
+    }
+
+    task initSourceFolders {
+        sourceSets*.java.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+
+        sourceSets*.resources.srcDirs*.each {
+            if( !it.exists() ) {
+                it.mkdirs()
+            }
+        }
+    }
+
+    dependencies {
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        // logback
+        implementation 'ch.qos.logback:logback-classic:' + logbackVersion
+        implementation 'ch.qos.logback:logback-core:' + logbackVersion
+    }
+}
+
+project(':base-api') {
+    dependencies {
+        compile project(':base-common')
+    }
+}
+
+project(':base-batch') {
+    dependencies {
+        compile project(':base-common')
+    }
+}
+
+project(':base-web') {
+    dependencies {
+        compile project(':base-common')
+    }
+}
