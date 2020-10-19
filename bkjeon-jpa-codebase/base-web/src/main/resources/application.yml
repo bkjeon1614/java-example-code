@@ -11,15 +11,15 @@ server:
 spring:
   profiles: local
   jpa:
-    show-sql: true
+    show-sql: on
     hibernate:
       ddl-auto: create-drop
   h2:
     console:
-      enabled: true # url: jdbc:h2:mem:testdb
+      enabled: on # url: jdbc:h2:mem:testdb
   devtools:
     livereload:
-      enabled: true
+      enabled: on
 
 # Dev Env
 ---
@@ -32,9 +32,9 @@ spring:
     password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    show-sql: true
+    show-sql: on
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 
 # Production Env
 ---

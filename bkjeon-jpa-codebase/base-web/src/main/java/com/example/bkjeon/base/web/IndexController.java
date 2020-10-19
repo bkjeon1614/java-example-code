@@ -1,5 +1,7 @@
 package com.example.bkjeon.base.web;
 
+import com.example.bkjeon.base.config.auth.LoginUser;
+import com.example.bkjeon.base.config.auth.dto.SessionUser;
 import com.example.bkjeon.base.web.dto.PostsResponseDTO;
 import com.example.bkjeon.base.web.service.PostsService;
 import lombok.RequiredArgsConstructor;
@@ -8,16 +10,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpSession;
+
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
 
     private final PostsService postsService;
+    private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model) {
-        System.out.println(postsService.findAllDesc());
+    public String index(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postsService.findAllDesc());
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
         return "index";
     }
 
