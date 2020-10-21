@@ -32,3 +32,5 @@ out/
 
 base-api/build/**
 base-common/build/**
+base-batch/build/**
+base-web/build/**
