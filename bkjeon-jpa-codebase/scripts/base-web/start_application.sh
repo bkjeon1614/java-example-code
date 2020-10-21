@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# init
+# chmod +x ./start_application.sh
 REPOSITORY=/home/bkjeon/app/java-example-code
 PROJECT_NAME=bkjeon-jpa-codebase
 MODULE_NAME=base-web
@@ -10,7 +12,8 @@ echo "> Git Pull"
 git pull
 
 echo "> Project Build Start"
-./gradlew $MODULE_NAME:clean build
+./gradlew $MODULE_NAME:clean
+./gradlew $MODULE_NAME:build
 
 echo "> STEP 1: Directory Move"
 cd $REPOSITORY
