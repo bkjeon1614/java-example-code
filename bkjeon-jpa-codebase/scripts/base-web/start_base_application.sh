@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# GIT Pull Deploy
 # init
 # chmod +x ./start_application.sh
 REPOSITORY=/home/bkjeon/app/java-example-code

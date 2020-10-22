@@ -22,7 +22,7 @@ const main = {
         }
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080/api/v1/posts',
+            url: 'http://docker.internal.com/api/v1/posts',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
@@ -42,7 +42,7 @@ const main = {
 
         $.ajax({
             type: 'PUT',
-            url: 'http://localhost:8080/api/v1/posts/' + id,
+            url: 'http://docker.internal.com/api/v1/posts/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
@@ -58,7 +58,7 @@ const main = {
 
         $.ajax({
             type: 'DELETE',
-            url: 'http://localhost:8080/api/v1/posts/' + id,
+            url: 'http://docker.internal.com/api/v1/posts/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
         }).done(function () {
