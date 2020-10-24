@@ -40,4 +40,4 @@ fi
 echo "> New Application Deploy"
 JAR_NAME=$(ls -tr $DEPLOY_REPOSITORY/ | grep $MODULE_NAME-.*.jar | tail -n 1)
 echo "> JAR Name: $JAR_NAME"
-nohup java -jar -Dspring.profiles.active=prod $DEPLOY_REPOSITORY/$JAR_NAME &
+nohup java -jar -Dspring.profiles.active=prod $DEPLOY_REPOSITORY/$JAR_NAME 2>&1 &
