@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-ABS_PATH=/home/bkjeon/app/java-example-code/bkjeon-jpa-codebase/scripts/base-web
+SCRIPT_PATH=/home/bkjeon/app/java-example-code/bkjeon-jpa-codebase/scripts/base-web
 
 # source(=java의 import 구문과 비슷) -> profile.sh의 function 사용
-source $(ABS_PATH)/profile.sh
+source ${SCRIPT_PATH}/profile.sh
 
 IDLE_PORT=$(find_idle_port)
 echo "> $IDLE_PORT 에서 구동 중인 애플리케이션 pid 확인"
