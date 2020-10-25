@@ -3,36 +3,20 @@
 ABSPATH=$(readlink -f $0)
 ABSDIR=$(dirname $ABSPATH)
 source ${ABSDIR}/profile.sh
-source ${ABSDIR}/switch.sh
 
-IDLE_PORT=$(find_idle_port)
+function switch_proxy() {
+  echo "> Switch Proxy Start"
+  IDLE_PORT=$(sudo cat /etc/nginx/conf.d/current-port)
 
-echo "> Health Check Start!"
-echo "> IDLE_PORT: $IDLE_PORT"
-echo "> curl -s http://localhost:$IDLE_PORT/profile"
-sleep 10
+  echo "> 전환할 Port: $IDLE_PORT"
+  echo "> Port Change"
 
-for RETRY_COUNT in {1..10}
-do
-  RESPONSE=$(curl -s http://localhost:${IDLE_PORT}/profile)
-  UP_COUNT=$(echo ${RESPONSE} | grep 'prod' | wc -l)
+  # 앞에서 넘겨준 문장을 service-url.inc에 덮어쓴다
+  echo "set \$service_url http://localhost:${IDLE_PORT};" | sudo tee /etc/nginx/conf.d/service-url.inc
 
-  if [ ${UP_COUNT} -ge 1 ]
-  then # $up_count >= 1 ("prod" 문자열이 있는지 검증)
-    echo "> Health Check Success"
-    switch_proxy
-    break
-  else
-    echo "> Health Check의 응답을 알 수 없거나 혹은 실행 상태가 아닙니다."
-    echo "> Health Check: ${RESPONSE}"
-  fi
+  # 최종적으로 실행한 포트의 값을 저장
+  sudo cat > /etc/nginx/conf.d/current-port
 
-  if [ ${RETRY_COUNT} -eq 10 ]
-  then
-    echo "> Health Check Fail"
-    echo "> nginx에 연결하지 않고 배포를 종료"
-    exit 1
-  fi
-    echo "> Health Check Fail, Retry..."
-    sleep 10
-  done
+  echo "> nginx reload"
+  sudo service nginx reload
+}
