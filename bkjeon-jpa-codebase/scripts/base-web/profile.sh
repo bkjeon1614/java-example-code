@@ -3,15 +3,16 @@
 # 쉬고 있는 profile 찾기
 function find_idle_profile() {
   # nginx가 바라보고 있는 springboot를 http statue로 정상동작 여부를 확인한다.
-  RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:9000/profile)
+  RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:9001/profile)
 
   # 400 이상은 모두 예외로 보고 prod2를 현재 profile로 사용
   if [ ${RESPONSE_CODE} -ge 400 ]
   then
-    CURRENT_PROFILE=prod2
+    CURRENT_PROFILE=prod1
   else
-    CURRENT_PROFILE=$(curl -s http://localhost:9000/profile)
+    CURRENT_PROFILE=$(curl -s http://localhost:9002/profile)
   fi
+
 
   # 스프링부트를 해당 profile로 연결하기 위해 반환
   if [ ${CURRENT_PROFILE} == prod1 ]
