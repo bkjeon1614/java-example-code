@@ -1,15 +1,13 @@
 #!/usr/bin/env bash
 
-ABSPATH=$(readlink -f $0)
-ABSDIR=$(dirname $ABSPATH)
+ABS_PATH=/home/bkjeon/app/java-example-code/bkjeon-jpa-codebase/scripts/base-web
 
 # source(=java의 import 구문과 비슷) -> profile.sh의 function 사용
-source $(ABSDIR)/profile.sh
+source $(ABS_PATH)/profile.sh
 
 IDLE_PORT=$(find_idle_port)
-
 echo "> $IDLE_PORT 에서 구동 중인 애플리케이션 pid 확인"
-IDLE_PID=$(lsof -ti tcp:$(IDLE_PORT))
+IDLE_PID=$(lsof -ti tcp:${IDLE_PORT})
 
 if [ -z ${IDLE_PID} ]
 then
