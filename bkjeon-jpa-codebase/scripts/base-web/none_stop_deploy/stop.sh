@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ABSPATH=$(readlink -f $0)
-ABSDIR=$(dirname $ABSPATH)
+ABSDIR=$(dirname $ABSPATH)/none_stop_deploy
 
 # source(=java의 import 구문과 비슷) -> profile.sh의 function 사용
 source ${ABSDIR}/profile.sh
