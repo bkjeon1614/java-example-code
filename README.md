@@ -1,4 +1,4 @@
-# Sample Code
+# JAVA Sample Code
 
 ## Code Base
 - [Mybatis Code Base (Mybatis Gradle Multi Project)](https://github.com/bkjeon1614/java-example-code/tree/master/bkjeon-codebase)

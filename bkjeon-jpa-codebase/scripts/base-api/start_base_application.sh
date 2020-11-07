@@ -6,6 +6,7 @@
 REPOSITORY=/home/bkjeon/app/java-example-code
 PROJECT_NAME=bkjeon-jpa-codebase
 MODULE_NAME=base-api
+DEPLOY_REPOSITORY=/home/bkjeon/app
 
 cd $REPOSITORY/$PROJECT_NAME/
 
@@ -21,7 +22,7 @@ echo "> STEP 1: Directory Move"
 cd $REPOSITORY
 
 echo "> Build File Copy"
-cp $REPOSITORY/$PROJECT_NAME/$MODULE_NAME/build/libs/*.jar $REPOSITORY/
+cp $REPOSITORY/$PROJECT_NAME/$MODULE_NAME/build/libs/*.jar $DEPLOY_REPOSITORY/
 
 echo "> Application Started PID Check"
 CURRENT_PID=$(pgrep -f ${MODULE_NAME}*.jar)
@@ -37,6 +38,6 @@ else
 fi
 
 echo "> New Application Deploy"
-JAR_NAME=$(ls -tr $REPOSITORY/ | grep $MODULE_NAME-.*.jar | tail -n 1)
+JAR_NAME=$(ls -tr $DEPLOY_REPOSITORY/ | grep $MODULE_NAME-.*.jar | tail -n 1)
 echo "> JAR Name: $JAR_NAME"
-nohup java -jar -Dspring.profiles.active=prod $REPOSITORY/$JAR_NAME &
+nohup java -jar -Dspring.profiles.active=prod $DEPLOY_REPOSITORY/$JAR_NAME &
