@@ -11,5 +11,6 @@ public interface BoardMapper {
     Long selectBoardGroupCnt(Long groupNo);
     void updateBoardGroupSort(Long groupNo);
     void updateBoardReplyGroupSort(Long groupNo, Integer sortSeq);
+    void updateBoard(Board board);
 
 }

@@ -9,6 +9,7 @@ import lombok.Setter;
 public class ApiResponseMessage {
     private ResponseResult result;
     private String message;
+    private Integer totalCnt;
     private Object contents;
     private Object params;
 
