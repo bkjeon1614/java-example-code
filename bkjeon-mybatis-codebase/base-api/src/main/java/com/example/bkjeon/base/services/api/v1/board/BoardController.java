@@ -6,7 +6,6 @@ import com.example.bkjeon.feature.board.BoardDTO;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -48,8 +47,7 @@ public class BoardController {
     @ApiOperation("메인 게시글 등록")
     @PostMapping
     public ApiResponseMessage setBoard(
-        @RequestBody @Valid BoardDTO boardDTO,
-        BindingResult bindingResult
+        final @RequestBody @Valid BoardDTO boardDTO
     ) {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
@@ -57,12 +55,6 @@ public class BoardController {
             null
         );
         result.setParams(boardDTO);
-
-        if (bindingResult.hasErrors()) {
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(bindingResult.getFieldError().getDefaultMessage());
-            return result;
-        }
 
         if (!boardService.setBoard(boardDTO)) {
             result.setResult(ResponseResult.FAIL);
@@ -75,8 +67,7 @@ public class BoardController {
     @PostMapping("{boardNo}/replies")
     public ApiResponseMessage setBoardReply(
         @ApiParam(value = "boardNo", name = "boardNo", required = true) @PathVariable Long boardNo,
-        @RequestBody @Valid BoardDTO boardDTO,
-        BindingResult bindingResult
+        final @RequestBody @Valid BoardDTO boardDTO
     ) {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
@@ -84,12 +75,6 @@ public class BoardController {
             null
         );
         result.setParams(boardDTO);
-
-        if (bindingResult.hasErrors()) {
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(bindingResult.getFieldError().getDefaultMessage());
-            return result;
-        }
 
         if (!boardService.setBoardReply(boardNo, boardDTO)) {
             result.setResult(ResponseResult.FAIL);
