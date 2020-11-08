@@ -26,7 +26,8 @@ public class ValidationExceptionHandler {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.FAIL,
             "Validation Error",
-            errorMap
+            errorMap,
+            null
         );
 
         return result;

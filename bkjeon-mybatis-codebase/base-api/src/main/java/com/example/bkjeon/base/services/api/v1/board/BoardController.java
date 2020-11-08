@@ -52,9 +52,8 @@ public class BoardController {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
             "게시글 등록이 완료되었습니다.",
-            null
+            requestDTO
         );
-        result.setParams(requestDTO);
 
         if (!boardService.setBoard(requestDTO)) {
             result.setResult(ResponseResult.FAIL);
@@ -73,9 +72,8 @@ public class BoardController {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
             "답글 등록이 완료되었습니다.",
-            null
+            requestDTO
         );
-        result.setParams(requestDTO);
 
         if (!boardService.setBoardReply(boardNo, requestDTO)) {
             result.setResult(ResponseResult.FAIL);
@@ -94,9 +92,8 @@ public class BoardController {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
             "게시글 수정이 완료되었습니다.",
-            null
+            requestDTO
         );
-        result.setParams(requestDTO);
 
         if (!boardService.putBoard(boardNo, requestDTO)) {
             result.setResult(ResponseResult.FAIL);

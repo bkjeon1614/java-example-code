@@ -26,8 +26,7 @@ public class BoardService {
     public ApiResponseMessage getBoardList(int page, int size) {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
-            "게시글 조회가 완료되었습니다.",
-            null
+            "게시글 조회가 완료되었습니다."
         );
 
         try {
@@ -54,8 +53,7 @@ public class BoardService {
     public ApiResponseMessage getBoard(Long boardNo) {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
-            "게시글 상세 조회가 완료되었습니다.",
-            null
+            "게시글 상세 조회가 완료되었습니다."
         );
 
         try {
@@ -78,19 +76,6 @@ public class BoardService {
     public boolean setBoard(BoardRequestDTO requestDTO) {
         try {
             boardMapper.insertBoard(requestDTO.toSaveBoardEntity());
-            /*
-            Board board = Board.builder()
-                .sortSeq(0)
-                .boardLvl(1)
-                .boardTitle(boardDTO.getBoardTitle())
-                .boardContents(boardDTO.getBoardContents())
-                .sysRegrId(boardDTO.getUserId())
-                .sysRegDtime(LocalDateTime.now())
-                .sysModrId(boardDTO.getUserId())
-                .sysModDtime(LocalDateTime.now())
-                .build();
-            boardMapper.insertBoard(board);
-             */
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("setBoard ERROR {}", e.getMessage());
@@ -162,20 +147,6 @@ public class BoardService {
 
             // 답글 저장
             boardMapper.insertBoardReply(requestDTO.toSaveBoardReplyEntity(board.getGroupNo(), sortSeq, boardLvl));
-            /*
-            Board insertBoardReply = Board.builder()
-                .groupNo(board.getGroupNo())
-                .sortSeq(sortSeq)
-                .boardLvl(boardLvl)
-                .boardTitle(boardDTO.getBoardTitle())
-                .boardContents(boardDTO.getBoardContents())
-                .sysRegrId(boardDTO.getUserId())
-                .sysRegDtime(LocalDateTime.now())
-                .sysModrId(boardDTO.getUserId())
-                .sysModDtime(LocalDateTime.now())
-                .build();
-            boardMapper.insertBoardReply(insertBoardReply);
-             */
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("setBoardReply ERROR {}", e.getMessage());
