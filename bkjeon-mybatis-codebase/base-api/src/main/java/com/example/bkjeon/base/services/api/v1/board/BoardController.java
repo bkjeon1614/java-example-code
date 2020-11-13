@@ -25,13 +25,13 @@ public class BoardController {
             name = "page",
             defaultValue = "1",
             required = true
-        ) @RequestParam int page,
+        ) @RequestParam Integer page,
         @ApiParam(
             value = "페이지 별 레코드 갯수를 설정 할 수 있습니다.",
             name = "size",
             defaultValue = "10",
             required = true
-        ) @RequestParam int size
+        ) @RequestParam Integer size
     ) {
         return boardService.getBoardList(page, size);
     }
