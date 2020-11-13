@@ -23,7 +23,7 @@ public class BoardService {
 
     // 게시글 리스트 조회
     @Transactional(readOnly = true)
-    public ApiResponseMessage getBoardList(int page, int size) {
+    public ApiResponseMessage getBoardList(Integer page, Integer size) {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
             "게시글 조회가 완료되었습니다."
