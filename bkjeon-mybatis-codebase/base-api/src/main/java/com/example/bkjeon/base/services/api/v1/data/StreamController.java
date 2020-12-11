@@ -15,6 +15,26 @@ import java.util.stream.Collectors;
 @RequestMapping("v1/data/stream")
 public class StreamController {
 
+    @ApiOperation("filter 후 Ascending 정렬로 1개의 데이터만 추출")
+    @GetMapping("selectOneOrderAsc")
+    public StreamUser getSelectOneOrderAsc() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("C", 30),
+            new StreamUser("전봉근", 20),
+            new StreamUser("전봉근", 10),
+            new StreamUser("전봉근", 40),
+            new StreamUser("E", 50)
+        );
+        StreamUser streamUser = streamUserList.stream()
+            .filter(streamUserObj -> streamUserObj.getName().equals("전봉근"))
+            .sorted(Comparator.comparingInt(StreamUser::getAge))
+            .limit(1)
+            .findAny()
+            .get();
+
+        return streamUser;
+    }
+
     @ApiOperation("숫자, 영어대소문자 오름차순으로 정렬")
     @GetMapping("sort")
     public List<String> sortData() {
@@ -38,7 +58,7 @@ public class StreamController {
     @ApiOperation("나이 오름차순으로 배열 정렬")
     @GetMapping("listObjectSort")
     public List<StreamUser> listObjectSortData() {
-        List<StreamUser> streamUsers = Arrays.asList(
+        List<StreamUser> streamUserArr = Arrays.asList(
             new StreamUser("C", 30),
             new StreamUser("D", 40),
             new StreamUser("전봉근", 10),
@@ -46,7 +66,7 @@ public class StreamController {
             new StreamUser("E", 50)
         );
 
-        List<StreamUser> sortedList = streamUsers.stream()
+        List<StreamUser> sortedList = streamUserArr.stream()
             .sorted(Comparator.comparingInt(StreamUser::getAge))
             .collect(Collectors.toList());
         sortedList.forEach(System.out::println);
@@ -56,7 +76,7 @@ public class StreamController {
     @ApiOperation("나이 내림차순으로 배열 정렬")
     @GetMapping("listObjectReverseSort")
     public List<StreamUser> listObjectReverseSortData() {
-        List<StreamUser> streamUsers = Arrays.asList(
+        List<StreamUser> streamUserArr = Arrays.asList(
             new StreamUser("전봉근", 30),
             new StreamUser("D", 40),
             new StreamUser("홍길동", 10),
@@ -64,7 +84,7 @@ public class StreamController {
             new StreamUser("E", 50)
         );
 
-        List<StreamUser> sortedList = streamUsers.stream()
+        List<StreamUser> sortedList = streamUserArr.stream()
             .sorted(Comparator.comparingInt(StreamUser::getAge).reversed())
             .collect(Collectors.toList());
         sortedList.forEach(System.out::println);
