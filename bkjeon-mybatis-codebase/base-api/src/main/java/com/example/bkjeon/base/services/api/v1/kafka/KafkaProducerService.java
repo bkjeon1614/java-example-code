@@ -30,8 +30,7 @@ public class KafkaProducerService {
     public ApiResponseMessage producerSendMessageSync() {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
-            "메세지 전송에 성공하였습니다. (동기)",
-            null
+            "메세지 전송에 성공하였습니다. (동기)"
         );
         Producer<String, String> producer = new KafkaProducer<>(getKafkaProperties());
 
@@ -63,8 +62,7 @@ public class KafkaProducerService {
     public ApiResponseMessage producerSendMessageAsync() {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
-            "메세지 전송에 성공하였습니다. (비동기)",
-            null
+            "메세지 전송에 성공하였습니다. (비동기)"
         );
 
         Producer<String, String> producer = new KafkaProducer<>(getKafkaProperties());
@@ -96,8 +94,7 @@ public class KafkaProducerService {
     public ApiResponseMessage producerSendKeyMessage() {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
-            "메세지 전송에 성공하였습니다. (Key 사용)",
-            null
+            "메세지 전송에 성공하였습니다. (Key 사용)"
         );
 
         Producer<String, String> producer = new KafkaProducer<>(getKafkaProperties());
@@ -142,8 +139,7 @@ public class KafkaProducerService {
     public ApiResponseMessage consumerSendMessageManualCommit() {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
-            "메세지 전송에 성공하였습니다. (수동커밋)",
-            null
+            "메세지 전송에 성공하였습니다. (수동커밋)"
         );
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getKafkaCommitProperties());
@@ -192,8 +188,7 @@ public class KafkaProducerService {
     public ApiResponseMessage getSpecificPartitionMessage() {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
-            "조회에 성공하였습니다. (특정 파티션에서만 메세지를 가져옴)",
-            null
+            "조회에 성공하였습니다. (특정 파티션에서만 메세지를 가져옴)"
         );
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getKafkaSpecificPartitionProperties());

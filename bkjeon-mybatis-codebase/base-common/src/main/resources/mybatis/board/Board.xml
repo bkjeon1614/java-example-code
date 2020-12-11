@@ -95,4 +95,10 @@
         AND SORT_SEQ > ${sortSeq}
     </update>
 
+    <update id="updateBoard" parameterType="map">
+        UPDATE tb_board
+        SET BOARD_TITLE = #{boardTitle}, BOARD_CONTENTS = #{boardContents}, SYS_MODR_ID = #{sysModrId}
+        WHERE BOARD_NO = ${boardNo}
+    </update>
+
 </mapper>

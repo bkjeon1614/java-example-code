@@ -1,37 +1,40 @@
 package com.example.bkjeon.base.services.api.v1.board;
 
+import com.example.bkjeon.base.services.api.v1.board.dto.BoardRequestDTO;
+import com.example.bkjeon.base.services.api.v1.board.dto.BoardResponseDTO;
 import com.example.bkjeon.common.enums.ResponseResult;
 import com.example.bkjeon.common.model.ApiResponseMessage;
 import com.example.bkjeon.feature.board.Board;
-import com.example.bkjeon.feature.board.BoardDTO;
 import com.example.bkjeon.feature.board.BoardMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BoardService {
 
     private final BoardMapper boardMapper;
 
     // 게시글 리스트 조회
     @Transactional(readOnly = true)
-    public ApiResponseMessage getBoardList(int page, int size) {
+    public ApiResponseMessage getBoardList(Integer page, Integer size) {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
-            "게시글 조회가 완료되었습니다.",
-            null
+            "게시글 조회가 완료되었습니다."
         );
 
         try {
             Integer offset = (page - 1) * size;
-            List<Board> boardList = boardMapper.selectBoardList(size, offset);
+            List<BoardResponseDTO> boardList = boardMapper.selectBoardList(size, offset).stream()
+                    .map(BoardResponseDTO::new)
+                    .collect(Collectors.toList());
+            result.setTotalCnt(boardList.size());
             result.setContents(boardList);
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
@@ -50,13 +53,12 @@ public class BoardService {
     public ApiResponseMessage getBoard(Long boardNo) {
         ApiResponseMessage result = new ApiResponseMessage(
             ResponseResult.SUCCESS,
-            "게시글 상세 조회가 완료되었습니다.",
-            null
+            "게시글 상세 조회가 완료되었습니다."
         );
 
         try {
             Board board = boardMapper.selectBoard(boardNo);
-            result.setContents(board);
+            result.setContents(new BoardResponseDTO(board));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("getBoard ERROR {}", e.getMessage());
@@ -71,19 +73,9 @@ public class BoardService {
 
     // 메인 게시물 등록
     @Transactional
-    public boolean setBoard(BoardDTO boardDTO) {
+    public boolean setBoard(BoardRequestDTO requestDTO) {
         try {
-            Board board = Board.builder()
-                .sortSeq(0)
-                .boardLvl(1)
-                .boardTitle(boardDTO.getBoardTitle())
-                .boardContents(boardDTO.getBoardContents())
-                .sysRegrId(boardDTO.getUserId())
-                .sysRegDtime(LocalDateTime.now())
-                .sysModrId(boardDTO.getUserId())
-                .sysModDtime(LocalDateTime.now())
-                .build();
-            boardMapper.insertBoard(board);
+            boardMapper.insertBoard(requestDTO.toSaveBoardEntity());
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("setBoard ERROR {}", e.getMessage());
@@ -96,7 +88,7 @@ public class BoardService {
 
     // 서브 게시물 등록
     @Transactional
-    public boolean setBoardReply(Long boardNo, BoardDTO boardDTO) {
+    public boolean setBoardReply(Long boardNo, BoardRequestDTO requestDTO) {
         try {
             Integer sortSeq = null;
             Integer boardLvl = null;
@@ -104,8 +96,8 @@ public class BoardService {
             // CASE 1: 원글의 GROUP_NO, SORT_SEQ, BOARD_LVL 기준으로 답글의 저장될 데이터를 계산한다.
             Board board = boardMapper.selectBoard(boardNo);
             if (board == null) {
-                if (log.isErrorEnabled()) {
-                    log.error("원글이 존재하지 않습니다. boardNo: " + board.getBoardNo());
+                if (log.isWarnEnabled()) {
+                    log.warn("원글이 존재하지 않습니다. boardNo: " + board.getBoardNo());
                     return false;
                 }
             }
@@ -154,23 +146,27 @@ public class BoardService {
             }
 
             // 답글 저장
-            Board insertBoardReply = Board.builder()
-                .groupNo(board.getGroupNo())
-                .sortSeq(sortSeq)
-                .boardLvl(boardLvl)
-                .boardTitle(boardDTO.getBoardTitle())
-                .boardContents(boardDTO.getBoardContents())
-                .sysRegrId(boardDTO.getUserId())
-                .sysRegDtime(LocalDateTime.now())
-                .sysModrId(boardDTO.getUserId())
-                .sysModDtime(LocalDateTime.now())
-                .build();
-            boardMapper.insertBoardReply(insertBoardReply);
+            boardMapper.insertBoardReply(requestDTO.toSaveBoardReplyEntity(board.getGroupNo(), sortSeq, boardLvl));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("setBoardReply ERROR {}", e.getMessage());
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    // 게시글 수정
+    @Transactional
+    public boolean putBoard(Long boardNo, BoardRequestDTO requestDTO) {
+        try {
+            boardMapper.updateBoard(requestDTO.toUpdateEntity(boardNo));
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.error("putBoard ERROR {}", e.getMessage());
+            }
+            return false;
         }
 
         return true;
