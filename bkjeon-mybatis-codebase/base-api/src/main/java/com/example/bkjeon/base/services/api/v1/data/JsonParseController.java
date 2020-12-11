@@ -16,16 +16,60 @@ import java.util.Map;
 @RequestMapping("v1/data/json")
 public class JsonParseController {
 
+    private final static String jsonObjectString = "{"
+        + "\"title\": \"Hi Bong Keun\","
+        + "\"url\": \"https://bkjeon1614.tistory.com\","
+        + "\"star\": 15"
+    + "}";
+
+    private final static String jsonObjectAndObjectString = "{"
+        + "\"obj1\": {"
+            + "\"title\": \"제목 bkjeon\","
+            + "\"url\": \"https://bkjeon1614.tistory.com\","
+            + "\"draft\": false"
+        + " },"
+        + "\"obj2\": {"
+            + "\"title\": \"제목입니다2 2222\","
+            + "\"url\": \"https://bkjeon1614.tistory.com\","
+            + "\"draft\": false"
+        + "}"
+    + "}";
+
+    private final static String jsonObjectAndArrayAndObjectString = "{"
+        + "\"list\": ["
+            + "{"
+                + "\"title\": \"제목11\","
+                + "\"url\": \"https://bkjeon1614.tistory.com\","
+                + "\"type\": false"
+            + "},"
+            + "{"
+                + "\"title\": \"제목22\","
+                + "\"url\": \"https://bkjeon1614.tistory.com\","
+                + "\"type\": true"
+            + "},"
+            + "{"
+                + "\"title\": \"제목33\","
+                + "\"url\": \"https://bkjeon1614.tistory.com\","
+                + "\"type\": true"
+            + "}"
+        + "]"
+    + "}";
+
+
+    @ApiOperation("JSON Object Null Check")
+    @GetMapping("jsonObjectNullCheck")
+    public void jsonObjectNullCheck() {
+        JSONObject jsonObject = new JSONObject(jsonObjectAndObjectString);
+
+        System.out.println("title object check: " + !jsonObject.getJSONObject("obj2").isNull("title"));
+        System.out.println("title2 object check: " + !jsonObject.getJSONObject("obj2").isNull("title2"));
+    }
+
     @ApiOperation("Key-Value만 있는 JSON Parse")
     @GetMapping("baseParseObject")
     public Map<String, Object> getJsonParseBase() {
-        String jsonString = "{\"title\": \"Hi Bong Keun\","
-            + "\"url\": \"https://bkjeon1614.tistory.com\","
-            + "\"star\": 15"
-            + "}";
-
         // JSONObjet를 가져와서 key-value를 읽습니다.
-        JSONObject jObject = new JSONObject(jsonString);
+        JSONObject jObject = new JSONObject(jsonObjectString);
         String title = jObject.getString("title");
         String url = jObject.getString("url");
         int star = jObject.getInt("star");
@@ -43,21 +87,8 @@ public class JsonParseController {
     public Map<String, Map<String, Object>> getJsonParseMultiObject() {
         Map<String, Map<String, Object>> retMap = new HashMap<>();
 
-        String jsonString = "{"
-            + "\"obj1\": {"
-                + "\"title\": \"제목 bkjeon\","
-                + "\"url\": \"https://bkjeon1614.tistory.com\","
-                + "\"draft\": false"
-            + " },"
-            + "\"obj2\": {"
-                + "\"title\": \"제목입니다2 2222\","
-                + "\"url\": \"https://bkjeon1614.tistory.com\","
-                + "\"draft\": false"
-            + "}"
-        + "}";
-
         // 가장 큰 JSONObject를 가져옵니다.
-        JSONObject jObject = new JSONObject(jsonString);
+        JSONObject jObject = new JSONObject(jsonObjectAndObjectString);
 
         // 첫번째 JSONObject를 가져와서 key-value를 읽습니다.
         Map<String, Object> retPost1Map = new HashMap<>();
@@ -91,29 +122,8 @@ public class JsonParseController {
     public List<Map<String, Object>> getJsonParseArrayObject() {
         List<Map<String, Object>> retListMap = new ArrayList<>();
 
-        String jsonString =
-            "{"
-                + "\"list\": ["
-                    + "{"
-                        + "\"title\": \"제목11\","
-                        + "\"url\": \"https://bkjeon1614.tistory.com\","
-                        + "\"type\": false"
-                    + "},"
-                    + "{"
-                        + "\"title\": \"제목22\","
-                        + "\"url\": \"https://bkjeon1614.tistory.com\","
-                        + "\"type\": true"
-                    + "},"
-                    + "{"
-                        + "\"title\": \"제목33\","
-                        + "\"url\": \"https://bkjeon1614.tistory.com\","
-                        + "\"type\": true"
-                    + "}"
-                + "]"
-            + "}";
-
         // 가장 큰 JSONObject를 가져옵니다.
-        JSONObject jObject = new JSONObject(jsonString);
+        JSONObject jObject = new JSONObject(jsonObjectAndArrayAndObjectString);
 
         // 배열을 가져옵니다.
         JSONArray jArray = jObject.getJSONArray("list");
