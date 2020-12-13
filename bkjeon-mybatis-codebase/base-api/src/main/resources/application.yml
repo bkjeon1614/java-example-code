@@ -13,6 +13,10 @@ mybatis:
     default-statement-timeout: 30
     map-underscore-to-camel-case: true
 
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
 # Local Env (Mysql DB)
 ---
 
@@ -21,7 +25,7 @@ spring:
   datasource:
     url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
-    password: wjsqhdrms
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 kafka:
@@ -36,9 +40,9 @@ server:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
-    username: test
-    password: test
+    url: jdbc:mysql://192.168.0.207:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: bkjeon
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 kafka:
@@ -53,9 +57,9 @@ server:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
-    username: test
-    password: test
+    url: jdbc:mysql://192.168.0.207:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: bkjeon
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 kafka:
