@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EncryptionController {
 
     /**
+     * Jasypt 를 활용한 Application Property 암호화
      * 1. http://www.jasypt.org/download.html 에서 jasypt 다운 (1.9.2 버전 기준)
      * 2. 압축 풀고 cmd에서 bin 폴더로 이동 (./file/jasypt-1.9.3/bin)
      * 3. encrypt input="bkjeontest!@" password="bkjeon!@" algorithm="PBEWITHMD5ANDDES" (온라인 암/복호화 사이트 https://www.devglan.com/online-tools/jasypt-online-encryption-decryption)
