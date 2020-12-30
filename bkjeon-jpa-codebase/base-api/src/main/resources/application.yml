@@ -26,7 +26,7 @@ spring:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    url: jdbc:mysql://192.168.0.207:13306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -41,7 +41,7 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    url: jdbc:mysql://192.168.0.207:13306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver
