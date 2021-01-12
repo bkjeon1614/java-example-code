@@ -8,7 +8,8 @@
 - [Gradle Multi Project](https://github.com/bkjeon1614/java-example-code/tree/master/sample-multi-module)
 
 ## Spring Boot
-- [Spring Boot + Vuejs + Gradle (Frontend and Backend Combine)](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-vuejs)
+- [Spring Boot + Gradle + React + Typescript](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-react-typescript)
+- [Spring Boot + Gradle + Vuejs](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-vuejs)
 - [Swagger를 사용한 API문서 자동화](https://github.com/bkjeon1614/java-example-code/tree/master/swagger-example)
 - [Spring Boot Multiple Connection (Mysql, Oracle)](https://github.com/bkjeon1614/java-example-code/tree/master/spring-boot-multiple-db-conn-different)
 

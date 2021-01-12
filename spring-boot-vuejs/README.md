@@ -1,4 +1,4 @@
-Spring Boot + Vuejs + Gradle (Frontend and Backend Combine)
+Spring Boot + Gradle + Vuejs
 =========
 
 https://bkjeon1614.tistory.com/39
