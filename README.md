@@ -1,7 +1,7 @@
 # JAVA Sample Code
 
 ## Code Base
-- [Mybatis Code Base (Mybatis Gradle Multi Project)](https://github.com/bkjeon1614/java-example-code/tree/master/bkjeon-codebase)
+- [Mybatis Code Base (Mybatis Gradle Multi Project)](https://github.com/bkjeon1614/java-example-code/tree/develop/bkjeon-mybatis-codebase)
 - [JPA Code Base (JPA Gradle Multi Project)](https://github.com/bkjeon1614/java-example-code/tree/master/bkjeon-jpa-codebase)
 
 ## Gradle
