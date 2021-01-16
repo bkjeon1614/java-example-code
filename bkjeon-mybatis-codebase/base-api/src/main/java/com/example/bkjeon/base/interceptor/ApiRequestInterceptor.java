@@ -10,12 +10,12 @@ import java.util.regex.Pattern;
 
 public class ApiRequestInterceptor extends HandlerInterceptorAdapter {
 
+    /**
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String apiKey = request.getHeader("ACCESS-TOKEN");
         String path = request.getRequestURI();
 
-        /**
         if (StringUtils.isNotBlank(apiKey)) {
             String[] availablePaths = ApiKeyAuthPaths.getAvailablePaths(apiKey);
             for (String availablePath : availablePaths) {
@@ -26,10 +26,9 @@ public class ApiRequestInterceptor extends HandlerInterceptorAdapter {
                 }
             }
         }
-         **/
-
         response.setStatus(401);
         return false;
     }
+    */
 
 }
