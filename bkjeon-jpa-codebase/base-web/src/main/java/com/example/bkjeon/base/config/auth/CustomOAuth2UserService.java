@@ -1,8 +1,8 @@
 package com.example.bkjeon.base.config.auth;
 
 import com.example.bkjeon.base.config.auth.dto.SessionUser;
-import com.example.bkjeon.base.domain.user.User;
-import com.example.bkjeon.base.domain.user.UserRepository;
+import com.example.bkjeon.base.domain.user.WebUser;
+import com.example.bkjeon.base.repository.user.WebUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -20,7 +20,7 @@ import java.util.Collections;
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final UserRepository userRepository;
+    private final WebUserRepository userRepository;
     private final HttpSession httpSession;
 
     @Override
@@ -36,7 +36,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuthAttributes attributes = OAuthAttributes
                 .of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        User user = saveOrUpdate(attributes);
+        WebUser user = saveOrUpdate(attributes);
         httpSession.setAttribute("user", new SessionUser(user));
 
         return new DefaultOAuth2User(
@@ -46,8 +46,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         );
     }
 
-    private User saveOrUpdate(OAuthAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail())
+    private WebUser saveOrUpdate(OAuthAttributes attributes) {
+        WebUser user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
 

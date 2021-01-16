@@ -1,8 +1,8 @@
-Mybatis Code Base
+JPA Code Base
 =========
 
 ## 1. Project Structure
-bkjeon-mybatis-codebase <br>
+bkjeon-jpa-codebase <br>
 &nbsp;&nbsp; |- [base-common](/base-common) : 공통 클래스 모듈 <br>
 &nbsp;&nbsp; |- [base-api](/base-api) : API <br>
 &nbsp;&nbsp; |- [base-batch](/base-batch) : Batch <br>

@@ -7,12 +7,19 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    testImplementation 'org.springframework.security:spring-security-test'
 
     // swagger
     implementation 'io.springfox:springfox-swagger2:' + swaggerVersion
     implementation 'io.springfox:springfox-swagger-ui:' + swaggerVersion
-    implementation("io.swagger:swagger-annotations:" + swaggerExceptionVersion)
-    implementation("io.swagger:swagger-models:" + swaggerExceptionVersion)
+    implementation 'io.swagger:swagger-annotations:' + swaggerExceptionVersion
+    implementation 'io.swagger:swagger-models:' + swaggerExceptionVersion
+
+    // jwt
+    compile group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    compile group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
 }
 
 test {
