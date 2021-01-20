@@ -8,8 +8,8 @@ server:
 jwt:
   header: Authorization
   # HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
-  # echo 'silvernine-tech-spring-boot-jwt-tutorial-secret-silvernine-tech-spring-boot-jwt-tutorial-secret' | base64
-  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  # echo 'bkjeon-java-example-spring-boot-jpa-codebase-secret-bkjeon-java-example-spring-boot-jpa-codebase-secret' | base64
+  secret: YmtqZW9uLWphdmEtZXhhbXBsZS1zcHJpbmctYm9vdC1qcGEtY29kZWJhc2Utc2VjcmV0LWJramVvbi1qYXZhLWV4YW1wbGUtc3ByaW5nLWJvb3QtanBhLWNvZGViYXNlLXNlY3JldA==
   token-validity-in-seconds: 86400
 
 # Local Env (H2 DB)
