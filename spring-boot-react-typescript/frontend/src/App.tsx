@@ -18,7 +18,7 @@ function App() {
         >
           Learn React
         </a>
-        <input id={'test'}></input>
+        <input id={'test'} name={'test2'}></input>
       </header>
     </div>
   )
