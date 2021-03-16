@@ -100,11 +100,11 @@ https://bkjeon1614.tistory.com/39
 #### lint-staged + husky
 - lint-staged 설치
   ```
-    $ yarn add --dev lint-staged
+    $ yarn add -D lint-staged
   ```
 - husky 설치
   ```
-    $ yarn add --dev husky
+    $ yarn add -D husky
   ```  
 - package.json 설정
   [package.json]
