@@ -35,12 +35,10 @@ public class CommonLogAspect {
             // 로그 출력
             log.info("------------ CommonLogAspect Request Service Method: {}", signature.toShortString());
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error(
-                    "------------ CommonLogAspect outputCommonServiceLogging(Aspect) ERROR !! {}",
-                    e.getMessage()
-                );
-            }
+            log.error(
+                "------------ CommonLogAspect outputCommonServiceLogging(Aspect) ERROR !! {}",
+                e.getMessage()
+            );
         }
     }
 
@@ -84,9 +82,7 @@ public class CommonLogAspect {
                 commonLogMapper.insertLog(commonLog);
             }
         } catch (Throwable throwable) {
-            if (log.isErrorEnabled()) {
-                log.error("CommonLogAspect setCommonControllerLogging(Aspect) ERROR !! {}", throwable.getMessage());
-            }
+            log.error("CommonLogAspect setCommonControllerLogging(Aspect) ERROR !! {}", throwable.getMessage());
         }
 
         return result;

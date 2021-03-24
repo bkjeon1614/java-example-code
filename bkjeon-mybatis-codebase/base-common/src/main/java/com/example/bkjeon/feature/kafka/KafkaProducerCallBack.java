@@ -10,13 +10,9 @@ public class KafkaProducerCallBack implements Callback {
     // 비동기 전송에 대한 콜백 예외처리
     public void onCompletion(RecordMetadata metadata, Exception e) {
         if (metadata != null) {
-            if (log.isInfoEnabled()) {
-                log.info("Partition: " + metadata.partition() + ", Offset: " + metadata.offset());
-            }
+            log.info("Partition: " + metadata.partition() + ", Offset: " + metadata.offset());
         } else {
-            if (log.isErrorEnabled()) {
-                log.error("onCompletion Error: " + e.getMessage());
-            }
+            log.error("onCompletion Error: " + e.getMessage());
         }
     }
 

@@ -37,12 +37,10 @@ public class BoardService {
             result.setTotalCnt(boardList.size());
             result.setContents(boardList);
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("getBoardList ERROR {}", e.getMessage());
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage(e.getMessage());
-                return result;
-            }
+            log.error("getBoardList ERROR {}", e.getMessage());
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage(e.getMessage());
+            return result;
         }
 
         return result;
@@ -60,12 +58,10 @@ public class BoardService {
             Board board = boardMapper.selectBoard(boardNo);
             result.setContents(new BoardResponseDTO(board));
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("getBoard ERROR {}", e.getMessage());
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage(e.getMessage());
-                return result;
-            }
+            log.error("getBoard ERROR {}", e.getMessage());
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage(e.getMessage());
+            return result;
         }
 
         return result;
@@ -77,9 +73,7 @@ public class BoardService {
         try {
             boardMapper.insertBoard(requestDTO.toSaveBoardEntity());
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("setBoard ERROR {}", e.getMessage());
-            }
+            log.error("setBoard ERROR {}", e.getMessage());
             return false;
         }
 
@@ -96,10 +90,8 @@ public class BoardService {
             // CASE 1: 원글의 GROUP_NO, SORT_SEQ, BOARD_LVL 기준으로 답글의 저장될 데이터를 계산한다.
             Board board = boardMapper.selectBoard(boardNo);
             if (board == null) {
-                if (log.isWarnEnabled()) {
-                    log.warn("원글이 존재하지 않습니다. boardNo: " + board.getBoardNo());
-                    return false;
-                }
+                log.warn("원글이 존재하지 않습니다. boardNo: " + board.getBoardNo());
+                return false;
             }
 
             if (board.getBoardLvl() == 1 && board.getSortSeq() == 0) {
@@ -148,10 +140,8 @@ public class BoardService {
             // 답글 저장
             boardMapper.insertBoardReply(requestDTO.toSaveBoardReplyEntity(board.getGroupNo(), sortSeq, boardLvl));
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("setBoardReply ERROR {}", e.getMessage());
-                return false;
-            }
+            log.error("setBoardReply ERROR {}", e.getMessage());
+            return false;
         }
 
         return true;
@@ -163,9 +153,7 @@ public class BoardService {
         try {
             boardMapper.updateBoard(requestDTO.toUpdateEntity(boardNo));
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("putBoard ERROR {}", e.getMessage());
-            }
+            log.error("putBoard ERROR {}", e.getMessage());
             return false;
         }
 

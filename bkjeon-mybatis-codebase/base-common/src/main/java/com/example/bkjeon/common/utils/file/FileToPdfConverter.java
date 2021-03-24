@@ -98,9 +98,7 @@ public class FileToPdfConverter {
             converter.convert(origFile, parseFile);
             log.info(">>>>>>>>>>>>>>>>>>>>>>>>> [PDF Parser Util] End !!");
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error(">>>>>>>>>>>>>>>>>>>>>>>>> setFileToPdfParse ERROR !! {}", e.getMessage());
-            }
+            log.error(">>>>>>>>>>>>>>>>>>>>>>>>> setFileToPdfParse ERROR !! {}", e.getMessage());
         } finally {
             officeManager.stop();
             origFile.delete();
@@ -130,9 +128,7 @@ public class FileToPdfConverter {
             origFile.delete();
             log.info(">>>>>>>>>>>>>>>>>>>>>>>>> origFile Delete !!");
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error(">>>>>>>>>>>>>>>>>>>>>>>>> FileToPdfParser ERROR !! {}", e.getMessage());
-            }
+            log.error(">>>>>>>>>>>>>>>>>>>>>>>>> FileToPdfParser ERROR !! {}", e.getMessage());
         }
     }
 
@@ -163,9 +159,7 @@ public class FileToPdfConverter {
                 fileEncodingStr = "UTF-32LE";
             }
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("fileEncodingChk ERROR !! {}", e.getMessage());
-            }
+            log.error("fileEncodingChk ERROR !! {}", e.getMessage());
         }
 
         return fileEncodingStr;

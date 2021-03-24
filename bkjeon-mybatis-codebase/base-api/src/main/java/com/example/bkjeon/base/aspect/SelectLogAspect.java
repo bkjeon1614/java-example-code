@@ -42,9 +42,7 @@ public class SelectLogAspect {
             log.info("------------ SelectLogAspect Request Service Method: {}", signature.toShortString());
             log.info("------------ SelectLogAspect Request Service Method Execution Time: {}", (end - start));
         } catch (Throwable throwable) {
-            if (log.isErrorEnabled()) {
-                log.error("------------ SelectLogAspect outputCrudServiceLogging(Aspect) ERROR !! {}", throwable.getMessage());
-            }
+            log.error("------------ SelectLogAspect outputCrudServiceLogging(Aspect) ERROR !! {}", throwable.getMessage());
         }
 
         return result;

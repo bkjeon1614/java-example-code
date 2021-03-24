@@ -40,9 +40,7 @@ public class FileUtil {
             // File delOrigFile = new File(origPath);
             // delOrigFile.delete();
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("fileCopy ERROR {}", e.getMessage());
-            }
+            log.error("fileCopy ERROR {}", e.getMessage());
         }
     }
 
