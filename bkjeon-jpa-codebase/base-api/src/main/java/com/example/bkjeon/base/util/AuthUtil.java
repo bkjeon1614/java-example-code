@@ -20,9 +20,7 @@ public class AuthUtil {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("Security Context에 인증 정보가 없습니다.");
-            }
+            log.debug("Security Context에 인증 정보가 없습니다.");
             return Optional.empty();
         }
 
