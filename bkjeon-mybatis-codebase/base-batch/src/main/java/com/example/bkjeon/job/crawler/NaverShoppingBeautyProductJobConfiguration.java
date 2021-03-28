@@ -1,16 +1,10 @@
 package com.example.bkjeon.job.crawler;
 
-import com.example.bkjeon.common.utils.HttpUtil;
+import com.example.bkjeon.common.utils.DateUtil;
 import com.example.bkjeon.feature.crawler.NaverShoppingBeautyProduct;
-import com.example.bkjeon.job.crawler.common.CrawlerConstant;
 import com.example.bkjeon.job.crawler.service.NaverShoppingBeautyProductService;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -23,9 +17,7 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Date;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,9 +25,9 @@ import java.util.Map;
 public class NaverShoppingBeautyProductJobConfiguration {
 
     private String logYmd;
-    private String[] categoryIdArr;
+    private String[] categoryNoArr;
     private String[] categoryNameArr;
-    private int currentcategoryIdIndex = 0;
+    private int currentcategoryNoIndex = 0;
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -52,10 +44,10 @@ public class NaverShoppingBeautyProductJobConfiguration {
 
                         logYmd = StringUtils.defaultIfBlank(
                             jobExecution.getJobParameters().getString("logYmd"),
-                            "20210325"
+                            DateUtil.date("yyyyMMdd", new Date())
                         );
 
-                        categoryIdArr = StringUtils.defaultIfBlank(
+                        categoryNoArr = StringUtils.defaultIfBlank(
                             jobExecution.getJobParameters().getString("categoryIds"),
                             "10003314,10003368,10003291,10003292,10003340,10003399"
                         ).split(",");
@@ -112,8 +104,8 @@ public class NaverShoppingBeautyProductJobConfiguration {
 
                     @Override
                     public ExitStatus afterStep(StepExecution stepExecution) {
-                        currentcategoryIdIndex++;
-                        if (currentcategoryIdIndex < categoryIdArr.length) {
+                        currentcategoryNoIndex++;
+                        if (currentcategoryNoIndex < categoryNoArr.length) {
                             return new ExitStatus("CONTINUE");
                         } else {
                             return new ExitStatus("FINISHED");
@@ -128,8 +120,8 @@ public class NaverShoppingBeautyProductJobConfiguration {
     public ListItemReader<NaverShoppingBeautyProduct> naverShoppingBeautyProductCrawlingStepReader() {
         return new ListItemReader<>(
                 naverShoppingBeautyProductService.getNaverShoppingBeautyProductCrawling(
-                        categoryIdArr,
-                        currentcategoryIdIndex
+                    categoryNoArr,
+                    currentcategoryNoIndex
                 )
         );
     }

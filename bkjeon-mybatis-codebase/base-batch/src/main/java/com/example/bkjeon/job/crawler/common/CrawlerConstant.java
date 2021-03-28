@@ -18,4 +18,7 @@ public class CrawlerConstant {
             + "&includeRankingByMenus=true"
             + "&includeStoreCategoryName=true";
 
+    // 네이버 쇼핑 카테고리별 클릭량
+    public static final String naverShoppingDataLabClickRateUrl
+            = "https://datalab.naver.com/shoppingInsight/getCategoryClickTrend.naver";
 }
