@@ -4,7 +4,14 @@ spring:
   batch:
     job:
       names: ${job.name:NONE}
+  main:
+    web-application-type: none
 
+logging:
+  level:
+    org:
+      springframework:
+        batch: DEBUG
 
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
@@ -23,9 +30,9 @@ mybatis:
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
-    username: test
-    password: test
+    url: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: root
+    password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 server:
