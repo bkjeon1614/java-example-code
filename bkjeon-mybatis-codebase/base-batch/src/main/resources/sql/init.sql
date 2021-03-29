@@ -100,3 +100,51 @@ CREATE TABLE BATCH_JOB_SEQ (
 ) ENGINE=InnoDB;
 
 INSERT INTO BATCH_JOB_SEQ (ID, UNIQUE_KEY) select * from (select 0 as ID, '0' as UNIQUE_KEY) as tmp where not exists(select * from BATCH_JOB_SEQ);
+
+
+
+-- Add New
+CREATE TABLE `nv_blog_trend` (
+  `log_ymd` varchar(8) NOT NULL,
+  `srch_kwd` varchar(30) NOT NULL,
+  `ad_yn` char(1) NOT NULL,
+  `ad_kwd` varchar(100) DEFAULT NULL,
+  `cat_id` varchar(15) NOT NULL,
+  `cat_nm` varchar(30) DEFAULT NULL,
+  `brand_id` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `brand_nm` varchar(30) NOT NULL,
+  `post_cnt` int(11) DEFAULT NULL,
+  `sys_reg_dt` datetime DEFAULT NULL,
+  `sys_mod_dt` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버 블로그';
+
+CREATE TABLE `nv_data_click_rate` (
+  `log_ymd` varchar(15) NOT NULL,
+  `cat_id` varchar(15) NOT NULL,
+  `period` varchar(15) NOT NULL,
+  `click_rate` varchar(15) NOT NULL,
+  `sys_reg_dt` datetime DEFAULT NULL,
+  `sys_mod_dt` datetime DEFAULT NULL,
+  PRIMARY KEY (`log_ymd`,`cat_id`,`period`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버데이터랩 클릭추이';
+
+CREATE TABLE `nv_beauty_prod_rank` (
+  `log_ymd` varchar(8) NOT NULL,
+  `prod_id` varchar(20) NOT NULL,
+  `prod_nm` varchar(100) DEFAULT NULL,
+  `cat_id` varchar(15) NOT NULL,
+  `cat_nm` varchar(15) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `review_cnt` int(11) DEFAULT NULL,
+  `review_score` decimal(3,2) DEFAULT NULL,
+  `rank` int(11) DEFAULT NULL,
+  `url` varchar(300) DEFAULT NULL,
+  `img_url` varchar(300) DEFAULT NULL,
+  `brand_id` varchar(15) DEFAULT NULL,
+  `brand_nm` varchar(30) DEFAULT NULL,
+  `zzim_cnt` int(11) DEFAULT NULL,
+  `sys_reg_dt` datetime DEFAULT NULL,
+  `sys_mod_dt` datetime DEFAULT NULL,
+  `popular_score` decimal(15,3) DEFAULT NULL,
+  PRIMARY KEY (`log_ymd`,`cat_id`,`prod_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버뷰티윈도우 상품랭킹';
