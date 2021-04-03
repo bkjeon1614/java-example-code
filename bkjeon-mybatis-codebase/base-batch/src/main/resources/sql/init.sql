@@ -111,7 +111,7 @@ CREATE TABLE `nv_blog_trend` (
   `ad_kwd` varchar(100) DEFAULT NULL,
   `cat_id` varchar(15) NOT NULL,
   `cat_nm` varchar(30) DEFAULT NULL,
-  `brand_id` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `brand_id` varchar(15) DEFAULT NULL,
   `brand_nm` varchar(30) NOT NULL,
   `post_cnt` int(11) DEFAULT NULL,
   `sys_reg_dt` datetime DEFAULT NULL,

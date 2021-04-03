@@ -2,7 +2,12 @@
 <mapper namespace="com.example.bkjeon.feature.crawler.NaverShoppingBeautyProduct">
 
     <insert id="insertNaverShoppingBeautyProduct" parameterType="map">
-
+        INSERT INTO nv_beauty_prod_rank (log_ymd, prod_id, prod_nm, cat_id, rank)
+        VALUES (#{logYmd}, #{productNo}, #{productName}, #{categoryNo}, #{productRank})
     </insert>
+
+    <delete id="deleteNaverShoppingBeautyProduct" parameterType="map">
+        DELETE FROM nv_beauty_prod_rank WHERE log_ymd = #{logYmd} AND cat_id IN (#{categoryIds})
+    </delete>
 
 </mapper>

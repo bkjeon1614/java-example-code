@@ -25,9 +25,8 @@ import java.util.Date;
 public class NaverShoppingBeautyProductJobConfiguration {
 
     private String logYmd;
-    private String[] categoryNoArr;
-    private String[] categoryNameArr;
-    private int currentcategoryNoIndex = 0;
+    private String categoryIds;
+    private int currentCategoryNoIndex = 0;
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -45,19 +44,12 @@ public class NaverShoppingBeautyProductJobConfiguration {
                         logYmd = StringUtils.defaultIfBlank(
                             jobExecution.getJobParameters().getString("logYmd"),
                             DateUtil.date("yyyyMMdd", new Date())
-                        );
+                        ).trim();
 
-                        categoryNoArr = StringUtils.defaultIfBlank(
+                        categoryIds = StringUtils.defaultIfBlank(
                             jobExecution.getJobParameters().getString("categoryIds"),
                             "10003314,10003368,10003291,10003292,10003340,10003399"
-                        ).split(",");
-
-                        categoryNameArr = StringUtils.defaultIfBlank(
-                            jobExecution.getJobParameters().getString("categoryNames"),
-                            "마스크시트,핸드크림,스킨케어,클렌징,립스틱,맨즈케어"
-                        ).split(",");
-
-                        log.info("Log Ymd {}", logYmd);
+                        ).trim();
                     }
 
                     @Override
@@ -83,7 +75,11 @@ public class NaverShoppingBeautyProductJobConfiguration {
     public Step naverShoppingBeautyProductInitializeDBStep() {
         return stepBuilderFactory.get("naverShoppingBeautyProductInitializeDBStep")
                 .tasklet((contribution, chunkContext) -> {
-                    // 삭제(=초기화) repo 필요
+                    int delCnt = naverShoppingBeautyProductService.delNaverShoppingBeautyProduct(
+                        logYmd,
+                        categoryIds
+                    );
+                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete Count: {}", delCnt);
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> naverShoppingBeautyProductInitializeDBStep Finished");
                     return RepeatStatus.FINISHED;
                 })
@@ -104,8 +100,8 @@ public class NaverShoppingBeautyProductJobConfiguration {
 
                     @Override
                     public ExitStatus afterStep(StepExecution stepExecution) {
-                        currentcategoryNoIndex++;
-                        if (currentcategoryNoIndex < categoryNoArr.length) {
+                        currentCategoryNoIndex++;
+                        if (currentCategoryNoIndex < categoryIds.split(",").length) {
                             return new ExitStatus("CONTINUE");
                         } else {
                             return new ExitStatus("FINISHED");
@@ -119,10 +115,11 @@ public class NaverShoppingBeautyProductJobConfiguration {
     @StepScope
     public ListItemReader<NaverShoppingBeautyProduct> naverShoppingBeautyProductCrawlingStepReader() {
         return new ListItemReader<>(
-                naverShoppingBeautyProductService.getNaverShoppingBeautyProductCrawling(
-                    categoryNoArr,
-                    currentcategoryNoIndex
-                )
+            naverShoppingBeautyProductService.getNaverShoppingBeautyProductCrawling(
+                logYmd,
+                categoryIds.split(","),
+                currentCategoryNoIndex
+            )
         );
     }
 
@@ -132,8 +129,7 @@ public class NaverShoppingBeautyProductJobConfiguration {
         return items -> items
                 .stream()
                 .forEach(item -> {
-                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Writer: {}", item.toString());
-                    // naverShoppingBeautyProductService.setNaverShoppingBeautyProduct(item);
+                    naverShoppingBeautyProductService.setNaverShoppingBeautyProduct(item);
                 });
     }
 

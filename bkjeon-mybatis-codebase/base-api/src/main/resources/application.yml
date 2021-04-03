@@ -19,15 +19,18 @@ jasypt:
 
 
 # Local Env (Mysql DB)
+# H2 Console
+# - url: http://localhost:9090/h2-console
+# - jdbc url: jdbc:h2:mem:testdb
 ---
 
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://192.168.0.207:13306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
-    username: bkjeon
-    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    data: classpath:sql/init_h2.sql
+  h2:
+    console:
+      enabled: true
 
 kafka:
   brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092

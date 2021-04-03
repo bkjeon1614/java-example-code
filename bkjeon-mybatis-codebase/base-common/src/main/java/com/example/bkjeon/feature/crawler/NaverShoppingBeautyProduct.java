@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class NaverShoppingBeautyProduct {
 
+    private String logYmd;
     private String productNo;
     private String productName;
     private String categoryNo;

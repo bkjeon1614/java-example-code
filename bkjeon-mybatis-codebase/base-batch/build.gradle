@@ -1,6 +1,5 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-batch'
-    implementation 'org.apache.commons:commons-lang3:3.7'
     testImplementation 'org.springframework.batch:spring-batch-test'
 
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
