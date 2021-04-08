@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
-public class jasyptEncryptConfig {
+public class JasyptEncryptConfig {
 
     @Bean("jasyptStringEncryptor")
     public StringEncryptor jasyptStringEncryptor() {

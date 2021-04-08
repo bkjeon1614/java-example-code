@@ -3,6 +3,8 @@
 ## Info
 - Application: http://localhost:8080
 - Swagger: http://localhost:8080/swagger-ui.html
+- jasypt decode: https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
+  - config/JasyptEncryptConfig.java
 
 ## Build
 ```

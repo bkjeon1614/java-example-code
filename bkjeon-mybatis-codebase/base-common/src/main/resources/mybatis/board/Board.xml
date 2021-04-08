@@ -59,6 +59,10 @@
         </if>
     </select>
 
+    <select id="selectBoardListCnt" resultType="int">
+        SELECT COUNT(*) FROM tb_board
+    </select>
+
     <select id="selectBoard" resultMap="boardResultMap" parameterType="map">
         <include refid="boardSelectFromSql" />
         WHERE BOARD_NO = ${boardNo}

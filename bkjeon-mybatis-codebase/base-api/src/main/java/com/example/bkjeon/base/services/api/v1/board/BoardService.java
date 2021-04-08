@@ -34,7 +34,8 @@ public class BoardService {
             List<BoardResponseDTO> boardList = boardMapper.selectBoardList(size, offset).stream()
                     .map(BoardResponseDTO::new)
                     .collect(Collectors.toList());
-            result.setTotalCnt(boardList.size());
+            int totalCnt = boardMapper.selectBoardListCnt();
+            result.setTotalCnt(totalCnt);
             result.setContents(boardList);
         } catch (Exception e) {
             log.error("getBoardList ERROR {}", e.getMessage());

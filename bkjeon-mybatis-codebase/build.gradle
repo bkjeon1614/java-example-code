@@ -55,6 +55,12 @@ subprojects {
 
         // kafka
         compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
+
+        implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+
+        // Excel
+        implementation 'org.apache.poi:poi:3.17'
+        implementation 'org.apache.poi:poi-ooxml:3.17'
     }
 }
 

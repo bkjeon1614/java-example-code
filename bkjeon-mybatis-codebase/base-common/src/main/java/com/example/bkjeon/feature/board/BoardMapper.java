@@ -9,6 +9,7 @@ public interface BoardMapper {
     void insertBoard(Board board);
     void insertBoardReply(Board board);
     List<Board> selectBoardList(@Param("size") Integer size, @Param("offset") Integer offset);
+    int selectBoardListCnt();
     Board selectBoard(@Param("boardNo") Long boardNo);
     Long selectBoardGroupCnt(@Param("groupNo") Long groupNo);
     void updateBoardGroupSort(@Param("groupNo") Long groupNo);
