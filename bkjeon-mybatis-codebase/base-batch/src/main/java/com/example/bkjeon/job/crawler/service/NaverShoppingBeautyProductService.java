@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -79,6 +80,19 @@ public class NaverShoppingBeautyProductService {
     @Transactional
     public void setNaverShoppingBeautyProduct(NaverShoppingBeautyProduct naverShoppingBeautyProduct) {
         try {
+            System.out.println(naverShoppingBeautyProduct.toString());
+
+            /**
+            Map<String, Integer> test = repo.seelect(new HashMap<>() {
+                {
+                    put("id", id);
+                    put("name", name)
+                }
+            }).stream().collect(Collectors.toMap(NaverDate::id, NaverDate:count))
+
+            test.get()
+            */
+
             naverShoppingBeautyProductMapper.insertNaverShoppingBeautyProduct(naverShoppingBeautyProduct);
         } catch (Exception e) {
             log.error(">>>>>>>>>>>>>>>>>>>>>>>>>>>> setNaverShoppingBeautyProduct Error !! {}", e);
