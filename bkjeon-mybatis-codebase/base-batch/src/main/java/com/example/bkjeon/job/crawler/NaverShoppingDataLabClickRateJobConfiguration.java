@@ -1,8 +1,8 @@
 package com.example.bkjeon.job.crawler;
 
-import com.example.bkjeon.util.DateUtil;
 import com.example.bkjeon.feature.crawler.NaverShoppingDataLabClickRate;
 import com.example.bkjeon.job.crawler.service.NaverShoppingDataLabClickRateService;
+import com.example.bkjeon.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -17,11 +17,9 @@ import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-// TODO: 작업중.. 청크 단위로 하니 중복된 카테고리가 연속적으로 읽어짐...
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
@@ -90,8 +88,7 @@ public class NaverShoppingDataLabClickRateJobConfiguration {
     public Step naverShoppingDataLabClickRateJobInitializeDBStep() {
         return stepBuilderFactory.get("naverShoppingDataLabClickRateJobInitializeDBStep")
                 .tasklet((contribution, chunkContext) -> {
-                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> logYmd: {}", logYmd);
-                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> startDate: {} - endDate: {}", startDate, endDate);
+                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> logYmd: {}, startDate: {}, endDate: {}", logYmd, startDate, endDate);
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> categoryIds: {}", categoryIds);
                     int delCnt = naverShoppingDataLabClickRateService.delNaverShoppingDataLabClickRate(logYmd, categoryIds);
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete Count: {}", delCnt);
@@ -127,23 +124,15 @@ public class NaverShoppingDataLabClickRateJobConfiguration {
     @Bean("naverShoppingDataLabClickCrawlingStepReader")
     @StepScope
     public ListItemReader<NaverShoppingDataLabClickRate> naverShoppingDataLabClickCrawlingStepReader() {
-        List<NaverShoppingDataLabClickRate> naverDataLabClickRateList = new ArrayList<>();
-
-        for (String categoryId: categoryIds.split(",")) {
-            System.out.println("--------------------------");
-            System.out.println(categoryId);
-            System.out.println("--------------------------");
-//            naverDataLabClickRateList.addAll(
-//                naverShoppingDataLabClickRateService.getNaverShoppingDataLabClickRateCrawling(
-//                    logYmd,
-//                    startDate,
-//                    endDate,
-//                    categoryId
-//                )
-//            );
-        }
-
-        return new ListItemReader<>(naverDataLabClickRateList);
+        return new ListItemReader<>(
+            naverShoppingDataLabClickRateService.getNaverShoppingDataLabClickRateCrawling(
+                logYmd,
+                startDate,
+                endDate,
+                categoryIds.split(","),
+                currentCategoryIdIndex
+            )
+        );
     }
 
     @Bean("naverShoppingDataLabClickCrawlingStepWriter")

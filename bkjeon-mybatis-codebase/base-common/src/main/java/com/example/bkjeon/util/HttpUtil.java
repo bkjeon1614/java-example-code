@@ -12,6 +12,11 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -79,6 +84,26 @@ public class HttpUtil {
         str = emoticonsMatcher.replaceAll("");
 
         return str;
+    }
+
+    public static ResponseEntity<String> getRequestEntity(
+        MultiValueMap<String, String> body,
+        String requestUrl,
+        String referer
+    ) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Referer", referer);
+        headers.add("User-Agent", RandomUserAgent.getRandomUserAgent());
+        HttpEntity requestEntity = new HttpEntity(body, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(
+            requestUrl,
+            requestEntity,
+            String.class
+        );
+
+        return responseEntity;
     }
 
 }
