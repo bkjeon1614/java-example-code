@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class NaverShoppingBeautyProductService {
 
-    private NaverShoppingBeautyProductMapper naverShoppingBeautyProductMapper;
+    private final NaverShoppingBeautyProductMapper naverShoppingBeautyProductMapper;
 
     public List<NaverShoppingBeautyProduct> getNaverShoppingBeautyProductCrawling(
         String logYmd,
@@ -78,25 +77,27 @@ public class NaverShoppingBeautyProductService {
     }
 
     @Transactional
-    public void setNaverShoppingBeautyProduct(NaverShoppingBeautyProduct naverShoppingBeautyProduct) {
+    public int setNaverShoppingBeautyProduct(List<NaverShoppingBeautyProduct> naverShoppingBeautyProductList) {
+        int insertCnt = 0;
         try {
-            System.out.println(naverShoppingBeautyProduct.toString());
-
-            /**
-            Map<String, Integer> test = repo.seelect(new HashMap<>() {
-                {
-                    put("id", id);
-                    put("name", name)
-                }
-            }).stream().collect(Collectors.toMap(NaverDate::id, NaverDate:count))
-
-            test.get()
-            */
-
-            naverShoppingBeautyProductMapper.insertNaverShoppingBeautyProduct(naverShoppingBeautyProduct);
+            insertCnt = naverShoppingBeautyProductMapper.insertNaverShoppingBeautyProductList(naverShoppingBeautyProductList);
         } catch (Exception e) {
             log.error(">>>>>>>>>>>>>>>>>>>>>>>>>>>> setNaverShoppingBeautyProduct Error !! {}", e);
         }
+
+        return insertCnt;
+    }
+
+    @Transactional
+    public int modifyNaverShoppingBeautyProduct(List<NaverShoppingBeautyProduct> naverShoppingBeautyProductList) {
+        int insertCnt = 0;
+        try {
+            insertCnt = naverShoppingBeautyProductMapper.updateNaverShoppingBeautyProductList(naverShoppingBeautyProductList);
+        } catch (Exception e) {
+            log.error(">>>>>>>>>>>>>>>>>>>>>>>>>>>> modifyNaverShoppingBeautyProduct Error !! {}", e);
+        }
+
+        return insertCnt;
     }
 
     @Transactional

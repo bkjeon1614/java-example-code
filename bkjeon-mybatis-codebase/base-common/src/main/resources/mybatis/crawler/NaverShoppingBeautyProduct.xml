@@ -1,10 +1,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.bkjeon.feature.crawler.NaverShoppingBeautyProduct">
+<mapper namespace="com.example.bkjeon.feature.crawler.NaverShoppingBeautyProductMapper">
 
-    <insert id="insertNaverShoppingBeautyProduct" parameterType="map">
-        INSERT INTO nv_beauty_prod_rank (log_ymd, prod_id, prod_nm, cat_id, rank)
-        VALUES (#{logYmd}, #{productNo}, #{productName}, #{categoryNo}, #{productRank})
+    <insert id="insertNaverShoppingBeautyProductList" parameterType="list" flushCache="true">
+        INSERT INTO nv_beauty_prod_rank (log_ymd, prod_id, prod_nm, cat_id, prod_rank)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.logYmd},
+                #{item.productNo},
+                #{item.productName},
+                #{item.categoryNo},
+                #{item.productRank}
+            )
+        </foreach>
     </insert>
+
+    <update id="updateNaverShoppingBeautyProductList" parameterType="list" flushCache="true">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE nv_beauty_prod_rank
+            <set>
+                prod_nm = #{item.productName},
+                prod_rank = #{item.productRank}
+            </set>
+            WHERE 1=1
+            AND log_ymd = #{item.logYmd}
+            AND cat_id = #{item.categoryNo}
+            AND prod_id = #{item.productNo}
+        </foreach>
+    </update>
 
     <delete id="deleteNaverShoppingBeautyProduct" parameterType="map">
         DELETE FROM nv_beauty_prod_rank WHERE log_ymd = #{logYmd} AND cat_id IN (#{categoryIds})

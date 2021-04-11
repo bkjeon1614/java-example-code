@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,6 +28,7 @@ public class NaverShoppingBeautyProductJobConfiguration {
     private String logYmd;
     private String categoryIds;
     private int currentCategoryNoIndex = 0;
+    private int insertCnt = 0;
 
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
@@ -79,6 +81,8 @@ public class NaverShoppingBeautyProductJobConfiguration {
                         logYmd,
                         categoryIds
                     );
+                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete logYmd: {}", logYmd);
+                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete categoryIds: {}", categoryIds);
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete Count: {}", delCnt);
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> naverShoppingBeautyProductInitializeDBStep Finished");
                     return RepeatStatus.FINISHED;
@@ -94,9 +98,7 @@ public class NaverShoppingBeautyProductJobConfiguration {
                 .writer(naverShoppingBeautyProductCrawlingStepWriter())
                 .listener(new StepExecutionListener() {
                     @Override
-                    public void beforeStep(StepExecution stepExecution) {
-
-                    }
+                    public void beforeStep(StepExecution stepExecution) {}
 
                     @Override
                     public ExitStatus afterStep(StepExecution stepExecution) {
@@ -126,11 +128,10 @@ public class NaverShoppingBeautyProductJobConfiguration {
     @Bean("naverShoppingBeautyProductCrawlingStepWriter")
     @StepScope
     public ItemWriter<NaverShoppingBeautyProduct> naverShoppingBeautyProductCrawlingStepWriter() {
-        return items -> items
-                .stream()
-                .forEach(item -> {
-                    naverShoppingBeautyProductService.setNaverShoppingBeautyProduct(item);
-                });
+        return items -> {
+            insertCnt += naverShoppingBeautyProductService.setNaverShoppingBeautyProduct((List<NaverShoppingBeautyProduct>) items);
+            log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Finished Insert Count: {}", insertCnt);
+        };
     }
 
 }

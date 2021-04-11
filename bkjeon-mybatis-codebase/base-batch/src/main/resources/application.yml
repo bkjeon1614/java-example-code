@@ -7,12 +7,6 @@ spring:
   main:
     web-application-type: none
 
-logging:
-  level:
-    org:
-      springframework:
-        batch: DEBUG
-
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
   type-aliases-package: com.example.bkjeon.feature
@@ -30,10 +24,16 @@ mybatis:
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
     username: root
     password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    org:
+      springframework:
+        batch: DEBUG
 
 server:
   port: 9091
@@ -44,10 +44,16 @@ server:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
     username: test
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    org:
+      springframework:
+        batch: INFO
 
 server:
   port: 9091
@@ -58,10 +64,16 @@ server:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
     username: test
     password: test
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+logging:
+  level:
+    org:
+      springframework:
+        batch: INFO
 
 server:
   port: 9091
