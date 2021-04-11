@@ -1,7 +1,7 @@
 package com.example.bkjeon.base.services.api.v1.validation;
 
 import com.example.bkjeon.base.services.api.v1.validation.dto.PostValidDTO;
-import com.example.bkjeon.common.enums.ResponseResult;
+import com.example.bkjeon.enums.ResponseResult;
 import com.example.bkjeon.common.model.ApiResponseMessage;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;

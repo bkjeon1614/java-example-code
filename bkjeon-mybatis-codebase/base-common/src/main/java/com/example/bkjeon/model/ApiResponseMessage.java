@@ -1,6 +1,6 @@
-package com.example.bkjeon.common.model;
+package com.example.bkjeon.model;
 
-import com.example.bkjeon.common.enums.ResponseResult;
+import com.example.bkjeon.enums.ResponseResult;
 import lombok.Getter;
 import lombok.Setter;
 

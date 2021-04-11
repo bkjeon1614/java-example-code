@@ -1,4 +1,4 @@
-package com.example.bkjeon.common.model.file;
+package com.example.bkjeon.model.file;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package com.example.bkjeon.common.utils;
+package com.example.bkjeon.util;
 
 import java.util.HashMap;
 import java.util.Map;

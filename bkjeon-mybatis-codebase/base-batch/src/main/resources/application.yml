@@ -26,7 +26,7 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
     username: root
-    password: wjsqhdrms
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 logging:
@@ -45,8 +45,8 @@ spring:
   profiles: dev
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
-    username: test
-    password: test
+    username: bkjeon
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 logging:
@@ -65,8 +65,8 @@ spring:
   profiles: prod
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
-    username: test
-    password: test
+    username: bkjeon
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 logging:

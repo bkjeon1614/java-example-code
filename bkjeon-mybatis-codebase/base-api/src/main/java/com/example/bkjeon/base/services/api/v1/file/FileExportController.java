@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.file;
 
-import com.example.bkjeon.common.utils.file.ExcelUtil;
+import com.example.bkjeon.util.file.ExcelUtil;
 import com.example.bkjeon.feature.file.FileExportXlsxExample;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;

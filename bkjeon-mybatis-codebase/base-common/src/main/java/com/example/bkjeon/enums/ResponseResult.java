@@ -1,4 +1,4 @@
-package com.example.bkjeon.common.enums;
+package com.example.bkjeon.enums;
 
 import lombok.Getter;
 

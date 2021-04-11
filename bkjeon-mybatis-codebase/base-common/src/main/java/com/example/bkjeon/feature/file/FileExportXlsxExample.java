@@ -1,6 +1,6 @@
 package com.example.bkjeon.feature.file;
 
-import com.example.bkjeon.common.model.file.ToExcel;
+import com.example.bkjeon.model.file.ToExcel;
 import lombok.*;
 
 @Builder

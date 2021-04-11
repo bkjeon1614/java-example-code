@@ -104,35 +104,21 @@ INSERT INTO BATCH_JOB_SEQ (ID, UNIQUE_KEY) select * from (select 0 as ID, '0' as
 
 
 -- Add New
-CREATE TABLE `nv_blog_trend` (
-  `log_ymd` varchar(8) NOT NULL,
-  `srch_kwd` varchar(30) NOT NULL,
-  `ad_yn` char(1) NOT NULL,
-  `ad_kwd` varchar(100) DEFAULT NULL,
-  `cat_id` varchar(15) NOT NULL,
-  `cat_nm` varchar(30) DEFAULT NULL,
-  `brand_id` varchar(15) DEFAULT NULL,
-  `brand_nm` varchar(30) NOT NULL,
-  `post_cnt` int(11) DEFAULT NULL,
-  `sys_reg_dt` datetime DEFAULT NULL,
-  `sys_mod_dt` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버 블로그';
-
 CREATE TABLE `nv_data_click_rate` (
   `log_ymd` varchar(15) NOT NULL,
   `cat_id` varchar(15) NOT NULL,
   `period` varchar(15) NOT NULL,
   `click_rate` varchar(15) NOT NULL,
-  `sys_reg_dt` datetime DEFAULT NULL,
-  `sys_mod_dt` datetime DEFAULT NULL,
+  `sys_reg_dt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '시스템 등록일자',
+  `sys_mod_dt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '시스템 수정일자',
   PRIMARY KEY (`log_ymd`,`cat_id`,`period`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버데이터랩 클릭추이';
 
 CREATE TABLE `nv_beauty_prod_rank` (
   `log_ymd` varchar(8) NOT NULL,
-  `prod_no` varchar(20) NOT NULL,
+  `prod_id` varchar(20) NOT NULL,
   `prod_nm` varchar(100) DEFAULT NULL,
-  `cat_no` varchar(15) NOT NULL,
+  `cat_id` varchar(15) NOT NULL,
   `cat_nm` varchar(15) DEFAULT NULL,
   `price` int DEFAULT NULL,
   `review_cnt` int DEFAULT NULL,
@@ -140,10 +126,8 @@ CREATE TABLE `nv_beauty_prod_rank` (
   `prod_rank` int DEFAULT NULL,
   `prod_url` varchar(300) DEFAULT NULL,
   `img_url` varchar(300) DEFAULT NULL,
-  `brand_no` varchar(15) DEFAULT NULL,
-  `brand_nm` varchar(30) DEFAULT NULL,
   `zzim_cnt` int DEFAULT NULL,
-  `sys_reg_dt` datetime DEFAULT NULL,
-  `sys_mod_dt` datetime DEFAULT NULL,
+  `sys_reg_dt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '시스템 등록일자',
+  `sys_mod_dt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '시스템 수정일자',
   PRIMARY KEY (`log_ymd`,`cat_no`,`prod_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버뷰티윈도우 상품랭킹';

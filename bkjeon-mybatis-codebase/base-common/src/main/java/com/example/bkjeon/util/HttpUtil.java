@@ -1,4 +1,4 @@
-package com.example.bkjeon.common.utils;
+package com.example.bkjeon.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.HttpClient;

@@ -7,12 +7,11 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class NaverShoppingBeautyProduct {
+public class NaverShoppingDataLabClickRate {
 
-    private String logYmd;
-    private String productId;
-    private String productName;
     private String categoryId;
-    private Integer productRank;
+    private String logYmd;
+    private String period;
+    private String clickRate;
 
 }

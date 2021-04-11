@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.kafka;
 
-import com.example.bkjeon.common.enums.ResponseResult;
+import com.example.bkjeon.enums.ResponseResult;
 import com.example.bkjeon.common.model.ApiResponseMessage;
 import com.example.bkjeon.feature.kafka.KafkaProducerCallBack;
 import lombok.extern.slf4j.Slf4j;

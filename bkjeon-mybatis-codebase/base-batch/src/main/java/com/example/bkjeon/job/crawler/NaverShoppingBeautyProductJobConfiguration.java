@@ -1,6 +1,6 @@
 package com.example.bkjeon.job.crawler;
 
-import com.example.bkjeon.common.utils.DateUtil;
+import com.example.bkjeon.util.DateUtil;
 import com.example.bkjeon.feature.crawler.NaverShoppingBeautyProduct;
 import com.example.bkjeon.job.crawler.service.NaverShoppingBeautyProductService;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +26,8 @@ import java.util.List;
 public class NaverShoppingBeautyProductJobConfiguration {
 
     private String logYmd;
-    private String categoryNos;
-    private int currentCategoryNoIndex = 0;
+    private String categoryIds;
+    private int currentCategoryIdIndex = 0;
     private int insertCnt = 0;
 
     private final JobBuilderFactory jobBuilderFactory;
@@ -48,8 +48,8 @@ public class NaverShoppingBeautyProductJobConfiguration {
                             DateUtil.date("yyyyMMdd", new Date())
                         ).trim();
 
-                        categoryNos = StringUtils.defaultIfBlank(
-                            jobExecution.getJobParameters().getString("categoryNos"),
+                        categoryIds = StringUtils.defaultIfBlank(
+                            jobExecution.getJobParameters().getString("categoryIds"),
                             "10003314,10003368,10003291,10003292,10003340,10003399"
                         ).trim();
                     }
@@ -63,7 +63,7 @@ public class NaverShoppingBeautyProductJobConfiguration {
                     }
                 })
                 .incrementer(new RunIdIncrementer())
-                .start(naverShoppingBeautyProductInitializeDBStep())
+                .start(naverShoppingBeautyProductJobInitializeDBStep())
                 .next(naverShoppingBeautyProductCrawlingStep())
                 .on("CONTINUE")
                 .to(naverShoppingBeautyProductCrawlingStep())
@@ -73,16 +73,16 @@ public class NaverShoppingBeautyProductJobConfiguration {
                 .build();
     }
 
-    @Bean("naverShoppingBeautyProductInitializeDBStep")
-    public Step naverShoppingBeautyProductInitializeDBStep() {
-        return stepBuilderFactory.get("naverShoppingBeautyProductInitializeDBStep")
+    @Bean("naverShoppingBeautyProductJobInitializeDBStep")
+    public Step naverShoppingBeautyProductJobInitializeDBStep() {
+        return stepBuilderFactory.get("naverShoppingBeautyProductJobInitializeDBStep")
                 .tasklet((contribution, chunkContext) -> {
                     int delCnt = naverShoppingBeautyProductService.delNaverShoppingBeautyProduct(
                         logYmd,
-                        categoryNos
+                        categoryIds
                     );
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete logYmd: {}", logYmd);
-                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete categoryNos: {}", categoryNos);
+                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete categoryIds: {}", categoryIds);
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete Count: {}", delCnt);
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> naverShoppingBeautyProductInitializeDBStep Finished");
                     return RepeatStatus.FINISHED;
@@ -102,8 +102,8 @@ public class NaverShoppingBeautyProductJobConfiguration {
 
                     @Override
                     public ExitStatus afterStep(StepExecution stepExecution) {
-                        currentCategoryNoIndex++;
-                        if (currentCategoryNoIndex < categoryNos.split(",").length) {
+                        currentCategoryIdIndex++;
+                        if (currentCategoryIdIndex < categoryIds.split(",").length) {
                             return new ExitStatus("CONTINUE");
                         } else {
                             return new ExitStatus("FINISHED");
@@ -119,8 +119,8 @@ public class NaverShoppingBeautyProductJobConfiguration {
         return new ListItemReader<>(
             naverShoppingBeautyProductService.getNaverShoppingBeautyProductCrawling(
                 logYmd,
-                categoryNos.split(","),
-                currentCategoryNoIndex
+                categoryIds.split(","),
+                currentCategoryIdIndex
             )
         );
     }

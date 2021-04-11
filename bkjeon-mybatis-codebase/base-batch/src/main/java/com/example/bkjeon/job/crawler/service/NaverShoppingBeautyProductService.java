@@ -1,6 +1,6 @@
 package com.example.bkjeon.job.crawler.service;
 
-import com.example.bkjeon.common.utils.HttpUtil;
+import com.example.bkjeon.util.HttpUtil;
 import com.example.bkjeon.feature.crawler.NaverShoppingBeautyProduct;
 import com.example.bkjeon.feature.crawler.NaverShoppingBeautyProductMapper;
 import com.example.bkjeon.job.crawler.common.CrawlerConstant;
@@ -35,7 +35,7 @@ public class NaverShoppingBeautyProductService {
         try {
             String menuId = categoryIdArr[currentCategoryIdIndex];
             String[] fullCategories = categoryIdArr[currentCategoryIdIndex].split("/");
-            String categoryNo = fullCategories[fullCategories.length - 1];
+            String categoryId = fullCategories[fullCategories.length - 1];
 
             String verticalCode;
             if (menuId.equals("10002562")) {
@@ -60,9 +60,9 @@ public class NaverShoppingBeautyProductService {
             for (int i=0; i<parseProductList.size(); i++) {
                 NaverShoppingBeautyProduct naverShoppingBeautyProduct = NaverShoppingBeautyProduct.builder()
                     .logYmd(logYmd)
-                    .productNo(MapUtils.getString(parseProductList.get(i), "_id"))
+                    .productId(MapUtils.getString(parseProductList.get(i), "_id"))
                     .productName(HttpUtil.getCleanData(MapUtils.getString(parseProductList.get(i), "name")))
-                    .categoryNo(categoryNo)
+                    .categoryId(categoryId)
                     .productRank(productRank)
                     .build();
                 naverShoppingBeautyProductList.add(naverShoppingBeautyProduct);
@@ -70,7 +70,7 @@ public class NaverShoppingBeautyProductService {
                 productRank++;
             }
         } catch (Exception e) {
-            log.error("네이버 쇼핑 뷰티 상품 크롤링 에러 {}", e.getMessage());
+            log.error("네이버 쇼핑 뷰티 상품 크롤링 에러 {}", e);
         }
 
         return naverShoppingBeautyProductList;
