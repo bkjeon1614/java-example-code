@@ -46,7 +46,7 @@ public class NaverShoppingBeautyProductService {
                 verticalCode = "BEAUTY";
             }
 
-            String requestUrl = String.format(CrawlerConstant.naverShoppingBeautyUrl, menuId, verticalCode);
+            String requestUrl = String.format(CrawlerConstant.NAVER_SHOPPING_BEAUTY_URL, menuId, verticalCode);
 
             GetMethod method = new GetMethod(requestUrl);
             String response = HttpUtil.requestUrl(method);

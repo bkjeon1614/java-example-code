@@ -46,8 +46,8 @@ public class NaverShoppingDataLabClickRateService {
             );
             ResponseEntity<String> response = HttpUtil.getRequestEntity(
                 body,
-                CrawlerConstant.naverShoppingDataLabClickRateUrl,
-                "https://datalab.naver.com"
+                CrawlerConstant.NAVER_SHOPPING_DATA_LAB_CLICK_RATE_URL,
+                CrawlerConstant.NAVER_DATALAB_URL
             );
 
             JsonElement rootNode = JsonParser.parseString(response.getBody());
