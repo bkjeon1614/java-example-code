@@ -2,7 +2,7 @@
 <mapper namespace="com.example.bkjeon.feature.crawler.NaverShoppingBeautyProductMapper">
 
     <insert id="insertNaverShoppingBeautyProductList" parameterType="list" flushCache="true">
-        INSERT INTO nv_beauty_prod_rank (log_ymd, prod_id, prod_nm, cat_id, prod_rank)
+        INSERT INTO nv_beauty_prod_rank (log_ymd, prod_no, prod_nm, cat_no, prod_rank)
         VALUES
         <foreach collection="list" item="item" separator=",">
             (
@@ -24,13 +24,13 @@
             </set>
             WHERE 1=1
             AND log_ymd = #{item.logYmd}
-            AND cat_id = #{item.categoryNo}
-            AND prod_id = #{item.productNo}
+            AND cat_no = #{item.categoryNo}
+            AND prod_no = #{item.productNo}
         </foreach>
     </update>
 
     <delete id="deleteNaverShoppingBeautyProduct" parameterType="map">
-        DELETE FROM nv_beauty_prod_rank WHERE log_ymd = #{logYmd} AND cat_id IN (#{categoryIds})
+        DELETE FROM nv_beauty_prod_rank WHERE log_ymd = #{logYmd} AND cat_no IN (#{categoryNos})
     </delete>
 
 </mapper>

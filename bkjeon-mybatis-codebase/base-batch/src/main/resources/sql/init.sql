@@ -130,21 +130,20 @@ CREATE TABLE `nv_data_click_rate` (
 
 CREATE TABLE `nv_beauty_prod_rank` (
   `log_ymd` varchar(8) NOT NULL,
-  `prod_id` varchar(20) NOT NULL,
+  `prod_no` varchar(20) NOT NULL,
   `prod_nm` varchar(100) DEFAULT NULL,
-  `cat_id` varchar(15) NOT NULL,
+  `cat_no` varchar(15) NOT NULL,
   `cat_nm` varchar(15) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
-  `review_cnt` int(11) DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  `review_cnt` int DEFAULT NULL,
   `review_score` decimal(3,2) DEFAULT NULL,
-  `rank` int(11) DEFAULT NULL,
-  `url` varchar(300) DEFAULT NULL,
+  `prod_rank` int DEFAULT NULL,
+  `prod_url` varchar(300) DEFAULT NULL,
   `img_url` varchar(300) DEFAULT NULL,
-  `brand_id` varchar(15) DEFAULT NULL,
+  `brand_no` varchar(15) DEFAULT NULL,
   `brand_nm` varchar(30) DEFAULT NULL,
-  `zzim_cnt` int(11) DEFAULT NULL,
+  `zzim_cnt` int DEFAULT NULL,
   `sys_reg_dt` datetime DEFAULT NULL,
   `sys_mod_dt` datetime DEFAULT NULL,
-  `popular_score` decimal(15,3) DEFAULT NULL,
-  PRIMARY KEY (`log_ymd`,`cat_id`,`prod_id`)
+  PRIMARY KEY (`log_ymd`,`cat_no`,`prod_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버뷰티윈도우 상품랭킹';

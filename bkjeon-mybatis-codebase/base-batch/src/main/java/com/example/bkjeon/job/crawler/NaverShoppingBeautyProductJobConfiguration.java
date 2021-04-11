@@ -26,7 +26,7 @@ import java.util.List;
 public class NaverShoppingBeautyProductJobConfiguration {
 
     private String logYmd;
-    private String categoryIds;
+    private String categoryNos;
     private int currentCategoryNoIndex = 0;
     private int insertCnt = 0;
 
@@ -48,8 +48,8 @@ public class NaverShoppingBeautyProductJobConfiguration {
                             DateUtil.date("yyyyMMdd", new Date())
                         ).trim();
 
-                        categoryIds = StringUtils.defaultIfBlank(
-                            jobExecution.getJobParameters().getString("categoryIds"),
+                        categoryNos = StringUtils.defaultIfBlank(
+                            jobExecution.getJobParameters().getString("categoryNos"),
                             "10003314,10003368,10003291,10003292,10003340,10003399"
                         ).trim();
                     }
@@ -79,10 +79,10 @@ public class NaverShoppingBeautyProductJobConfiguration {
                 .tasklet((contribution, chunkContext) -> {
                     int delCnt = naverShoppingBeautyProductService.delNaverShoppingBeautyProduct(
                         logYmd,
-                        categoryIds
+                        categoryNos
                     );
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete logYmd: {}", logYmd);
-                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete categoryIds: {}", categoryIds);
+                    log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete categoryNos: {}", categoryNos);
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> Delete Count: {}", delCnt);
                     log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>> naverShoppingBeautyProductInitializeDBStep Finished");
                     return RepeatStatus.FINISHED;
@@ -103,7 +103,7 @@ public class NaverShoppingBeautyProductJobConfiguration {
                     @Override
                     public ExitStatus afterStep(StepExecution stepExecution) {
                         currentCategoryNoIndex++;
-                        if (currentCategoryNoIndex < categoryIds.split(",").length) {
+                        if (currentCategoryNoIndex < categoryNos.split(",").length) {
                             return new ExitStatus("CONTINUE");
                         } else {
                             return new ExitStatus("FINISHED");
@@ -119,7 +119,7 @@ public class NaverShoppingBeautyProductJobConfiguration {
         return new ListItemReader<>(
             naverShoppingBeautyProductService.getNaverShoppingBeautyProductCrawling(
                 logYmd,
-                categoryIds.split(","),
+                categoryNos.split(","),
                 currentCategoryNoIndex
             )
         );
