@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.data;
 
-import com.example.bkjeon.feature.data.stream.StreamUser;
+import com.example.bkjeon.entity.data.stream.StreamUser;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

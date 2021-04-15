@@ -1,4 +1,4 @@
-package com.example.bkjeon.feature.data.stream;
+package com.example.bkjeon.entity.data.stream;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

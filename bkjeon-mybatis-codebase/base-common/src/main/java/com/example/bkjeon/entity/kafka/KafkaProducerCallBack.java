@@ -1,4 +1,4 @@
-package com.example.bkjeon.feature.kafka;
+package com.example.bkjeon.entity.kafka;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.Callback;

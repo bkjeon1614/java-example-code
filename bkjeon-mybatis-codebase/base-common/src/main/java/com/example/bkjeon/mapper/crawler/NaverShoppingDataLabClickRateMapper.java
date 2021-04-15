@@ -1,5 +1,6 @@
-package com.example.bkjeon.feature.crawler;
+package com.example.bkjeon.mapper.crawler;
 
+import com.example.bkjeon.entity.crawler.NaverShoppingDataLabClickRate;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

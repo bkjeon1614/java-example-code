@@ -1,0 +1,42 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bkjeon.mapper.crawler.NaverShoppingBestProductMapper">
+
+    <insert id="insertNaverShoppingBestProductList" parameterType="list" flushCache="true">
+        INSERT INTO nv_best_prod_rank (
+            log_ymd,
+            prod_Id,
+            prod_nm,
+            cat_id,
+            prod_rank,
+            brd_nm,
+            prod_reg_ymd,
+            zzim_cnt,
+            review_score,
+            seller_cnt,
+            shipping_price,
+            prod_price
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+                #{item.logYmd},
+                #{item.productId},
+                #{item.productName},
+                #{item.categoryId},
+                #{item.productRank},
+                #{item.brandName},
+                #{item.productRegisterYmd},
+                #{item.zzimCount},
+                #{item.reviewScore},
+                #{item.sellerCount},
+                #{item.shippingPrice},
+                #{item.productPrice}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteNaverShoppingBestProduct" parameterType="map" flushCache="true">
+        DELETE FROM nv_best_prod_rank WHERE log_ymd = #{logYmd} AND cat_id IN (#{categoryIds})
+    </delete>
+
+</mapper>

@@ -1,7 +1,5 @@
-package com.example.bkjeon.feature.common.log;
+package com.example.bkjeon.entity.common.log;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

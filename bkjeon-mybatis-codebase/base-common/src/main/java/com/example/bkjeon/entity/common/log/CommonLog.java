@@ -1,4 +1,4 @@
-package com.example.bkjeon.feature.common.log;
+package com.example.bkjeon.entity.common.log;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

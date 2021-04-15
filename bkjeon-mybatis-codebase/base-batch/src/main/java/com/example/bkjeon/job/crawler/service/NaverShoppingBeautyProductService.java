@@ -1,8 +1,8 @@
 package com.example.bkjeon.job.crawler.service;
 
 import com.example.bkjeon.util.HttpUtil;
-import com.example.bkjeon.feature.crawler.NaverShoppingBeautyProduct;
-import com.example.bkjeon.feature.crawler.NaverShoppingBeautyProductMapper;
+import com.example.bkjeon.entity.crawler.NaverShoppingBeautyProduct;
+import com.example.bkjeon.mapper.crawler.NaverShoppingBeautyProductMapper;
 import com.example.bkjeon.job.crawler.common.CrawlerConstant;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -47,6 +47,7 @@ public class NaverShoppingBeautyProductService {
             }
 
             String requestUrl = String.format(CrawlerConstant.NAVER_SHOPPING_BEAUTY_URL, menuId, verticalCode);
+            log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> Request URL: {}", requestUrl);
 
             GetMethod method = new GetMethod(requestUrl);
             String response = HttpUtil.requestUrl(method);

@@ -1,5 +1,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.bkjeon.feature.crawler.NaverShoppingBeautyProductMapper">
+<mapper namespace="com.example.bkjeon.mapper.crawler.NaverShoppingBeautyProductMapper">
 
     <insert id="insertNaverShoppingBeautyProductList" parameterType="list" flushCache="true">
         INSERT INTO nv_beauty_prod_rank (log_ymd, prod_Id, prod_nm, cat_id, prod_rank)

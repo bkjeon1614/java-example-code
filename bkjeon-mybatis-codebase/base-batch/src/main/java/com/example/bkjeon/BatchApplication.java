@@ -14,7 +14,7 @@ import javax.annotation.PostConstruct;
  */
 @Slf4j
 @EnableBatchProcessing
-@MapperScan(basePackages = {"com.example.bkjeon.feature"})
+@MapperScan(basePackages = {"com.example.bkjeon.mapper"})
 @SpringBootApplication
 public class BatchApplication {
 

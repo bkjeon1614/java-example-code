@@ -1,5 +1,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.bkjeon.feature.crawler.NaverShoppingDataLabClickRateMapper">
+<mapper namespace="com.example.bkjeon.mapper.crawler.NaverShoppingDataLabClickRateMapper">
 
     <insert id="insertNaverShoppingDataLabClickRateList" parameterType="list" flushCache="true">
         INSERT INTO nv_data_click_rate (log_ymd, cat_id, period, click_rate)

@@ -1,4 +1,4 @@
-package com.example.bkjeon.feature.file;
+package com.example.bkjeon.entity.file;
 
 import com.example.bkjeon.model.file.ToExcel;
 import lombok.*;

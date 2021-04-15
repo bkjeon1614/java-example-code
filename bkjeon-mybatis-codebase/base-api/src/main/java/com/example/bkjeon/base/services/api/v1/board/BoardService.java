@@ -2,10 +2,10 @@ package com.example.bkjeon.base.services.api.v1.board;
 
 import com.example.bkjeon.base.services.api.v1.board.dto.BoardRequestDTO;
 import com.example.bkjeon.base.services.api.v1.board.dto.BoardResponseDTO;
+import com.example.bkjeon.entity.board.Board;
 import com.example.bkjeon.enums.ResponseResult;
-import com.example.bkjeon.common.model.ApiResponseMessage;
-import com.example.bkjeon.feature.board.Board;
-import com.example.bkjeon.feature.board.BoardMapper;
+import com.example.bkjeon.mapper.board.BoardMapper;
+import com.example.bkjeon.model.ApiResponseMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

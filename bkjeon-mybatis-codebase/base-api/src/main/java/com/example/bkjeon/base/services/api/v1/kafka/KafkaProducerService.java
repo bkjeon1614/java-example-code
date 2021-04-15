@@ -1,10 +1,13 @@
 package com.example.bkjeon.base.services.api.v1.kafka;
 
+import com.example.bkjeon.entity.kafka.KafkaProducerCallBack;
 import com.example.bkjeon.enums.ResponseResult;
-import com.example.bkjeon.common.model.ApiResponseMessage;
-import com.example.bkjeon.feature.kafka.KafkaProducerCallBack;
+import com.example.bkjeon.model.ApiResponseMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.*;
+import org.apache.kafka.clients.consumer.CommitFailedException;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;

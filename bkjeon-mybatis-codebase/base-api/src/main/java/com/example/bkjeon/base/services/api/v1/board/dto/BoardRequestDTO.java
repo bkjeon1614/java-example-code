@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.board.dto;
 
-import com.example.bkjeon.feature.board.Board;
+import com.example.bkjeon.entity.board.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.example.bkjeon.job.crawler;
 
 import com.example.bkjeon.util.DateUtil;
-import com.example.bkjeon.feature.crawler.NaverShoppingBeautyProduct;
+import com.example.bkjeon.entity.crawler.NaverShoppingBeautyProduct;
 import com.example.bkjeon.job.crawler.service.NaverShoppingBeautyProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

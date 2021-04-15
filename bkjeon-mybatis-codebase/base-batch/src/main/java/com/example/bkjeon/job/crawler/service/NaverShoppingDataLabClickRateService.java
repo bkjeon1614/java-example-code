@@ -1,7 +1,7 @@
 package com.example.bkjeon.job.crawler.service;
 
-import com.example.bkjeon.feature.crawler.NaverShoppingDataLabClickRate;
-import com.example.bkjeon.feature.crawler.NaverShoppingDataLabClickRateMapper;
+import com.example.bkjeon.entity.crawler.NaverShoppingDataLabClickRate;
+import com.example.bkjeon.mapper.crawler.NaverShoppingDataLabClickRateMapper;
 import com.example.bkjeon.job.crawler.common.CrawlerConstant;
 import com.example.bkjeon.util.DateUtil;
 import com.example.bkjeon.util.HttpUtil;

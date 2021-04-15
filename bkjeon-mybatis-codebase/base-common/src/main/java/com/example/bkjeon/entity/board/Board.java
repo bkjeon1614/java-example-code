@@ -1,4 +1,4 @@
-package com.example.bkjeon.feature.board;
+package com.example.bkjeon.entity.board;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;

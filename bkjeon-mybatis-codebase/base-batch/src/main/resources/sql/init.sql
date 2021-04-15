@@ -119,15 +119,26 @@ CREATE TABLE `nv_beauty_prod_rank` (
   `prod_id` varchar(20) NOT NULL,
   `prod_nm` varchar(100) DEFAULT NULL,
   `cat_id` varchar(15) NOT NULL,
-  `cat_nm` varchar(15) DEFAULT NULL,
-  `price` int DEFAULT NULL,
-  `review_cnt` int DEFAULT NULL,
-  `review_score` decimal(3,2) DEFAULT NULL,
-  `prod_rank` int DEFAULT NULL,
-  `prod_url` varchar(300) DEFAULT NULL,
-  `img_url` varchar(300) DEFAULT NULL,
-  `zzim_cnt` int DEFAULT NULL,
+  `prod_rank` int(10) DEFAULT NULL,
   `sys_reg_dt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '시스템 등록일자',
   `sys_mod_dt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '시스템 수정일자',
-  PRIMARY KEY (`log_ymd`,`cat_no`,`prod_no`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버뷰티윈도우 상품랭킹';
+  PRIMARY KEY (`log_ymd`,`cat_id`,`prod_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버 뷰티윈도우 상품랭킹';
+
+CREATE TABLE `nv_best_prod_rank` (
+  `log_ymd` varchar(8) NOT NULL,
+  `prod_id` varchar(20) NOT NULL,
+  `prod_nm` varchar(100) DEFAULT NULL,
+  `cat_id` varchar(15) NOT NULL,
+  `prod_rank` int(10) DEFAULT NULL,
+  `brd_nm` varchar(100) DEFAULT NULL,
+  `prod_reg_ymd` varchar(8) DEFAULT NULL,
+  `zzim_cnt` int(10) DEFAULT NULL,
+  `review_score` double DEFAULT NULL,
+  `seller_cnt` int(10) DEFAULT NULL,
+  `shipping_price` int(10) DEFAULT NULL,
+  `prod_price` int(10) DEFAULT NULL,
+  `sys_reg_dt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '시스템 등록일자',
+  `sys_mod_dt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '시스템 수정일자',
+  PRIMARY KEY (`log_ymd`,`cat_id`,`prod_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버 베스트100 상품랭킹';

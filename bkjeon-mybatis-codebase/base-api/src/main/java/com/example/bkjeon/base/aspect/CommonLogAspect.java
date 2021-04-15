@@ -1,7 +1,7 @@
 package com.example.bkjeon.base.aspect;
 
-import com.example.bkjeon.feature.common.log.CommonLog;
-import com.example.bkjeon.feature.common.log.CommonLogMapper;
+import com.example.bkjeon.entity.common.log.CommonLog;
+import com.example.bkjeon.mapper.common.log.CommonLogMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;

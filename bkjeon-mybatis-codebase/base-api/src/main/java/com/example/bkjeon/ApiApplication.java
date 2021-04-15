@@ -7,7 +7,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
-@MapperScan("com.example.bkjeon.feature")
+@MapperScan("com.example.bkjeon.mapper")
 public class ApiApplication {
 
     public static void main(String[] args) {

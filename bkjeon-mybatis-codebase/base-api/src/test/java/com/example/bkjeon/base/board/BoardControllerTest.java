@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.board;
 
-import com.example.bkjeon.feature.board.BoardDTO;
+import com.example.bkjeon.entity.board.BoardDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

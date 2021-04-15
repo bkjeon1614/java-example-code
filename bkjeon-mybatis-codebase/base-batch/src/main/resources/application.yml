@@ -9,7 +9,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
-  type-aliases-package: com.example.bkjeon.feature
+  type-aliases-package: com.example.bkjeon.mapper
   configuration:
     cacheEnabled: false
     useGeneratedKeys: true
@@ -28,6 +28,10 @@ spring:
     username: root
     password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+chromedriver:
+  id: webdriver.chrome.driver
+  path: ./file/chromedriver.exe
 
 logging:
   level:
@@ -49,6 +53,10 @@ spring:
     password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+chromedriver:
+  id: webdriver.chrome.driver
+  path: /home/bkjeon/app/chromedriver/chromedriver
+
 logging:
   level:
     org:
@@ -68,6 +76,10 @@ spring:
     username: bkjeon
     password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+chromedriver:
+  id: webdriver.chrome.driver
+  path: /home/bkjeon/app/chromedriver/chromedriver
 
 logging:
   level:

@@ -1,5 +1,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.bkjeon.feature.common.log.CommonLogMapper">
+<mapper namespace="com.example.bkjeon.mapper.common.log.CommonLogMapper">
 
     <insert id="insertLog" parameterType="map">
         INSERT INTO tb_cm_his_l (

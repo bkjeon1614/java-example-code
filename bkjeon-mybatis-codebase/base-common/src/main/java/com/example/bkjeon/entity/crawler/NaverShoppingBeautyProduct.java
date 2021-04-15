@@ -1,4 +1,4 @@
-package com.example.bkjeon.feature.crawler;
+package com.example.bkjeon.entity.crawler;
 
 import lombok.*;
 

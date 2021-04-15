@@ -13,5 +13,5 @@
 
 ## App Start
 ```
-    java -jar -Dspring.profiles.active=local -Dfile.encoding=UTF-8 -Djasypt.encryptor.password=bkjeon!@ -Xms256M -Xmx512M
+    java -jar base-api-0.0.0.jar --spring.profiles.active=dev -Dfile.encoding=UTF-8 -Djasypt.encryptor.password=bkjeon!@ -Xms256M -Xmx512M -XX:OnOutOfMemoryError=\"kill -9 %p\" -XX:+HeapDumpOnOutOfMemoryError
 ```
