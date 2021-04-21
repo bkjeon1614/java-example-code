@@ -13,6 +13,10 @@ dependencies {
     implementation 'io.springfox:springfox-swagger-ui:' + swaggerVersion
     implementation 'io.swagger:swagger-annotations:' + swaggerExceptionVersion
     implementation 'io.swagger:swagger-models:' + swaggerExceptionVersion
+
+    // cache
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.6'
 }
 
 test {

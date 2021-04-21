@@ -14,4 +14,8 @@ public class ThreadUtil {
         Thread.sleep(randomNum);
     }
 
+    public static void threadSleep(int second) throws InterruptedException {
+        Thread.sleep(second);
+    }
+
 }
