@@ -66,7 +66,7 @@ const LoginForm = (props: IProps) => {
           <Col span={24} style={{ textAlign: 'center' }}>
             <Button type="primary" htmlType="submit" className={styles.loginFormButton}>
               Log in
-            </Button>&nbsp; Or {/*<a href="/app/registration">register now!</a>*/}
+            </Button>&nbsp; Or <a href="/app/registration">register now!</a>
           </Col>
         </Row>
       </Form.Item>
