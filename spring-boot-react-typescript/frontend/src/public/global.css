@@ -1,0 +1,19 @@
+body {
+  background-color: #f0f2f5;
+}
+
+.global-class {
+  color: #fff;
+  background-color: #333;
+}
+
+.global-big-font {
+  font-size: 32px;
+}
+
+.text-ellipsis {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

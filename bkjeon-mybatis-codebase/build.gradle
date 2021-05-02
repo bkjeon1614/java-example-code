@@ -12,7 +12,6 @@ buildscript {
 }
 
 subprojects {
-
     apply plugin: 'java'
     apply plugin: 'eclipse'
     apply plugin: 'org.springframework.boot'
@@ -45,9 +44,13 @@ subprojects {
 
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+
+        // jasypt encrypt
+        compile group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'
 
         // logback
         implementation 'ch.qos.logback:logback-classic:' + logbackVersion
@@ -55,6 +58,12 @@ subprojects {
 
         // kafka
         compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
+
+        implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
+
+        // Excel
+        implementation 'org.apache.poi:poi:3.17'
+        implementation 'org.apache.poi:poi-ooxml:3.17'
     }
 }
 

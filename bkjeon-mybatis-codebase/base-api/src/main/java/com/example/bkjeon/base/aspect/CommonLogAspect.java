@@ -1,7 +1,7 @@
 package com.example.bkjeon.base.aspect;
 
-import com.example.bkjeon.feature.common.log.CommonLog;
-import com.example.bkjeon.feature.common.log.CommonLogMapper;
+import com.example.bkjeon.entity.common.log.CommonLog;
+import com.example.bkjeon.mapper.common.log.CommonLogMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -35,12 +35,10 @@ public class CommonLogAspect {
             // 로그 출력
             log.info("------------ CommonLogAspect Request Service Method: {}", signature.toShortString());
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error(
-                    "------------ CommonLogAspect outputCommonServiceLogging(Aspect) ERROR !! {}",
-                    e.getMessage()
-                );
-            }
+            log.error(
+                "------------ CommonLogAspect outputCommonServiceLogging(Aspect) ERROR !! {}",
+                e.getMessage()
+            );
         }
     }
 
@@ -84,9 +82,7 @@ public class CommonLogAspect {
                 commonLogMapper.insertLog(commonLog);
             }
         } catch (Throwable throwable) {
-            if (log.isErrorEnabled()) {
-                log.error("CommonLogAspect setCommonControllerLogging(Aspect) ERROR !! {}", throwable.getMessage());
-            }
+            log.error("CommonLogAspect setCommonControllerLogging(Aspect) ERROR !! {}", throwable.getMessage());
         }
 
         return result;

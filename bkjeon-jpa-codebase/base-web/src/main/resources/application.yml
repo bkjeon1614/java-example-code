@@ -12,6 +12,7 @@ spring:
   profiles: local
   jpa:
     show-sql: on
+    format_sql: true
     hibernate:
       ddl-auto: create-drop
   h2:
@@ -33,6 +34,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: on
+    format_sql: true
     hibernate:
       ddl-auto: update
 

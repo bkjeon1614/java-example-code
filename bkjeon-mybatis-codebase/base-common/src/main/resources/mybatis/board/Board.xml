@@ -1,7 +1,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.bkjeon.feature.board.BoardMapper">
+<mapper namespace="com.example.bkjeon.mapper.board.BoardMapper">
 
-    <resultMap id="boardResultMap" type="com.example.bkjeon.feature.board.Board">
+    <resultMap id="boardResultMap" type="com.example.bkjeon.entity.board.Board">
         <result property="boardNo" column="BOARD_NO"/>
         <result property="groupNo" column="GROUP_NO"/>
         <result property="sortSeq" column="SORT_SEQ"/>
@@ -59,12 +59,16 @@
         </if>
     </select>
 
+    <select id="selectBoardListCnt" resultType="int">
+        SELECT COUNT(*) FROM tb_board
+    </select>
+
     <select id="selectBoard" resultMap="boardResultMap" parameterType="map">
         <include refid="boardSelectFromSql" />
         WHERE BOARD_NO = ${boardNo}
     </select>
 
-    <insert id="insertBoard" parameterType="com.example.bkjeon.feature.board.Board">
+    <insert id="insertBoard" parameterType="com.example.bkjeon.entity.board.Board">
         <selectKey resultType="long" keyProperty="groupNo" order="BEFORE">
             SELECT IFNULL(MAX(GROUP_NO), 0) + 1
             FROM tb_board
@@ -73,7 +77,7 @@
         <include refid="boardInsertSql" />
     </insert>
 
-    <insert id="insertBoardReply" parameterType="com.example.bkjeon.feature.board.Board">
+    <insert id="insertBoardReply" parameterType="com.example.bkjeon.entity.board.Board">
         <include refid="boardInsertSql" />
     </insert>
 

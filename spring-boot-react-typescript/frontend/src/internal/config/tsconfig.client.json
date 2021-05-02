@@ -1,0 +1,13 @@
+{
+  "extends": "../../../tsconfig.base",
+  "compilerOptions": {
+    "target": "es5"
+  },
+  "include": [
+    "../../client.tsx",
+    "../../app/**/*",
+    "../../client/**/*",
+    "../../config/**/*",
+    "../../../common/**/*"
+  ]
+}

@@ -4,11 +4,12 @@ spring:
   batch:
     job:
       names: ${job.name:NONE}
-
+  main:
+    web-application-type: none
 
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
-  type-aliases-package: com.example.bkjeon.feature
+  type-aliases-package: com.example.bkjeon.mapper
   configuration:
     cacheEnabled: false
     useGeneratedKeys: true
@@ -23,10 +24,20 @@ mybatis:
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
-    username: test
-    password: test
+    url: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
+    username: root
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+chromedriver:
+  id: webdriver.chrome.driver
+  path: ./file/chromedriver.exe
+
+logging:
+  level:
+    org:
+      springframework:
+        batch: DEBUG
 
 server:
   port: 9091
@@ -37,10 +48,20 @@ server:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
-    username: test
-    password: test
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
+    username: bkjeon
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+chromedriver:
+  id: webdriver.chrome.driver
+  path: /home/bkjeon/app/chromedriver/chromedriver
+
+logging:
+  level:
+    org:
+      springframework:
+        batch: INFO
 
 server:
   port: 9091
@@ -51,10 +72,20 @@ server:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
-    username: test
-    password: test
+    url: jdbc:mysql://127.0.0.1:3306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
+    username: bkjeon
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+chromedriver:
+  id: webdriver.chrome.driver
+  path: /home/bkjeon/app/chromedriver/chromedriver
+
+logging:
+  level:
+    org:
+      springframework:
+        batch: INFO
 
 server:
   port: 9091

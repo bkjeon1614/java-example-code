@@ -32,3 +32,6 @@ out/
 
 base-api/build/**
 base-common/build/**
+
+### Custom ###
+logs/**

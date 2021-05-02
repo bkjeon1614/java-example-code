@@ -1,7 +1,7 @@
 package com.example.bkjeon.base.config.auth;
 
-import com.example.bkjeon.base.domain.user.Role;
-import com.example.bkjeon.base.domain.user.User;
+import com.example.bkjeon.base.domain.user.WebRole;
+import com.example.bkjeon.base.domain.user.WebUser;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -71,12 +71,12 @@ public class OAuthAttributes {
                 .build();
     }
 
-    public User toEntity() {
-        return User.builder()
+    public WebUser toEntity() {
+        return WebUser.builder()
                 .name(name)
                 .email(email)
                 .picture(picture)
-                .role(Role.GUEST)
+                .role(WebRole.GUEST)
                 .build();
     }
 

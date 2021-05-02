@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.kafka;
 
-import com.example.bkjeon.common.model.ApiResponseMessage;
+import com.example.bkjeon.model.ApiResponseMessage;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

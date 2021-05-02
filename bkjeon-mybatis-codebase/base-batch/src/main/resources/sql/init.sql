@@ -100,3 +100,45 @@ CREATE TABLE BATCH_JOB_SEQ (
 ) ENGINE=InnoDB;
 
 INSERT INTO BATCH_JOB_SEQ (ID, UNIQUE_KEY) select * from (select 0 as ID, '0' as UNIQUE_KEY) as tmp where not exists(select * from BATCH_JOB_SEQ);
+
+
+
+-- Add New
+CREATE TABLE `nv_data_click_rate` (
+  `log_ymd` varchar(15) NOT NULL,
+  `cat_id` varchar(15) NOT NULL,
+  `period` varchar(15) NOT NULL,
+  `click_rate` varchar(15) NOT NULL,
+  `sys_reg_dt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '시스템 등록일자',
+  `sys_mod_dt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '시스템 수정일자',
+  PRIMARY KEY (`log_ymd`,`cat_id`,`period`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버데이터랩 클릭추이';
+
+CREATE TABLE `nv_beauty_prod_rank` (
+  `log_ymd` varchar(8) NOT NULL,
+  `prod_id` varchar(20) NOT NULL,
+  `prod_nm` varchar(100) DEFAULT NULL,
+  `cat_id` varchar(15) NOT NULL,
+  `prod_rank` int(10) DEFAULT NULL,
+  `sys_reg_dt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '시스템 등록일자',
+  `sys_mod_dt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '시스템 수정일자',
+  PRIMARY KEY (`log_ymd`,`cat_id`,`prod_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버 뷰티윈도우 상품랭킹';
+
+CREATE TABLE `nv_best_prod_rank` (
+  `log_ymd` varchar(8) NOT NULL,
+  `prod_id` varchar(20) NOT NULL,
+  `prod_nm` varchar(100) DEFAULT NULL,
+  `cat_id` varchar(15) NOT NULL,
+  `prod_rank` int(10) DEFAULT NULL,
+  `brd_nm` varchar(100) DEFAULT NULL,
+  `prod_reg_ymd` varchar(8) DEFAULT NULL,
+  `zzim_cnt` int(10) DEFAULT NULL,
+  `review_score` double DEFAULT NULL,
+  `seller_cnt` int(10) DEFAULT NULL,
+  `shipping_price` int(10) DEFAULT NULL,
+  `prod_price` int(10) DEFAULT NULL,
+  `sys_reg_dt` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '시스템 등록일자',
+  `sys_mod_dt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '시스템 수정일자',
+  PRIMARY KEY (`log_ymd`,`cat_id`,`prod_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='[트랜드] 네이버 베스트100 상품랭킹';

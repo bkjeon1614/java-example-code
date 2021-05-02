@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.data;
 
-import com.example.bkjeon.feature.data.stream.StreamUser;
+import com.example.bkjeon.entity.data.stream.StreamUser;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,11 +9,28 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("v1/data/stream")
 public class StreamController {
+
+    @ApiOperation("List를 HashMap형태로 변경")
+    @GetMapping("listToHashMap")
+    public Integer getListToHashMap() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("C", 30),
+            new StreamUser("전봉근", 20),
+            new StreamUser("전봉근1", 10),
+            new StreamUser("전봉근2", 40),
+            new StreamUser("E", 50)
+        );
+        Map<String, Integer> streamUserMap = streamUserList
+                .stream()
+                .collect(Collectors.toMap(StreamUser::getName, StreamUser::getAge));
+        return streamUserMap.get("전봉근");
+    }
 
     @ApiOperation("filter 후 Ascending 정렬로 1개의 데이터만 추출")
     @GetMapping("selectOneOrderAsc")

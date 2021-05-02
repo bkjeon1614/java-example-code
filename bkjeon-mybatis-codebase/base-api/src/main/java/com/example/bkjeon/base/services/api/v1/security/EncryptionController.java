@@ -46,13 +46,9 @@ public class EncryptionController {
             // 암호화, 복호화
             String encrypt = pbeEnc.encrypt("wjsqhdrms");
             String decrypt = pbeEnc.decrypt(encrypt);
-            if (log.isInfoEnabled()) {
-                log.info("encrypt: {}, decrypt: {}", encrypt, decrypt);
-            }
+            log.info("encrypt: {}, decrypt: {}", encrypt, decrypt);
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("getJasyptEncryptProperties ERROR {}", e.getMessage());
-            }
+            log.error("getJasyptEncryptProperties ERROR {}", e.getMessage());
         }
     }
 }

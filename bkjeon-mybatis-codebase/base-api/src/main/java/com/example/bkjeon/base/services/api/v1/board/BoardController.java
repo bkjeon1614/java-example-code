@@ -1,17 +1,17 @@
 package com.example.bkjeon.base.services.api.v1.board;
 
-import com.example.bkjeon.base.services.api.v1.board.dto.BoardRequestDTO;
-import com.example.bkjeon.common.enums.ResponseResult;
-import com.example.bkjeon.common.model.ApiResponseMessage;
+import com.example.bkjeon.dto.board.BoardRequestDTO;
+import com.example.bkjeon.enums.ResponseResult;
+import com.example.bkjeon.model.ApiResponseMessage;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("v1/boards")
 public class BoardController {
 

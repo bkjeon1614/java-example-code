@@ -1,10 +1,13 @@
 package com.example.bkjeon.base.services.api.v1.kafka;
 
-import com.example.bkjeon.common.enums.ResponseResult;
-import com.example.bkjeon.common.model.ApiResponseMessage;
-import com.example.bkjeon.feature.kafka.KafkaProducerCallBack;
+import com.example.bkjeon.entity.kafka.KafkaProducerCallBack;
+import com.example.bkjeon.enums.ResponseResult;
+import com.example.bkjeon.model.ApiResponseMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.*;
+import org.apache.kafka.clients.consumer.CommitFailedException;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -42,12 +45,10 @@ public class KafkaProducerService {
             // 에러가 없으면 메세지가 기록된 offset을 알 수 있는 RecoardMetadata를 얻을 수 있다.
             log.info("Partition: %d, Offset: %d", metadata.partition(), metadata.offset());
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("producerSendMessageSync ERROR {}", e.getMessage());
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage(e.getMessage());
-                return result;
-            }
+            log.error("producerSendMessageSync ERROR {}", e.getMessage());
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage(e.getMessage());
+            return result;
         } finally {
             producer.close();
         }
@@ -74,12 +75,10 @@ public class KafkaProducerService {
                 new KafkaProducerCallBack()
             );
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("producerSendMessageAsync ERROR {}", e.getMessage());
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage(e.getMessage());
-                return result;
-            }
+            log.error("producerSendMessageAsync ERROR {}", e.getMessage());
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage(e.getMessage());
+            return result;
         } finally {
             producer.close();
         }
@@ -123,12 +122,10 @@ public class KafkaProducerService {
                 }
             }
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("producerSendKeyMessage ERROR {}", e.getMessage());
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage(e.getMessage());
-                return result;
-            }
+            log.error("producerSendKeyMessage ERROR {}", e.getMessage());
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage(e.getMessage());
+            return result;
         } finally {
             producer.close();
         }
@@ -163,21 +160,16 @@ public class KafkaProducerService {
                     // 만약 데이터베이스에 저장하는 내용을 추가할 경우 consumer.commitSync(); 위에 명시 즉, 저장 후 수동커밋
                     consumer.commitSync();
                 } catch (CommitFailedException e) {
-                    if (log.isErrorEnabled()) {
-                        log.error("consumerSendMessageManualCommit CommitFailedException ERROR {}", e);
-                        result.setResult(ResponseResult.FAIL);
-                        result.setMessage(e.getMessage());
-                        return result;
-                    }
+                    log.error("consumerSendMessageManualCommit CommitFailedException ERROR {}", e);
+                    result.setResult(ResponseResult.FAIL);
+                    result.setMessage(e.getMessage());
+                    return result;
                 }
             }
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("consumerSendMessageManualCommit Exception ERROR {}", e.getMessage());
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage(e.getMessage());
-                return result;
-            }
+            log.error("consumerSendMessageManualCommit Exception ERROR {}", e.getMessage());
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage(e.getMessage());
         } finally {
             consumer.close();
         }
@@ -223,21 +215,16 @@ public class KafkaProducerService {
                 try {
                     consumer.commitSync();
                 } catch (CommitFailedException e) {
-                    if (log.isErrorEnabled()) {
-                        log.error("consumerSendMessageManualCommit CommitFailedException ERROR {}", e);
-                        result.setResult(ResponseResult.FAIL);
-                        result.setMessage(e.getMessage());
-                        return result;
-                    }
+                    log.error("consumerSendMessageManualCommit CommitFailedException ERROR {}", e);
+                    result.setResult(ResponseResult.FAIL);
+                    result.setMessage(e.getMessage());
+                    return result;
                 }
             }
         } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.error("getSpecificPartitionMessage Exception ERROR {}", e.getMessage());
-                result.setResult(ResponseResult.FAIL);
-                result.setMessage(e.getMessage());
-                return result;
-            }
+            log.error("getSpecificPartitionMessage Exception ERROR {}", e.getMessage());
+            result.setResult(ResponseResult.FAIL);
+            result.setMessage(e.getMessage());
         } finally {
             consumer.close();
         }

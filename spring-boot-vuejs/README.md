@@ -1,9 +1,9 @@
-Spring Boot + Vuejs + Gradle (Frontend and Backend Combine)
+Spring Boot + Gradle + Vuejs
 =========
 
 https://bkjeon1614.tistory.com/39
 
-[![springbootvuejsimg](https://t1.daumcdn.net/cfile/tistory/996A9C3B5BB1A77516)]()
+![vuejs.PNG](./docs/img/vuejs.PNG)
 
 ## Development Environment 
 * IDE : IntelliJ IDEA Ultimate

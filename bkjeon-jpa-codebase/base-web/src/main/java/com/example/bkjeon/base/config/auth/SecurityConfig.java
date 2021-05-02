@@ -1,11 +1,10 @@
 package com.example.bkjeon.base.config.auth;
 
-import com.example.bkjeon.base.domain.user.Role;
+import com.example.bkjeon.base.domain.user.WebRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.client.userinfo.CustomUserTypesOAuth2UserService;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -28,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/h2-console/**",
                         "/profile"
                     ).permitAll()
-                    .antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                    .antMatchers("/api/v1/**").hasRole(WebRole.USER.name())
                     .anyRequest().authenticated()
                 .and()
                     .logout()
