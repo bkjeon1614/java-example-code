@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.services.api.v1.board.dto;
+package com.example.bkjeon.dto.board;
 
 import com.example.bkjeon.entity.board.Board;
 import com.fasterxml.jackson.annotation.JsonFormat;

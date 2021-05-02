@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.services.api.v1.validation.dto;
+package com.example.bkjeon.dto.validation;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.board;
 
-import com.example.bkjeon.base.services.api.v1.board.dto.BoardRequestDTO;
+import com.example.bkjeon.dto.board.BoardRequestDTO;
 import com.example.bkjeon.enums.ResponseResult;
 import com.example.bkjeon.model.ApiResponseMessage;
 import io.swagger.annotations.ApiOperation;
