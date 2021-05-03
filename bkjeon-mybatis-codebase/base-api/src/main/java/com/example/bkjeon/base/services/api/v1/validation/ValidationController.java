@@ -1,7 +1,7 @@
 package com.example.bkjeon.base.services.api.v1.validation;
 
 import com.example.bkjeon.dto.validation.PostValidDTO;
-import com.example.bkjeon.dto.validation.PostValidator;
+import com.example.bkjeon.base.validation.PostValidator;
 import com.example.bkjeon.enums.ResponseResult;
 import com.example.bkjeon.model.ApiResponseMessage;
 import com.example.bkjeon.util.validation.ValidationUtil;

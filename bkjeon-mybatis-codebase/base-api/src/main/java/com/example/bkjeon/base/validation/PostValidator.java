@@ -1,5 +1,6 @@
-package com.example.bkjeon.dto.validation;
+package com.example.bkjeon.base.validation;
 
+import com.example.bkjeon.dto.validation.PostValidDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
