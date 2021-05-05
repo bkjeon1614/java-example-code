@@ -18,7 +18,6 @@ public class AnnotationController {
     @GetMapping("examples")
     public void getCallMethod() throws InterruptedException {
         ThreadUtil.threadSleep(5000);
-        // 082840000
     }
 
 }
