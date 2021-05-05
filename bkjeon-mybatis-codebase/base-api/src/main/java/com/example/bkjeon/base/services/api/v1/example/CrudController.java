@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.services.api.v1.crud;
+package com.example.bkjeon.base.services.api.v1.example;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
