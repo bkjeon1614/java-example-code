@@ -1,6 +1,7 @@
 package com.example.bkjeon.base.services.api.v1.validation;
 
 import com.example.bkjeon.dto.validation.PostEnumAssertTrueValidDTO;
+import com.example.bkjeon.dto.validation.PostEnumCustomValidDTO;
 import com.example.bkjeon.dto.validation.PostValidDTO;
 import com.example.bkjeon.base.validation.PostValidator;
 import com.example.bkjeon.enums.ResponseResult;
@@ -51,18 +52,18 @@ public class ValidationController {
     }
 
     @ApiOperation("POST 밸리데이션 체크(Enum Type 체크 포함 -> @AssertTrue 활용)")
-    @PostMapping("postEnumValidCheck")
-    public ApiResponseMessage postEnumValidCheck(
+    @PostMapping("postEnumAssertTrueValidCheck")
+    public ApiResponseMessage postEnumAssertTrueValidCheck(
         @RequestBody @Valid final PostEnumAssertTrueValidDTO postEnumAssertTrueValidDTO,
         BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            List<ObjectError> list = bindingResult.getAllErrors();
-            for (ObjectError e: list) {
+            List<ObjectError> errorListor = bindingResult.getAllErrors();
+            for (ObjectError e: errorListor) {
                 return new ApiResponseMessage(
                     ResponseResult.FAIL,
                     e.getDefaultMessage(),
-                    null
+                    postEnumAssertTrueValidDTO
                 );
             }
         }
@@ -74,5 +75,28 @@ public class ValidationController {
         );
     }
 
+    @ApiOperation("POST 밸리데이션 체크(Enum Type 체크 포함 -> EnumType 관련 Annotation 및 Interface 활용)")
+    @PostMapping("postEnumCustomValidCheck")
+    public ApiResponseMessage postEnumCustomValidCheck(
+        @RequestBody @Valid final PostEnumCustomValidDTO postEnumCustomValidDTO,
+        BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> list = bindingResult.getAllErrors();
+            for (ObjectError e: list) {
+                return new ApiResponseMessage(
+                    ResponseResult.FAIL,
+                    e.getDefaultMessage(),
+                    postEnumCustomValidDTO
+                );
+            }
+        }
+
+        return new ApiResponseMessage(
+            ResponseResult.SUCCESS,
+            "postEnumCustomValidDTO 객체 검증 성공",
+            postEnumCustomValidDTO
+        );
+    }
 
 }
