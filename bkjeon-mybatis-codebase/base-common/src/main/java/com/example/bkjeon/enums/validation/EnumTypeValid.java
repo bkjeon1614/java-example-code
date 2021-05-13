@@ -11,8 +11,10 @@ import java.lang.annotation.*;
 public @interface EnumTypeValid {
 
     String message() default "invalid parameter!!";
-    Class<?>[] groups() default {};
     Class<? extends EnumTypeValueInterface> target();
+
+    // 하기 groups, payload 를 추가하지 않으면 javax.validation.ConstraintDefinitionException: HV000074 오류 발생
+    Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 
 }
