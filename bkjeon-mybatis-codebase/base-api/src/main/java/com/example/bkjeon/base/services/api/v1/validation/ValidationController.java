@@ -1,5 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.validation;
 
+import com.example.bkjeon.dto.validation.PostEnumAssertTrueValidDTO;
 import com.example.bkjeon.dto.validation.PostValidDTO;
 import com.example.bkjeon.base.validation.PostValidator;
 import com.example.bkjeon.enums.ResponseResult;
@@ -8,12 +9,14 @@ import com.example.bkjeon.util.validation.ValidationUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "v1/validation", produces = "application/json; charset=utf8")
@@ -46,5 +49,30 @@ public class ValidationController {
             postValidDTO
         );
     }
+
+    @ApiOperation("POST 밸리데이션 체크(Enum Type 체크 포함 -> @AssertTrue 활용)")
+    @PostMapping("postEnumValidCheck")
+    public ApiResponseMessage postEnumValidCheck(
+        @RequestBody @Valid final PostEnumAssertTrueValidDTO postEnumAssertTrueValidDTO,
+        BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> list = bindingResult.getAllErrors();
+            for (ObjectError e: list) {
+                return new ApiResponseMessage(
+                    ResponseResult.FAIL,
+                    e.getDefaultMessage(),
+                    null
+                );
+            }
+        }
+
+        return new ApiResponseMessage(
+            ResponseResult.SUCCESS,
+            "postEnumValidDTO 객체 검증 성공",
+            postEnumAssertTrueValidDTO
+        );
+    }
+
 
 }
