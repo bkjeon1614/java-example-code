@@ -13,19 +13,19 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class SelectLogAspect {
 
-    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.crud.CrudService.getCallMethod(..))")
+    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.example.CrudService.getCallMethod(..))")
     public void getCallMethod(){}
 
-    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.crud.CrudService.setCallMethod(..))")
+    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.example.CrudService.setCallMethod(..))")
     public void setCallMethod(){}
 
-    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.crud.CrudService.putCallMethod(..))")
+    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.example.CrudService.putCallMethod(..))")
     public void putCallMethod(){}
 
-    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.crud.CrudService.patchCallMethod(..))")
+    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.example.CrudService.patchCallMethod(..))")
     public void patchCallMethod(){}
 
-    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.crud.CrudService.delCallMethod(..))")
+    @Pointcut("execution(* com.example.bkjeon.base.services.api.v1.example.CrudService.delCallMethod(..))")
     public void delCallMethod(){}
 
     @Around("getCallMethod() || setCallMethod() || putCallMethod() || patchCallMethod() || delCallMethod()")

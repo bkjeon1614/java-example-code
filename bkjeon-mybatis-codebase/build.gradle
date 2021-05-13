@@ -42,12 +42,22 @@ subprojects {
     // dependencies const
     def logbackVersion = '1.2.3'
 
+    // const
+    def swaggerVersion = '2.9.2'
+    def swaggerExceptionVersion = '1.5.21'
+
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
+
+        // swagger
+        implementation 'io.springfox:springfox-swagger2:' + swaggerVersion
+        implementation 'io.springfox:springfox-swagger-ui:' + swaggerVersion
+        implementation 'io.swagger:swagger-annotations:' + swaggerExceptionVersion
+        implementation 'io.swagger:swagger-models:' + swaggerExceptionVersion
 
         // jasypt encrypt
         compile group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'
