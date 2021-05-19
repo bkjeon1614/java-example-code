@@ -35,6 +35,11 @@ spring:
 kafka:
   brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092
 
+elasticsearch:
+  hosts: 10.65.40.183:9200
+  username: elastic
+  password: elastic
+
 server:
   port: 9090
 
@@ -50,6 +55,11 @@ spring:
 
 kafka:
   brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092
+
+elasticsearch:
+  hosts: 127.0.0.1:9200
+  username: elastic
+  password: elastic
 
 server:
   port: 9090
@@ -67,6 +77,11 @@ spring:
 
 kafka:
   brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092
+
+elasticsearch:
+  hosts: 192.168.0.203:9200,192.168.0.204:9200
+  username: elastic
+  password: elastic
 
 server:
   port: 9090

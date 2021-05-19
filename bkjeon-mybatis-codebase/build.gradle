@@ -80,6 +80,10 @@ subprojects {
 
         // DB Log
         implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+        // elasticsearch
+        implementation group: 'org.elasticsearch', name: 'elasticsearch', version: '7.1.1'
+        implementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: '7.1.1'
     }
 }
 

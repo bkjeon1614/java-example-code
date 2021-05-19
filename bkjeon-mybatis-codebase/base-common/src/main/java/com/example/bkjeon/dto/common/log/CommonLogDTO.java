@@ -1,4 +1,4 @@
-package com.example.bkjeon.entity.common.log;
+package com.example.bkjeon.dto.common.log;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
