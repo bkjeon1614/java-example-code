@@ -65,7 +65,9 @@ public class CommonLogAspect {
                 Object[] args = proceedingJoinPoint.getArgs();
                 StringBuffer sb = new StringBuffer();
                 for (int i=0; i < args.length; i++) {
-                    sb.append(args[i].toString());
+                    if (args[i] != null) {
+                        sb.append(args[i].toString());
+                    }
                 }
 
                 CommonLog commonLog = CommonLog.builder()
