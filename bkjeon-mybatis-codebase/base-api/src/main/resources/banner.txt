@@ -10,7 +10,7 @@ $$$$$$$/  $$/   $$/__   $$ | $$$$$$$/  $$$$$$/  $$/   $$/
                   /  \__$$ |
                   $$    $$/
                    $$$$$$/
-${spring-boot.formatted-version}                   
+${AnsiColor.BRIGHT_GREEN}:: Spring Boot ::${AnsiColor.DEFAULT}${spring-boot.formatted-version}
 
 
 
