@@ -1,4 +1,4 @@
-package com.example.bkjeon.mybatis;
+package com.example.bkjeon.config.mybatis;
 
 import javax.sql.DataSource;
 import lombok.Getter;

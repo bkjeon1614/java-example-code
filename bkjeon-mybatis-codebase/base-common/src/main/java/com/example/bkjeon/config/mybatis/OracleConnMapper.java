@@ -1,4 +1,4 @@
-package com.example.bkjeon.mybatis;
+package com.example.bkjeon.config.mybatis;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

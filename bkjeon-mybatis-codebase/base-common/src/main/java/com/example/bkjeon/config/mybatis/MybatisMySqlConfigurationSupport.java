@@ -1,4 +1,4 @@
-package com.example.bkjeon.mybatis;
+package com.example.bkjeon.config.mybatis;
 
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
@@ -12,16 +12,16 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class MybatisOracleConfigurationSupport extends MybatisConfigurationSupport {
+public class MybatisMySqlConfigurationSupport extends MybatisConfigurationSupport {
 
     private final MybatisProperties mybatisProperties;
     private final Interceptor[] interceptors;
     private final ResourceLoader resourceLoader;
     private final DatabaseIdProvider databaseIdProvider;
 
-    public MybatisOracleConfigurationSupport(MybatisProperties mybatisProperties, ObjectProvider<Interceptor[]> interceptorsProvider, ResourceLoader resourceLoader, ObjectProvider<DatabaseIdProvider> databaseIdProvider) {
+    public MybatisMySqlConfigurationSupport(MybatisProperties mybatisProperties, ObjectProvider<Interceptor[]> interceptorsProvider, ResourceLoader resourceLoader, ObjectProvider<DatabaseIdProvider> databaseIdProvider) {
         super(mybatisProperties, interceptorsProvider, resourceLoader, databaseIdProvider);
-        log.info("=============================== Oracle Config Support ===============================");
+        log.info("=============================== MySQL Config Support ===============================");
         this.mybatisProperties = super.getMybatisProperties();
         this.interceptors = super.getInterceptors();
         this.resourceLoader = super.getResourceLoader();
