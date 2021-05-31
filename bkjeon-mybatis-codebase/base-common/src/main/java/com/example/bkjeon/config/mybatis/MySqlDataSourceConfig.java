@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Primary;
 @Primary
 @Configuration
 @MapperScan(
-    value = "kr.co.oliveyoung.pda.mapper",
+    value = "com.example.bkjeon.mapper",
     annotationClass = MySqlConnMapper.class,
     sqlSessionFactoryRef = "mySqlSessionFactory"
 )

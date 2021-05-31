@@ -33,6 +33,24 @@
         </root>
     </springProfile>
 
+    <springProfile name="local_dev">
+        <logger name="com.example.bkjeon" level="debug"/>
+        <logger name="org.springframework.web" level="debug"/>
+        <logger name="org.springframework.data" level="debug"/>
+
+        <logger name="jdbc" level="OFF"/>
+        <logger name="jdbc.connection" level="OFF"/>
+        <logger name="jdbc.sqlonly" level="DEBUG"/>
+        <logger name="jdbc.sqltiming" level="DEBUG"/>
+        <logger name="jdbc.audit" level="OFF"/>
+        <logger name="jdbc.resultset" level="OFF"/>
+        <logger name="jdbc.resultsettable" level="OFF"/>
+
+        <root level="info">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
     <springProfile name="dev">
         <logger name="com.example.bkjeon" level="debug"/>
         <logger name="org.springframework.web" level="debug"/>
