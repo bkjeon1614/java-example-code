@@ -1,7 +1,9 @@
 package com.example.bkjeon;
 
+import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +18,7 @@ import javax.annotation.PostConstruct;
 @EnableBatchProcessing
 @MapperScan(basePackages = {"com.example.bkjeon.mapper"})
 @SpringBootApplication
-public class BatchApplication {
+public class BatchApplication extends DefaultBatchConfigurer {
 
     @Value("${spring.batch.job.names:NONE}")
     private String jobNames;
@@ -34,6 +36,11 @@ public class BatchApplication {
             // ex) --job.name=sampleJob, --job.name=sampleJob, sampleJob2
             throw new IllegalStateException("Job Name Empty !!");
         }
+    }
+
+    @Override
+    public void setDataSource(DataSource dataSource) {
+        super.setDataSource(dataSource);
     }
 
 }
