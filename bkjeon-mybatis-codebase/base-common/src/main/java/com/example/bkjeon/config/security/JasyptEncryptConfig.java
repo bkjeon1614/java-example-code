@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.config;
+package com.example.bkjeon.config.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
