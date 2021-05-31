@@ -17,6 +17,10 @@ jasypt:
   encryptor:
     bean: jasyptStringEncryptor
 
+server:
+  port: 9090
+  servlet:
+    context-path: /api
 
 # Local Env (Mysql DB)
 # H2 Console
@@ -40,9 +44,6 @@ elasticsearch:
   username: elastic
   password: elastic
 
-server:
-  port: 9090
-
 # Dev Env
 ---
 spring:
@@ -60,9 +61,6 @@ elasticsearch:
   hosts: 127.0.0.1:9200
   username: elastic
   password: elastic
-
-server:
-  port: 9090
 
 # Production Env
 ---
@@ -82,6 +80,3 @@ elasticsearch:
   hosts: 192.168.0.203:9200,192.168.0.204:9200
   username: elastic
   password: elastic
-
-server:
-  port: 9090
