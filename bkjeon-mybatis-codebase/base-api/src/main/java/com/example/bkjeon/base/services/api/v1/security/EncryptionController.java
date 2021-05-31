@@ -33,7 +33,7 @@ public class EncryptionController {
      *            bean: jasyptStringEncryptor
      *    ...
      * 6. ./config/jasyptEncryptConfig.java 생성
-     * 7. passwordKey 는 VM Option 에 넣어준다. ( -Djasypt.encryptor.passwordKey=bkjeon!@ )
+     * 7. passwordKey 는 VM Option 에 넣어준다. ( -Djasypt.encryptor.password=bkjeon!@ )
      */
     @ApiOperation("Jasypt를 사용한 properties 암호화")
     @GetMapping("jasyptEncrypt")
