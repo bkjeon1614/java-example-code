@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.4.1'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
+    apply plugin: "com.moowork.node"
 }
 
 group = 'com.bkjeon'
@@ -25,8 +26,51 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    classpath('com.moowork.gradle:gradle-node-plugin:1.3.1')
 }
 
 test {
     useJUnitPlatform()
+}
+
+// node environment
+def clientPath = projectDir.toString() + '/../frontend'
+def sourceDir = "${clientPath}/build/client"
+def targetDir = "src/main/resources/public"
+node {
+    println "CLIENT PROJECT PATH : ${clientPath}"
+    nodeModulesDir = file(clientPath)
+}
+
+task yarnBuild(type: YarnTask) {
+    group = 'Build'
+
+    if (System.getenv("NODE_ENV") != null && System.getenv("NODE_ENV").equals("test")) {
+        args = ['test-build:frontend']
+    } else {
+        args = ['build:frontend']
+    }
+}
+
+task deleteStatic() {
+    group = 'Build'
+    delete targetDir
+}
+
+// copy client /build to server /out
+task copyStatic(type: Copy) {
+    group = 'Build'
+    dependsOn deleteStatic
+    from sourceDir
+    into targetDir
+}
+
+// build with client
+task buildWithClient() {
+    group = 'Build'
+    yarnBuild.finalizedBy copyStatic
+    copyStatic.finalizedBy bootJar
+
+    dependsOn clean
+    dependsOn yarnBuild
 }
