@@ -46,9 +46,9 @@ task yarnBuild(type: YarnTask) {
     group = 'Build'
 
     if (System.getenv("NODE_ENV") != null && System.getenv("NODE_ENV").equals("test")) {
-        args = ['test-build:frontend']
+        args = ['test-build']
     } else {
-        args = ['build:frontend']
+        args = ['build']
     }
 }
 
