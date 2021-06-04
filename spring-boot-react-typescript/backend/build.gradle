@@ -34,7 +34,7 @@ test {
 }
 
 // node environment
-def clientPath = projectDir.toString() + '/../frontend'
+def clientPath = projectDir.toString() + '/../frontend_antd'
 def sourceDir = "${clientPath}/build/client"
 def targetDir = "src/main/resources/public"
 node {
@@ -42,7 +42,7 @@ node {
     nodeModulesDir = file(clientPath)
 }
 
-task yarnBuild(type: YarnTask) {
+task antdBuild(type: YarnTask) {
     group = 'Build'
 
     if (System.getenv("NODE_ENV") != null && System.getenv("NODE_ENV").equals("test")) {
