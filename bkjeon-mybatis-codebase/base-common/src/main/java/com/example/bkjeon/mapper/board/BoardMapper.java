@@ -1,10 +1,12 @@
 package com.example.bkjeon.mapper.board;
 
+import com.example.bkjeon.config.mybatis.MySqlConnMapper;
 import com.example.bkjeon.entity.board.Board;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@MySqlConnMapper
 public interface BoardMapper {
 
     void insertBoard(Board board);
