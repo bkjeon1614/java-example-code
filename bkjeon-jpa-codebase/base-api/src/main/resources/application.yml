@@ -20,13 +20,13 @@ spring:
   datasource:
     data: classpath:sql/data-h2.sql
   jpa:
-    show-sql: on
+    show-sql: true
     format_sql: true
     hibernate:
       ddl-auto: create-drop
   h2:
     console:
-      enabled: on # url: jdbc:h2:mem:testdb
+      enabled: true
 
 # Dev Env
 ---
@@ -39,7 +39,7 @@ spring:
     password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    show-sql: on
+    show-sql: false
     format_sql: true
     hibernate:
       ddl-auto: update
