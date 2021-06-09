@@ -3,7 +3,7 @@ spring:
     active: local
 
 server:
-  port: 8080
+  port: 9090
 
 jwt:
   header: Authorization
@@ -24,9 +24,42 @@ spring:
     format_sql: true
     hibernate:
       ddl-auto: create-drop
+  output:
+    ansi:
+      enabled: always
   h2:
     console:
       enabled: true
+
+logging:
+  level:
+    org.springframework.web.client: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: trace
+
+# Dev Env (Mysql DB)
+---
+
+spring:
+  profiles: local-db
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/bkjeon_jpa?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: bkjeon
+    password: wjsqhdrms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    data: classpath:sql/data-h2.sql
+    initialization-mode: always
+  jpa:
+    show-sql: true
+    format_sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+logging:
+  level:
+    org.springframework.web.client: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: trace
 
 # Dev Env
 ---
@@ -34,7 +67,7 @@ spring:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://192.168.0.207:13306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -50,7 +83,7 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://192.168.0.207:13306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver

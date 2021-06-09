@@ -24,12 +24,21 @@
         </root>
     </springProfile>
 
-    <springProfile name="dev">
+    <springProfile name="local-db">
         <logger name="com.example.bkjeon" level="debug"/>
         <logger name="org.springframework.web" level="debug"/>
         <logger name="org.springframework.data" level="debug"/>
         <root level="info">
             <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <logger name="com.example.bkjeon" level="debug"/>
+        <logger name="org.springframework.web" level="debug"/>
+        <logger name="org.springframework.data" level="debug"/>
+        <root level="info">
+            <appender-ref ref="FILE"/>
         </root>
     </springProfile>
 
