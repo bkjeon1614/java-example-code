@@ -10,17 +10,43 @@ server:
 
 spring:
   profiles: local
+  datasource:
+    data: classpath:sql/data-h2.sql
   jpa:
-    show-sql: on
-    format_sql: true
     hibernate:
       ddl-auto: create-drop
   h2:
     console:
-      enabled: on # url: jdbc:h2:mem:testdb
+      enabled: true
   devtools:
     livereload:
-      enabled: on
+      enabled: true
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+# Dev Env (Mysql DB)
+---
+
+spring:
+  profiles: local-db
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/bkjeon_jpa?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: bkjeon
+    password: wjsqhdrms
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    data: classpath:sql/data-h2.sql
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
 
 # Dev Env
 ---
@@ -33,8 +59,6 @@ spring:
     password: wjsqhdrms
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    show-sql: on
-    format_sql: true
     hibernate:
       ddl-auto: update
 
