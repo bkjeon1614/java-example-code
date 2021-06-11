@@ -22,6 +22,10 @@ server:
   servlet:
     context-path: /api
 
+springdoc:
+  swagger-ui:
+    path: /api/swagger-ui.html
+
 # Local Env (Mysql DB)
 # H2 Console
 # - url: http://localhost:9090/h2-console
