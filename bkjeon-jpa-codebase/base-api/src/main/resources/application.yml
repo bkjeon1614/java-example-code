@@ -4,6 +4,8 @@ spring:
 
 server:
   port: 9090
+  servlet:
+    context-path: /api
 
 jwt:
   header: Authorization
@@ -11,6 +13,10 @@ jwt:
   # echo 'bkjeon-java-example-spring-boot-jpa-codebase-secret-bkjeon-java-example-spring-boot-jpa-codebase-secret' | base64
   secret: YmtqZW9uLWphdmEtZXhhbXBsZS1zcHJpbmctYm9vdC1qcGEtY29kZWJhc2Utc2VjcmV0LWJramVvbi1qYXZhLWV4YW1wbGUtc3ByaW5nLWJvb3QtanBhLWNvZGViYXNlLXNlY3JldA==
   token-validity-in-seconds: 86400
+
+springdoc:
+  swagger-ui:
+    path: /api/swagger-ui.html
 
 # Local Env (H2 DB)
 ---
