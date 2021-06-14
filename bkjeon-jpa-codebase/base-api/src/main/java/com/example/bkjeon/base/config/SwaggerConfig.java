@@ -19,14 +19,27 @@ import java.util.List;
 public class SwaggerConfig {
 
     @Bean
-    public Docket adminApi() {
+    public Docket adminApiV1() {
         return new Docket(DocumentationType.SWAGGER_2)
             .groupName("v1")
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.example.bkjeon.base"))
+            .apis(RequestHandlerSelectors.basePackage("com.example.bkjeon.base.api.v1"))
             .paths(PathSelectors.any())
             .build()
             .apiInfo(apiInfo("Code Base APIs V1(Latest)", "Code Base APIs..", "v1"))
+            .securityContexts(Arrays.asList(securityContext()))
+            .securitySchemes(Arrays.asList(apiKey()));
+    }
+
+    @Bean
+    public Docket adminApiV2() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .groupName("v2")
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.example.bkjeon.base.api.v2"))
+            .paths(PathSelectors.any())
+            .build()
+            .apiInfo(apiInfo("Code Base APIs V2(New)", "Code Base APIs..", "v2"))
             .securityContexts(Arrays.asList(securityContext()))
             .securitySchemes(Arrays.asList(apiKey()));
     }

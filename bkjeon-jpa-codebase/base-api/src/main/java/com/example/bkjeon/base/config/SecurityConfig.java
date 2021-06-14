@@ -1,9 +1,9 @@
 package com.example.bkjeon.base.config;
 
-import com.example.bkjeon.base.controller.security.jwt.JwtAccessDeniedHandler;
-import com.example.bkjeon.base.controller.security.jwt.JwtAuthenticationEntryPoint;
-import com.example.bkjeon.base.controller.security.jwt.JwtSecurityConfig;
-import com.example.bkjeon.base.controller.security.jwt.TokenProvider;
+import com.example.bkjeon.base.api.v1.controller.security.jwt.JwtAccessDeniedHandler;
+import com.example.bkjeon.base.api.v1.controller.security.jwt.JwtAuthenticationEntryPoint;
+import com.example.bkjeon.base.api.v1.controller.security.jwt.JwtSecurityConfig;
+import com.example.bkjeon.base.api.v1.controller.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()    // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정
             .antMatchers(
                 "/",
+                "/v1/example/**", // querydsl example 향후 제거 필요
                 "/v1/security/auth/login", // 로그인
                 "/v1/security/auth/signUp", // 회원가입
                 "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**",   // swagger
