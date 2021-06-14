@@ -13,10 +13,6 @@ mybatis:
     default-statement-timeout: 30
     map-underscore-to-camel-case: true
 
-jasypt:
-  encryptor:
-    bean: jasyptStringEncryptor
-
 server:
   port: 9090
   servlet:
