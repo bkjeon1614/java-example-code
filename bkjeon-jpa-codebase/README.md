@@ -36,10 +36,10 @@ bkjeon-jpa-codebase <br>
   - 코드상에서 각 클래스 generated의 Q로 시작되는 class를 static import 필요
 
 ## 5. jasypt key create
-- path: /oy-auth/file/jasypt-1.9.3
+- path: /{projectName}/file/jasypt-1.9.3
   ```
   // H2 DB Config Example
-  $ encrypt input="1234" password="dhfflqmdud1!" algorithm="PBEWITHMD5ANDDES"
+  $ encrypt input="1234" password="bkjeon!@" algorithm="PBEWITHMD5ANDDES"
   ```
 - OUTPUT
   [application.yml] 

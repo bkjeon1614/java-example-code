@@ -22,10 +22,14 @@ springdoc:
 ---
 
 spring:
-  profiles: local
+  profiles: local-h2
   datasource:
+    jdbcUrl: jdbc:h2:mem:testdb
+    username: sa
+    driverClassName: org.h2.Driver
     data: classpath:sql/data-h2.sql
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
   h2:
@@ -43,13 +47,14 @@ decorator:
 spring:
   profiles: local-db
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/bkjeon_jpa?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon_jpa?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     data: classpath:sql/data-h2.sql
     initialization-mode: always
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: create-drop
 
@@ -64,11 +69,12 @@ decorator:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: validate
 
@@ -78,10 +84,11 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: validate

@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.entity.example;
+package com.example.bkjeon.base.domain.example;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

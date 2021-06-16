@@ -11,11 +11,12 @@ spring:
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon_jpa?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: validate
 
@@ -33,11 +34,12 @@ server:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon_jpa?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: validate
 
@@ -50,11 +52,12 @@ server:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon_jpa?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: validate
 

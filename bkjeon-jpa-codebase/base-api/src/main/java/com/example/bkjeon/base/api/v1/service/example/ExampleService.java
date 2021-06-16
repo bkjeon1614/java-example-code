@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.api.v1.service.example;
 
-import com.example.bkjeon.base.entity.example.Board;
+import com.example.bkjeon.base.domain.example.Board;
 import com.example.bkjeon.base.repository.example.BoardQueryDslRepository;
 import com.example.bkjeon.base.repository.example.BoardRepository;
 import java.util.List;
