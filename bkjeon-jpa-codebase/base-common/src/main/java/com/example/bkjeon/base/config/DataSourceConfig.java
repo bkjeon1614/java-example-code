@@ -46,7 +46,7 @@ public class DataSourceConfig {
     public LocalContainerEntityManagerFactoryBean baseEntityManager() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(getDataSource());
-        em.setPackagesToScan(new String[] {"kr.co.oliveyoung.auth.domain"});
+        em.setPackagesToScan(new String[] {"com.example.bkjeon.base.domain"});
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

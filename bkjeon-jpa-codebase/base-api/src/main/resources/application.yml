@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: local-h2
 
 server:
   port: 9090
