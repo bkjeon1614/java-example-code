@@ -33,8 +33,7 @@ public class MySqlDataSourceConfig {
     }
 
     @Bean(name = "mySqlSessionFactory")
-    public SqlSessionFactory mySqlSessionFactory(
-            @Qualifier("mySqlDataSource") DataSource dataSource) throws Exception {
+    public SqlSessionFactory mySqlSessionFactory(@Qualifier("mySqlDataSource") DataSource dataSource) throws Exception {
         SqlSessionFactory factory = mybatisMySqlConfigurationSupport.build(dataSource);
 
         String aesKey = System.getProperty("mysql.aeskey");
