@@ -17,6 +17,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)  // @PreAuthorize 애노테이션을 메소드단위로 추가하기 위하여 적용
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] AUTH_EXCEPTION_LIST = {
+        "/",
+        "/v1/security/auth/login", // 로그인
+        "/v1/security/auth/signUp", // 회원가입
+        "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**",   // swagger
+        "/h2-console/**",
+        "/favicon.ico"
+    };
+
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
@@ -59,15 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
             .and()
             .authorizeRequests()    // HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정
-            .antMatchers(
-                "/",
-                "/v1/security/auth/login", // 로그인
-                "/v1/security/auth/signUp", // 회원가입
-                "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**",   // swagger
-                "/h2-console/**",
-                "/favicon.ico"
-            ).permitAll()  // v1/security/auth에 대한 요청은 인증없이 접근을 허용
-            .anyRequest().authenticated()  // 나머지 요청들은 모두 인증되어야 한다
+            .antMatchers(AUTH_EXCEPTION_LIST)
+            .permitAll()  // v1/security/auth에 대한 요청은 인증없이 접근을 허용
+            .anyRequest()
+            .authenticated()  // 나머지 요청들은 모두 인증되어야 한다
 
             // Custom JwtSecurityConfig Class Setting
             .and()
