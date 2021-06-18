@@ -15,7 +15,7 @@
         </rollingPolicy>
     </appender>
 
-    <springProfile name="local">
+    <springProfile name="local-h2">
         <logger name="com.example.bkjeon" level="debug"/>
         <logger name="org.springframework.web" level="debug"/>
         <logger name="org.springframework.data" level="debug"/>

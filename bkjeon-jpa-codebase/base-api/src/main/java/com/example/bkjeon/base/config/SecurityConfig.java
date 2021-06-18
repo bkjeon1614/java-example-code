@@ -1,9 +1,9 @@
 package com.example.bkjeon.base.config;
 
-import com.example.bkjeon.base.controller.security.jwt.JwtAccessDeniedHandler;
-import com.example.bkjeon.base.controller.security.jwt.JwtAuthenticationEntryPoint;
-import com.example.bkjeon.base.controller.security.jwt.JwtSecurityConfig;
-import com.example.bkjeon.base.controller.security.jwt.TokenProvider;
+import com.example.bkjeon.base.api.v1.controller.security.jwt.JwtAccessDeniedHandler;
+import com.example.bkjeon.base.api.v1.controller.security.jwt.JwtAuthenticationEntryPoint;
+import com.example.bkjeon.base.api.v1.controller.security.jwt.JwtSecurityConfig;
+import com.example.bkjeon.base.api.v1.controller.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

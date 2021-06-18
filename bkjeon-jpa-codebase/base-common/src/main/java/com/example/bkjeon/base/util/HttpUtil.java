@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+@SuppressWarnings("unchecked")
 @Slf4j
 public class HttpUtil {
 
