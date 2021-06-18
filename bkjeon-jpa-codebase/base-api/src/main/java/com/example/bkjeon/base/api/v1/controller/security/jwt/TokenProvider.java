@@ -1,21 +1,8 @@
 package com.example.bkjeon.base.api.v1.controller.security.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-<<<<<<< HEAD:bkjeon-jpa-codebase/base-api/src/main/java/com/example/bkjeon/base/controller/security/jwt/TokenProvider.java
-=======
-import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.stream.Collectors;
->>>>>>> f39e82a8e33a2c0def4d5adfd357ae01fac78423:bkjeon-jpa-codebase/base-api/src/main/java/com/example/bkjeon/base/api/v1/controller/security/jwt/TokenProvider.java
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
