@@ -20,7 +20,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "v1/validation", produces = "application/json; charset=utf8")
+@RequestMapping("v1/validation")
 @RequiredArgsConstructor
 public class ValidationController {
 
