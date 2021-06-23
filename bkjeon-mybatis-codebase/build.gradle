@@ -58,6 +58,7 @@ subprojects {
         implementation 'io.springfox:springfox-swagger-ui:' + swaggerVersion
         implementation 'io.swagger:swagger-annotations:' + swaggerExceptionVersion
         implementation 'io.swagger:swagger-models:' + swaggerExceptionVersion
+        implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.2'
 
         // jasypt encrypt
         compile group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'

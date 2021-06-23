@@ -30,6 +30,24 @@ bkjeon-jpa-codebase <br>
     $ git add .
     $ git commit
   ```
+- QueryDSL Compile
+  - auth-common/src/main/generated/** 에 생성됨
+  - 우측 gradle view -> auth-common -> Task -> other -> compileJava
+  - 코드상에서 각 클래스 generated의 Q로 시작되는 class를 static import 필요
 
-## 5. Description
+## 5. jasypt key create
+- path: /{projectName}/file/jasypt-1.9.3
+  ```
+  // H2 DB Config Example
+  $ encrypt input="1234" password="bkjeon!@" algorithm="PBEWITHMD5ANDDES"
+  ```
+- OUTPUT
+  [application.yml] 
+  ```
+  ...
+    password: ENC(wJW+IP8qtJmgn1JhOGgptw==)
+  ...
+  ```
+
+## 6. Description
 - 해당 프로젝트는(=Code Base) IntelliJ IDEA에서만 지원가능합니다.

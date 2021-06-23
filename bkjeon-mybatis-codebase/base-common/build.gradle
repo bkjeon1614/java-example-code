@@ -10,9 +10,12 @@ dependencies {
     runtime('com.h2database:h2')
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
-
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
     implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.6'
+
+    // mysql
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+    // oracle
+    implementation group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
 
     // Windows
     compile group: 'org.jodconverter', name: 'jodconverter-core', version: '4.0.0-RELEASE'

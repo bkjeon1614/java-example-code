@@ -5,22 +5,50 @@ spring:
 server:
   port: 9000
 
-# Local Env
+# Local Env (H2 DB)
 ---
 
 spring:
-  profiles: local
+  profiles: local-h2
+  datasource:
+    jdbcUrl: jdbc:h2:mem:testdb
+    username: sa
+    driverClassName: org.h2.Driver
+    data: classpath:sql/data-h2.sql
   jpa:
-    show-sql: on
-    format_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
   h2:
     console:
-      enabled: on # url: jdbc:h2:mem:testdb
-  devtools:
-    livereload:
-      enabled: on
+      enabled: true
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+# Dev Env (Mysql DB)
+---
+
+spring:
+  profiles: local-db
+  datasource:
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon_jpa?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: bkjeon
+    password: wjsqhdrms
+    driverClassName: com.mysql.cj.jdbc.Driver
+    data: classpath:sql/data-h2.sql
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: create-drop
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
 
 # Dev Env
 ---
@@ -28,15 +56,14 @@ spring:
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
-    show-sql: on
-    format_sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 
 # Production Env
 ---
@@ -44,10 +71,11 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://192.168.0.207:3306/test?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
     username: bkjeon
     password: wjsqhdrms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: validate

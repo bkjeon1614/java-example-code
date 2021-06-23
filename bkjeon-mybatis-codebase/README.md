@@ -28,5 +28,19 @@ bkjeon-mybatis-codebase <br>
     $ git commit
   ```
 
-## 5. Description
+## 5. jasypt key create
+- path: /oy-auth/file/jasypt-1.9.3
+  ```
+  // H2 DB Config Example
+  $ encrypt input="1234" password="dhfflqmdud1!" algorithm="PBEWITHMD5ANDDES"
+  ```
+- OUTPUT
+  [application.yml] 
+  ```
+  ...
+    password: ENC(wJW+IP8qtJmgn1JhOGgptw==)
+  ...
+  ```
+
+## 6. Description
 - 해당 프로젝트는(=Code Base) IntelliJ IDEA에서만 지원가능합니다.

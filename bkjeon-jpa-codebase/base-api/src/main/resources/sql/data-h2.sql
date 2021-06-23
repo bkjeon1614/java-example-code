@@ -10,3 +10,8 @@ INSERT INTO AUTHORITY (AUTHORITY_NAME) values ('ROLE_ADMIN');
 INSERT INTO USER_AUTHORITY (USER_ID, AUTHORITY_NAME) values (1, 'ROLE_USER');
 INSERT INTO USER_AUTHORITY (USER_ID, AUTHORITY_NAME) values (1, 'ROLE_ADMIN');
 INSERT INTO USER_AUTHORITY (USER_ID, AUTHORITY_NAME) values (2, 'ROLE_USER');
+
+INSERT INTO board (title, contents, author) values ('테스트11111', '테스트2의 본문111111', 'bkjeon');
+INSERT INTO board (title, contents, author) values ('테스트2', '테스트2의 본문', 'bkjeon');
+INSERT INTO board (title, contents, author) values ('테스트2', '테스트2의 본문', 'bkjeon1');
+INSERT INTO board (title, contents, author) values ('테스트2', '테스트2의 본문', 'bkjeon2');

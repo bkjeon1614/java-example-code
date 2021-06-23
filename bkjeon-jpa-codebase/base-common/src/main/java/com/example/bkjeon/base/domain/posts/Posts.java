@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.domain.posts;
 
-import com.example.bkjeon.base.domain.BaseTimeEntity;
+import com.example.bkjeon.base.entity.common.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
