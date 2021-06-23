@@ -27,7 +27,7 @@
   "dependencies": {
     "@types/react-color": "^2.13.5",
     "antd": "3.24.2",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "classnames": "^2.2.5",
     "date-fns-tz": "^1.0.7",
     "event-source-polyfill": "^0.0.12",
