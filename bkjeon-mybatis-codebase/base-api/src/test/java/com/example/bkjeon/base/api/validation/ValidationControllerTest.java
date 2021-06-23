@@ -1,12 +1,12 @@
-package com.example.bkjeon.base.board.api.validation;
+package com.example.bkjeon.base.api.validation;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.bkjeon.dto.validation.PostEnumCustomValidDTO;
+import com.example.bkjeon.dto.validation.PostValidDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.co.oliveyoung.pda.dto.validation.PostEnumCustomValidDTO;
-import kr.co.oliveyoung.pda.dto.validation.PostValidDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

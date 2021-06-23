@@ -1,9 +1,7 @@
-package com.example.bkjeon.base.board.api.board;
+package com.example.bkjeon.base.api.board;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
+import com.example.bkjeon.dto.board.BoardRequestDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.co.oliveyoung.pda.dto.board.BoardRequestDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
