@@ -132,7 +132,7 @@
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",
     "prettier": "1.10.2",
-    "react-dev-utils": "^5.0.1",
+    "react-dev-utils": "^11.0.4",
     "react-error-overlay": "^4.0.0",
     "react-hot-loader": "^4.0.0-beta.16",
     "react-syntax-highlighter": "^7.0.2",
