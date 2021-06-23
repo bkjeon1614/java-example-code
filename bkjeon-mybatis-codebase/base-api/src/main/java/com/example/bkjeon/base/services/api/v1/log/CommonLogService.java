@@ -3,9 +3,11 @@ package com.example.bkjeon.base.services.api.v1.log;
 import com.example.bkjeon.dto.common.log.CommonESLogSaveRequestDTO;
 import com.example.bkjeon.enums.ResponseResult;
 import com.example.bkjeon.enums.elastic.CreateIndexType;
-import com.example.bkjeon.model.ApiResponseMessage;
+import com.example.bkjeon.model.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -20,12 +22,8 @@ public class CommonLogService {
      * @param commonESLogSaveRequestDTO
      * @return
      */
-    public ApiResponseMessage setESLog(CommonESLogSaveRequestDTO commonESLogSaveRequestDTO) {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "로그 저장 완료",
-            null
-        );
+    public ResponseEntity setESLog(CommonESLogSaveRequestDTO commonESLogSaveRequestDTO) {
+        ResponseEntity responseEntity;
 
         try {
             // 인덱스 존재 유무 체크(origin)
@@ -40,14 +38,29 @@ public class CommonLogService {
 
             // 로그 데이터 저장
             commonLogESService.insertCommonLogData(commonESLogSaveRequestDTO);
-            result.setParams(commonESLogSaveRequestDTO);
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.OK.value(),
+                    ResponseResult.SUCCESS.getText(),
+                    commonESLogSaveRequestDTO,
+                    null
+                ),
+                HttpStatus.OK
+            );
         } catch (Exception e) {
             log.error("setLog Error !!: {}", e);
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage("로그 저장에 실패하였습니다.");
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage(),
+                    commonESLogSaveRequestDTO,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
         }
 
-        return result;
+        return responseEntity;
     }
 
 }

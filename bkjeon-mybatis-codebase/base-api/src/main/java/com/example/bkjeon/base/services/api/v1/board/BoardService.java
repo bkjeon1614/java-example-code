@@ -5,14 +5,15 @@ import com.example.bkjeon.dto.board.BoardResponseDTO;
 import com.example.bkjeon.entity.board.Board;
 import com.example.bkjeon.enums.ResponseResult;
 import com.example.bkjeon.mapper.board.BoardMapper;
-import com.example.bkjeon.model.ApiResponseMessage;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.example.bkjeon.model.response.ApiResponse;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -23,49 +24,73 @@ public class BoardService {
 
     // 게시글 리스트 조회
     @Transactional(readOnly = true)
-    public ApiResponseMessage getBoardList(Integer page, Integer size) {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "게시글 조회가 완료되었습니다."
-        );
+    public ResponseEntity getBoardList(Integer page, Integer size) {
+        ResponseEntity responseEntity;
 
         try {
             Integer offset = (page - 1) * size;
             List<BoardResponseDTO> boardList = boardMapper.selectBoardList(size, offset).stream()
                     .map(BoardResponseDTO::new)
                     .collect(Collectors.toList());
+            // TODO: Response Data 모델 추가 필요
             int totalCnt = boardMapper.selectBoardListCnt();
-            result.setTotalCnt(totalCnt);
-            result.setContents(boardList);
+
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.OK.value(),
+                    ResponseResult.SUCCESS.getText(),
+                    null,
+                    boardList
+                ),
+                HttpStatus.OK
+            );
         } catch (Exception e) {
-            log.error("getBoardList ERROR {}", e.getMessage());
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(e.getMessage());
-            return result;
+            log.error("getBoardList ERROR {}", e);
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage(),
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
         }
 
-        return result;
+        return responseEntity;
     }
 
     // 게시글 상세 조회
     @Transactional(readOnly = true)
-    public ApiResponseMessage getBoard(Long boardNo) {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "게시글 상세 조회가 완료되었습니다."
-        );
+    public ResponseEntity getBoard(Long boardNo) {
+        ResponseEntity responseEntity;
 
         try {
             Board board = boardMapper.selectBoard(boardNo);
-            result.setContents(new BoardResponseDTO(board));
+
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.OK.value(),
+                    ResponseResult.SUCCESS.getText(),
+                    null,
+                    new BoardResponseDTO(board)
+                ),
+                HttpStatus.OK
+            );
         } catch (Exception e) {
-            log.error("getBoard ERROR {}", e.getMessage());
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(e.getMessage());
-            return result;
+            log.error("getBoard ERROR {}", e);
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage(),
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
         }
 
-        return result;
+        return responseEntity;
     }
 
     // 메인 게시물 등록

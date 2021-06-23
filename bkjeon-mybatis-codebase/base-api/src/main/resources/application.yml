@@ -31,6 +31,9 @@ springdoc:
 spring:
   profiles: local
   datasource:
+    jdbcUrl: jdbc:h2:mem:testdb
+    username: sa
+    driverClassName: org.h2.Driver
     data: classpath:sql/init_h2.sql
   h2:
     console:
