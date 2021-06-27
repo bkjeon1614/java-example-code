@@ -22,9 +22,6 @@ public class BoardControllerTest {
     private final static String VERSION_NAME = "v1";
     private final static String BASE_URI_PATH = "/" + VERSION_NAME + "/boards";
 
-    // Test URI List
-    // private final static String VALID_CHECK_URI = BASE_URI_PATH + "postValidCheck";
-
     @Autowired
     private MockMvc mockMvc;
 
