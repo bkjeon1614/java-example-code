@@ -24,4 +24,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+
+    systemProperty "jasypt.encryptor.password", System.getProperty("jasypt.encryptor.password")
+    systemProperty "mysql.aeskey", System.getProperty("mysql.aeskey")
 }

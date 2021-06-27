@@ -15,3 +15,8 @@
 ```
     java -jar base-api-0.0.0.jar --spring.profiles.active=dev -Dfile.encoding=UTF-8 -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@ -Xms256M -Xmx512M -XX:OnOutOfMemoryError=\"kill -9 %p\" -XX:+HeapDumpOnOutOfMemoryError
 ```
+
+## App Test
+```
+    gradle -Pprofile=local_dev -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@
+```

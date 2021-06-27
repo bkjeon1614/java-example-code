@@ -11,9 +11,9 @@ spring:
 spring:
   profiles: local
   datasource:
-    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon_jpa?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
-    username: bkjeon
-    password: wjsqhdrms
+    jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+    username: root
+    password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
     driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
