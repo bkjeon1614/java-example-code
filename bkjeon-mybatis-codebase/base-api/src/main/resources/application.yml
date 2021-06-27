@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: local_dev
 
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
@@ -29,7 +29,7 @@ springdoc:
 ---
 
 spring:
-  profiles: local
+  profiles: local_h2
   datasource:
     jdbc-url: jdbc:h2:mem:testdb
     username: sa

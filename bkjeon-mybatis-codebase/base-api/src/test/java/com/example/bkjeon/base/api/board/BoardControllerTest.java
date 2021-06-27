@@ -19,6 +19,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @Transactional
 public class BoardControllerTest {
 
+    private final static String VERSION_NAME = "v1";
+    private final static String BASE_URI_PATH = "/" + VERSION_NAME + "/boards";
+
+    // Test URI List
+    // private final static String VALID_CHECK_URI = BASE_URI_PATH + "postValidCheck";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -31,26 +37,11 @@ public class BoardControllerTest {
         BoardRequestDTO boardRequestDTO = BoardRequestDTO.builder()
             .boardTitle("제목")
             .boardContents("내용입니다")
-            .userId("tseter")
+            .userId("tester")
             .build();
         String userDtoJsonString = objectMapper.writeValueAsString(boardRequestDTO);
 
-        mockMvc.perform(post("/v1/boards")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(userDtoJsonString));
-    }
-
-    @Test
-    @DisplayName("답글 등록 테스트")
-    void board_reply_insert_test() throws Exception {
-        BoardRequestDTO boardRequestDTO = BoardRequestDTO.builder()
-            .boardTitle("[RE] 제목")
-            .boardContents("답글 내용입니다.")
-            .userId("olive")
-            .build();
-        String userDtoJsonString = objectMapper.writeValueAsString(boardRequestDTO);
-
-        mockMvc.perform(post("/v1/boards/1")
+        mockMvc.perform(post(BASE_URI_PATH)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(userDtoJsonString));
     }
