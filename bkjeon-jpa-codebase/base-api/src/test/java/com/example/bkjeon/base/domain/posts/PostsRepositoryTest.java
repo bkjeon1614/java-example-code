@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.domain.posts;
 
-import com.example.bkjeon.base.repository.posts.PostsRepository;
+import com.example.bkjeon.base.repository.example.PostsRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,9 +1,9 @@
 package com.example.bkjeon.base.controller;
 
-import com.example.bkjeon.base.domain.posts.Posts;
-import com.example.bkjeon.base.repository.posts.PostsRepository;
 import com.example.bkjeon.base.api.v1.controller.example.dto.PostsSaveRequestDTO;
 import com.example.bkjeon.base.api.v1.controller.example.dto.PostsUpdateRequestDTO;
+import com.example.bkjeon.base.domain.posts.Posts;
+import com.example.bkjeon.base.repository.example.PostsRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
