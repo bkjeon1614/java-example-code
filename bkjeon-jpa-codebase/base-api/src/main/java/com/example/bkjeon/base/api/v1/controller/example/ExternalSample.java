@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("v1/external")
 @RequiredArgsConstructor
-public class ExternalApiSample {
+public class ExternalSample {
 
     private final ExternalService externalService;
 

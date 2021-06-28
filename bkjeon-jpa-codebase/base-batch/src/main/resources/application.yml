@@ -20,11 +20,6 @@ spring:
     hibernate:
       ddl-auto: validate
 
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: true
-
 server:
   port: 9091
 
