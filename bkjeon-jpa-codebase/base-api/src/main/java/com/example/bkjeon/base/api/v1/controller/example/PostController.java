@@ -7,29 +7,30 @@ import com.example.bkjeon.base.api.v1.controller.example.dto.PostsUpdateRequestD
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor
 @RestController
+@RequestMapping("v1/posts")
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostsService postsService;
 
-    @GetMapping("api/v1/posts/{id}")
-    public PostsResponseDTO findById(@PathVariable Long id) {
+    @GetMapping("{id}")
+    public PostsResponseDTO postFindById(@PathVariable Long id) {
         return postsService.findById(id);
     }
 
-    @PostMapping("api/v1/posts")
-    public Long save(@RequestBody PostsSaveRequestDTO requestDTO) {
+    @PostMapping
+    public Long postSave(@RequestBody PostsSaveRequestDTO requestDTO) {
         return postsService.save(requestDTO);
     }
 
-    @PutMapping("api/v1/posts/{id}")
-    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDTO requestDTO) {
+    @PutMapping("{id}")
+    public Long postUpdate(@PathVariable Long id, @RequestBody PostsUpdateRequestDTO requestDTO) {
         return postsService.update(id, requestDTO);
     }
 
-    @DeleteMapping("api/v1/posts/{id}")
-    public Long delete(@PathVariable Long id) {
+    @DeleteMapping("{id}")
+    public Long postDelete(@PathVariable Long id) {
         postsService.delete(id);
         return id;
     }
