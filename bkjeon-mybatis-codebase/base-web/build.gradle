@@ -1,0 +1,59 @@
+dependencies {
+    compile project(':base-common')
+
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // cache
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.6'
+}
+
+test {
+    useJUnitPlatform()
+
+    systemProperty "jasypt.encryptor.password", System.getProperty("jasypt.encryptor.password")
+    systemProperty "mysql.aeskey", System.getProperty("mysql.aeskey")
+}
+
+// node environment
+def clientPath = projectDir.toString() + '/../base-client'
+def sourceDir = "${clientPath}/build/client"
+def targetDir = "src/main/resources/public"
+node {
+    println "CLIENT PROJECT PATH : ${clientPath}"
+    nodeModulesDir = file(clientPath)
+}
+
+task yarnBuild(type: YarnTask) {
+    group = 'Build'
+
+    if (System.getenv("NODE_ENV") != null && System.getenv("NODE_ENV").equals("test")) {
+        args = ['test-build']
+    } else {
+        args = ['build']
+    }
+}
+
+task deleteStatic() {
+    group = 'Build'
+    delete targetDir
+}
+
+// copy client /build to server /out
+task copyStatic(type: Copy) {
+    group = 'Build'
+    dependsOn deleteStatic
+    from sourceDir
+    into targetDir
+}
+
+// build with client
+task buildWithClient() {
+    group = 'Build'
+    yarnBuild.finalizedBy copyStatic
+    copyStatic.finalizedBy bootJar
+
+    dependsOn clean
+    dependsOn yarnBuild
+}

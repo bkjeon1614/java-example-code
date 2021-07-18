@@ -12,9 +12,10 @@ bkjeon-mybatis-codebase <br>
 * SpringBoot 2.2.2.RELEASE
 * Java11
 * Gradle
+* Node 14 And Yarn 1.19
 
 ## 3. Prerequisites
-- Install JDK 11 ([download](https://www.oracle.com/java/technologies/java-archive-javase11-downloads.html))
+- Install JDK 11 ([download](https://jdk.java.net/java-se-ri/11))
 
 ## 4. IDE Setting
 - File -> Settings.. -> Editor -> File Encoding -> "Project Encoding": UTF-8, "Default encoding for properties files": UTF-8

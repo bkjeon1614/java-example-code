@@ -1,0 +1,103 @@
+spring:
+  profiles:
+    active: local_dev
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 3072MB
+      max-request-size: 3072MB
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+  resources:
+    static-locations: classpath:/public/
+
+mybatis:
+  mapper-locations: classpath:mybatis/**/*.xml
+  type-aliases-package: com.example.bkjeon.mapper
+  configuration:
+    cacheEnabled: false
+    useGeneratedKeys: true
+    defaultExecutorType: REUSE
+    aggressiveLazyLoading: false
+    default-statement-timeout: 30
+    map-underscore-to-camel-case: true
+
+server:
+  port: 9090
+
+# Local Env (Mysql DB)
+# H2 Console
+# - url: http://localhost:9090/h2-console
+# - jdbc url: jdbc:h2:mem:testdb
+---
+
+spring:
+  profiles: local_h2
+  datasource:
+    jdbc-url: jdbc:h2:mem:testdb
+    username: sa
+    driverClassName: org.h2.Driver
+    data: classpath:sql/init_h2.sql
+  h2:
+    console:
+      enabled: true
+
+# Local Env (Mysql DB - 10.184.234.178 (든든이))
+---
+spring:
+  profiles: local_dev
+  oracle:
+    datasource:
+      jdbcUrl: jdbc:oracle:thin:@127.0.0.1:1521/xe
+      username: root
+      password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+  mysql:
+    datasource:
+      jdbcUrl: jdbc:log4jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+      username: root
+      password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+# Dev Env
+---
+spring:
+  profiles: dev
+  oracle:
+    datasource:
+      jdbcUrl: jdbc:oracle:thin:@127.0.0.1:1522/BKJEON
+      username: root
+      password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+  mysql:
+    datasource:
+      jdbcUrl: jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+      username: root
+      password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+# Production Env
+---
+
+spring:
+  profiles: prod
+  oracle:
+    datasource:
+      jdbcUrl: jdbc:oracle:thin:@127.0.0.1:1522/BKJEON
+      username: root
+      password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+  mysql:
+    datasource:
+      jdbcUrl: jdbc:mysql://192.168.0.207:13306/study?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+      username: root
+      password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
+      driver-class-name: com.mysql.cj.jdbc.Driver
+

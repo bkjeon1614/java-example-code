@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+         updateCheck="false">
+    <diskStore path="java.io.tmpdir" />
+
+    <!--
+        maxEntriesLocalHeap: 메모리에 생성될 객체의 최대 수(0: 제한없음)
+        maxEntriesLocalDisk: 디스크(DiskStore)에 저장될 객체의 최대 수(0: 제한없음)
+        eternal: 저장된 캐시를 제거할지 여부를 설정한다. true 인 경우 저장된 캐시는 제거되지 않으며 timeToIdleSeconds, timeToLiveSeconds 설정은 무시된다.
+        └timeToIdleSeconds: 생성후 해당 시간 동안 캐쉬가 사용되지 않으면 삭제된다. 0은 삭제되지 않는 다. 단 eternal=false 인 경우에만 유효
+        └timeToLiveSeconds: 생성후 해당 시간이 지나면 캐쉬는 삭제된다. 0은 삭제되지 않는 다. 단 eternal=false 인 경우에만 유효
+        diskSpoolBufferSizeMB: 스풀버퍼에 대한 디스크(DiskStore) 크기 설정한다. (OutOfMemory 에러가 발생 시 설정한 크기를 낮추는 것이 좋다)
+        memoryStoreEvictionPolicy: maxEntriesLocalHeap 설정 값에 도달했을때 설정된 정책에 따리 객체가 제거되고 새로 추가된다.
+        └LRU: 사용이 가장 적었던 것부터 제거한다.
+        └FIFO: 먼저 입력된 것부터 제거한다.
+        └LFU: 사용량이 적은 것부터 제거한다.
+        transactionalMode: copyOnRead, copyOnWrite 시 트랜잭션 모드를 설정 (copyOnRead, copyOnWrite 는 캐시로 받아온 객체에 수정이 일어나는 경우에 사용 -> 캐시된 객체에 수정이 일어나면 참조호출로 인하여 그 뒤에 호출되는 모든 객체가 수정영향이 중첩되어 발생하므로 주의 필요)
+    -->
+    <cache name="exampleCache"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           timeToIdleSeconds="300" timeToLiveSeconds="600"
+           diskSpoolBufferSizeMB="20"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+        <persistence strategy="localTempSwap" />
+    </cache>
+</ehcache>
