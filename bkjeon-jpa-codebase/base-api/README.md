@@ -20,3 +20,5 @@
 ```
     gradle -Pprofile=local_dev -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@
 ```
+
+> 빌드시 clean + build 조합으로만 하면됨. test는 알아서 
