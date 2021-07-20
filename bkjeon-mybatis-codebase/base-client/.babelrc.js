@@ -1,7 +1,3 @@
-/**
- * Created by: Andrey Polyakov (andrey@polyakov.im)
- */
-
 module.exports = (api) => {
   const mode = process.env.NODE_ENV ? process.env.NODE_ENV : 'production';
 

@@ -1,6 +1,3 @@
-/**
- * Created by: Andrey Polyakov (andrey@polyakov.im)
- */
 import TerserJSPlugin from 'terser-webpack-plugin';
 
 import * as plugins from './plugins';

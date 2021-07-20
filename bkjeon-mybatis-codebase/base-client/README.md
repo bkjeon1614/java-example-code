@@ -1,7 +1,5 @@
 # Webpack 5 boilerplate
 
-![](https://habrastorage.org/webt/q-/lv/b0/q-lvb0d4li7cpi-hsctistlzooi.png)
-
 [Webpack 5](https://webpack.js.org/) boilerplate with support of most common loaders and modules:
 
 - [babel](https://babeljs.io/)
@@ -19,7 +17,8 @@
 
 To run this locally:
 
-1. run `git clone https://github.com/glook/webpack-typescript-react.git sample-project`
-2. Install all dependencies using `yarn` or `npm install`
-3. Start the development server using `yarn start` or `npm run start`
-4. Open up [http://localhost:8080](http://localhost:8080)
+1. run `git clone https://github.com/bkjeon1614/java-example-code.git`
+2. `cd bae-client`
+3. Install all dependencies using `yarn` or `npm install`
+4. Start the development server using `yarn start` or `npm run start`
+5. Open up [http://localhost:5000](http://localhost:5000)

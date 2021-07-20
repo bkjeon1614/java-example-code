@@ -6,6 +6,7 @@ bkjeon-mybatis-codebase <br>
 &nbsp;&nbsp; |- [base-common](/base-common) : 공통 클래스 모듈 <br>
 &nbsp;&nbsp; |- [base-api](/base-api) : API <br>
 &nbsp;&nbsp; |- [base-batch](/base-batch) : Batch <br>
+&nbsp;&nbsp; |- [base-web](/base-web) : WEB (frontend + backend) <br>
 
 ## 2. Development Environment 
 * IDE : IntelliJ IDEA Ultimate
@@ -30,10 +31,12 @@ bkjeon-mybatis-codebase <br>
   ```
 
 ## 5. jasypt key create
+- jasypt decode: https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
+  - config/security/JasyptEncryptConfig.java
 - path: /oy-auth/file/jasypt-1.9.3
   ```
   // H2 DB Config Example
-  $ encrypt input="1234" password="dhfflqmdud1!" algorithm="PBEWITHMD5ANDDES"
+  $ encrypt input="1234" password="bkjeon!@" algorithm="PBEWITHMD5ANDDES"
   ```
 - OUTPUT
   [application.yml] 

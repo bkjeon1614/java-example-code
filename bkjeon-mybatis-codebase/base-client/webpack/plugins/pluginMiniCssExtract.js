@@ -1,6 +1,3 @@
-/**
- * Created by: Andrey Polyakov (andrey@polyakov.im)
- */
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const config = {

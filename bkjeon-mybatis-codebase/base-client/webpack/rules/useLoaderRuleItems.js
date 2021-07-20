@@ -1,6 +1,3 @@
-/**
- * Created by: Andrey Polyakov (andrey@polyakov.im)
- */
 import {join} from 'path';
 
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';

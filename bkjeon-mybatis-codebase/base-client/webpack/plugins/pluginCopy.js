@@ -1,6 +1,3 @@
-/**
- * Created by: Andrey Polyakov (andrey@polyakov.im)
- */
 import {join} from 'path';
 
 import CopyPlugin from 'copy-webpack-plugin';

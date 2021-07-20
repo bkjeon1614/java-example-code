@@ -3,25 +3,27 @@
 ## Info
 - Application: http://localhost:9090
 - Swagger: http://localhost:9090/swagger-ui.html
+- frontend code: ./base-client
 
 ## Build
-```
-    gradle yarnBuild
-```
+- Local
+  ```
+  :base-web:clean :base-web:yarnBuild -Pprofile=local_h2 -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@
+  ```
+- Not Local
+  ```
+  :base-web:clean :base-web:yarnBuild -Pprofile=production -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@
+  ```
 
 ## App Start
-- local
-  - WebApplication Start
-- dev  
+- Local
+  - Spring Boot Application Run => ApiApplication.java
+- Not Local
   ```
-  $ nohup ~/apps/java/bin/java -Denv=dev -Dserver.port=9091 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=jvm.hprof -XX:OnOutOfMemoryError='kill -9 %p' -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@ -Djavax.net.ssl.keyStoreType=pkcs12 -Xmx2048m -Xms1024m -Dfile.encoding=UTF-8 -jar ~/deploy/bkjeon/base-web-0.0.0.jar &
-  ```
-- production
+  nohup java -jar base-web-0.0.0.jar -spring.profiles.active=production -Dfile.encoding=UTF-8 -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@ -Xms256M -Xmx512M -XX:OnOutOfMemoryError=\"kill -9 %p\" -XX:+HeapDumpOnOutOfMemoryError &
   ```
   
-  ```
-  
-## App Test
+## App Test VM Options
 ```
-    gradle -Pprofile=local -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@
+    gradle -Pprofile=local_h2 -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@
 ```  

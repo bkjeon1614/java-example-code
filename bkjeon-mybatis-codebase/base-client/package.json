@@ -11,10 +11,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:glook/webpack-typescript-react.git"
+    "url": "https://github.com/bkjeon1614/java-example-code.git"
   },
   "license": "MIT",
-  "author": "Andrey Polyakov <andrey@polyakov.im>",
+  "author": "BongKeun Jeon",
   "main": "webpack.config.babel.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.babel.js",

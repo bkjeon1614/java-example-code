@@ -1,6 +1,3 @@
-/**
- * Created by: Andrey Polyakov (andrey@polyakov.im)
- */
 import {join} from 'path';
 
 export const mode = process.env.NODE_ENV ?? 'production';

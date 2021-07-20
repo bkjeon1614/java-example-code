@@ -1,7 +1,3 @@
-/**
- * Created by: Andrey Polyakov (andrey@polyakov.im)
- */
-
 export * from './pluginCleanWebpack';
 export * from './pluginCopy';
 export * from './pluginDefine';

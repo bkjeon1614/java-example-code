@@ -1,6 +1,3 @@
-/**
- * Created by: Andrey Polyakov (andrey@polyakov.im)
- */
 import React, {CSSProperties} from 'react';
 
 import StrawberryIcon from '@images/strawberry.component.svg';

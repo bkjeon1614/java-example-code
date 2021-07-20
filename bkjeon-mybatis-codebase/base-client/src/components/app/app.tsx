@@ -1,6 +1,3 @@
-/**
- * Created by: Andrey Polyakov (andrey@polyakov.im)
- */
 import React, {Suspense, lazy} from 'react';
 
 import {stylesContainer} from './app.module.less';
