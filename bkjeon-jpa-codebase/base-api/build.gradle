@@ -5,9 +5,7 @@ def swaggerExceptionVersion = '1.5.21'
 dependencies {
     compile project(':base-common')
 
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-
     testImplementation 'org.springframework.security:spring-security-test'
 
     // swagger
