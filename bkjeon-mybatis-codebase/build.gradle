@@ -50,9 +50,11 @@ subprojects {
     def swaggerExceptionVersion = '1.5.21'
 
     dependencies {
+        // Spring
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
 
+        // Lombok
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 
@@ -64,14 +66,14 @@ subprojects {
         implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.2'
 
         // jasypt encrypt
-        compile group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'
+        implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'
 
         // logback
         implementation 'ch.qos.logback:logback-classic:' + logbackVersion
         implementation 'ch.qos.logback:logback-core:' + logbackVersion
 
         // kafka
-        compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
+        implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
 
         implementation group: 'commons-collections', name: 'commons-collections', version: '3.2.2'
 
@@ -88,23 +90,5 @@ subprojects {
         // elasticsearch
         implementation group: 'org.elasticsearch', name: 'elasticsearch', version: '7.1.1'
         implementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: '7.1.1'
-    }
-}
-
-project(':base-api') {
-    dependencies {
-        compile project(':base-common')
-    }
-}
-
-project(':base-batch') {
-    dependencies {
-        compile project(':base-common')
-    }
-}
-
-project(':base-web') {
-    dependencies {
-        compile project(':base-common')
     }
 }
