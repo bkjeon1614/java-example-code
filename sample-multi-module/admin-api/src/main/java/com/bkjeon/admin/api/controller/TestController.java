@@ -1,9 +1,7 @@
 package com.bkjeon.admin.api.controller;
 
-import com.bkjeon.admin.entity.Sample;
-import com.bkjeon.admin.api.service.ApiSampleService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bkjeon.admin.api.service.ApiSampleService;
+import com.bkjeon.admin.entity.Sample;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("test")
+@RequiredArgsConstructor
 public class TestController {
 
-    @Autowired
-    private ApiSampleService apiSampleService;
+    private final ApiSampleService apiSampleService;
 
     @GetMapping
     public List<Sample> getSamples() {

@@ -2,6 +2,7 @@ package com.example.bkjeon.base.services.api.v1.data;
 
 import io.swagger.annotations.ApiOperation;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +59,7 @@ public class JsonParseController {
 
     @ApiOperation("JSON Object Null Check")
     @GetMapping("jsonObjectNullCheck")
-    public void jsonObjectNullCheck() {
+    public void jsonObjectNullCheck() throws JSONException {
         JSONObject jsonObject = new JSONObject(jsonObjectAndObjectString);
 
         System.out.println("title object check: " + !jsonObject.getJSONObject("obj2").isNull("title"));
@@ -67,7 +68,7 @@ public class JsonParseController {
 
     @ApiOperation("Key-Value만 있는 JSON Parse")
     @GetMapping("baseParseObject")
-    public Map<String, Object> getJsonParseBase() {
+    public Map<String, Object> getJsonParseBase() throws JSONException {
         // JSONObjet를 가져와서 key-value를 읽습니다.
         JSONObject jObject = new JSONObject(jsonObjectString);
         String title = jObject.getString("title");
@@ -84,7 +85,7 @@ public class JsonParseController {
 
     @ApiOperation("하위에 여러 Object가 있는 JSON")
     @GetMapping("downMultiParseObject")
-    public Map<String, Map<String, Object>> getJsonParseMultiObject() {
+    public Map<String, Map<String, Object>> getJsonParseMultiObject() throws JSONException {
         Map<String, Map<String, Object>> retMap = new HashMap<>();
 
         // 가장 큰 JSONObject를 가져옵니다.
@@ -119,7 +120,7 @@ public class JsonParseController {
 
     @ApiOperation("Array 가 있는 JSON")
     @GetMapping("arrayParseObject")
-    public List<Map<String, Object>> getJsonParseArrayObject() {
+    public List<Map<String, Object>> getJsonParseArrayObject() throws JSONException {
         List<Map<String, Object>> retListMap = new ArrayList<>();
 
         // 가장 큰 JSONObject를 가져옵니다.

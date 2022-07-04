@@ -1,16 +1,19 @@
 package com.bkjeon.admin.api.service;
 
-import com.bkjeon.admin.entity.Sample;
-import com.bkjeon.admin.service.SampleService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
+import com.bkjeon.admin.entity.Sample;
+import com.bkjeon.admin.service.SampleService;
+
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ApiSampleService {
 
-    @Autowired
-    private SampleService sampleService;
+    private final SampleService sampleService;
 
     public List<Sample> getSamples() {
         return sampleService.getSamples();

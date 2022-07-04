@@ -2,7 +2,7 @@ package com.example.bkjeon.base.services.api.v1.kafka;
 
 import com.example.bkjeon.entity.kafka.KafkaProducerCallBack;
 import com.example.bkjeon.enums.ResponseResult;
-import com.example.bkjeon.model.ApiResponseMessage;
+import com.example.bkjeon.model.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.CommitFailedException;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -14,6 +14,8 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -30,11 +32,8 @@ public class KafkaProducerService {
      * topic create command: /home/bkjeon/app/kafka/bin/kafka-topics.sh --zookeeper 192.168.0.200:2181,192.168.0.201:2181,192.168.0.202:2181/bkjeon-kafka --replication-factor 3 --partitions 1 --topic bkjeon-topic --create
      * @return
      */
-    public ApiResponseMessage producerSendMessageSync() {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "메세지 전송에 성공하였습니다. (동기)"
-        );
+    public ResponseEntity producerSendMessageSync() {
+        ResponseEntity responseEntity;
         Producer<String, String> producer = new KafkaProducer<>(getKafkaProperties());
 
         try {
@@ -44,28 +43,40 @@ public class KafkaProducerService {
 
             // 에러가 없으면 메세지가 기록된 offset을 알 수 있는 RecoardMetadata를 얻을 수 있다.
             log.info("Partition: %d, Offset: %d", metadata.partition(), metadata.offset());
+
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.OK.value(),
+                    ResponseResult.SUCCESS.getText(),
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
         } catch (Exception e) {
-            log.error("producerSendMessageSync ERROR {}", e.getMessage());
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(e.getMessage());
-            return result;
+            log.error("producerSendMessageSync ERROR {}", e);
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage(),
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
         } finally {
             producer.close();
         }
 
-        return result;
+        return responseEntity;
     }
 
     /**
      * topic create command: /home/bkjeon/app/kafka/bin/kafka-topics.sh --zookeeper 192.168.0.200:2181,192.168.0.201:2181,192.168.0.202:2181/bkjeon-kafka --replication-factor 3 --partitions 1 --topic bkjeon-topic --create
      * @return
      */
-    public ApiResponseMessage producerSendMessageAsync() {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "메세지 전송에 성공하였습니다. (비동기)"
-        );
-
+    public ResponseEntity producerSendMessageAsync() {
+        ResponseEntity responseEntity;
         Producer<String, String> producer = new KafkaProducer<>(getKafkaProperties());
 
         try {
@@ -74,28 +85,40 @@ public class KafkaProducerService {
                 new ProducerRecord<>("bkjeon-topic", "Hello Bkjeon Async Message"),
                 new KafkaProducerCallBack()
             );
+
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.OK.value(),
+                    ResponseResult.SUCCESS.getText(),
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
         } catch (Exception e) {
-            log.error("producerSendMessageAsync ERROR {}", e.getMessage());
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(e.getMessage());
-            return result;
+            log.error("producerSendMessageAsync ERROR {}", e);
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage(),
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
         } finally {
             producer.close();
         }
 
-        return result;
+        return responseEntity;
     }
 
     /**
      * topic create command: /home/bkjeon/app/kafka/bin/kafka-topics.sh --zookeeper 192.168.0.200:2181,192.168.0.201:2181,192.168.0.202:2181/bkjeon-kafka --replication-factor 1 --partitions 2 --topic bkjeon-topic-partitions --create
      * @return
      */
-    public ApiResponseMessage producerSendKeyMessage() {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "메세지 전송에 성공하였습니다. (Key 사용)"
-        );
-
+    public ResponseEntity producerSendKeyMessage() {
+        ResponseEntity responseEntity;
         Producer<String, String> producer = new KafkaProducer<>(getKafkaProperties());
         String exampleTopic = "bkjeon-topic-partitions";
         String oddKey = "1";
@@ -121,27 +144,50 @@ public class KafkaProducerService {
                     );
                 }
             }
+
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.OK.value(),
+                    ResponseResult.SUCCESS.getText(),
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
         } catch (Exception e) {
-            log.error("producerSendKeyMessage ERROR {}", e.getMessage());
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(e.getMessage());
-            return result;
+            log.error("producerSendKeyMessage ERROR {}", e);
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage(),
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
         } finally {
             producer.close();
         }
 
-        return result;
+        return responseEntity;
     }
 
-    public ApiResponseMessage consumerSendMessageManualCommit() {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "메세지 전송에 성공하였습니다. (수동커밋)"
-        );
-
+    public ResponseEntity consumerSendMessageManualCommit() {
+        ResponseEntity responseEntity;
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getKafkaCommitProperties());
         consumer.subscribe(Arrays.asList("bkjeon-topic"));
+
         try {
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.OK.value(),
+                    ResponseResult.SUCCESS.getText(),
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
+
             while (true) {
                 // poll을 호출해 bkjeon-topic으로부터 메세지를 가져옴
                 ConsumerRecords<String, String> records = consumer.poll(100);
@@ -161,28 +207,37 @@ public class KafkaProducerService {
                     consumer.commitSync();
                 } catch (CommitFailedException e) {
                     log.error("consumerSendMessageManualCommit CommitFailedException ERROR {}", e);
-                    result.setResult(ResponseResult.FAIL);
-                    result.setMessage(e.getMessage());
-                    return result;
+                    responseEntity = new ResponseEntity(
+                        ApiResponse.res(
+                            HttpStatus.BAD_REQUEST.value(),
+                            e.getMessage(),
+                            null,
+                            null
+                        ),
+                        HttpStatus.BAD_REQUEST
+                    );
                 }
             }
         } catch (Exception e) {
-            log.error("consumerSendMessageManualCommit Exception ERROR {}", e.getMessage());
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(e.getMessage());
+            log.error("consumerSendMessageManualCommit Exception ERROR {}", e);
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage(),
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
         } finally {
             consumer.close();
         }
 
-        return result;
+        return responseEntity;
     }
 
-    public ApiResponseMessage getSpecificPartitionMessage() {
-        ApiResponseMessage result = new ApiResponseMessage(
-            ResponseResult.SUCCESS,
-            "조회에 성공하였습니다. (특정 파티션에서만 메세지를 가져옴)"
-        );
-
+    public ResponseEntity getSpecificPartitionMessage() {
+        ResponseEntity responseEntity;
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getKafkaSpecificPartitionProperties());
         String topic = "bkjeon-topic";
 
@@ -200,6 +255,16 @@ public class KafkaProducerService {
         consumer.seek(partition1, 2);
 
         try {
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.OK.value(),
+                    ResponseResult.SUCCESS.getText(),
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
+
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(100);
                 for (ConsumerRecord<String, String> record: records) {
@@ -216,20 +281,33 @@ public class KafkaProducerService {
                     consumer.commitSync();
                 } catch (CommitFailedException e) {
                     log.error("consumerSendMessageManualCommit CommitFailedException ERROR {}", e);
-                    result.setResult(ResponseResult.FAIL);
-                    result.setMessage(e.getMessage());
-                    return result;
+                    responseEntity = new ResponseEntity(
+                        ApiResponse.res(
+                            HttpStatus.BAD_REQUEST.value(),
+                            e.getMessage(),
+                            null,
+                            null
+                        ),
+                        HttpStatus.BAD_REQUEST
+                    );
                 }
             }
         } catch (Exception e) {
             log.error("getSpecificPartitionMessage Exception ERROR {}", e.getMessage());
-            result.setResult(ResponseResult.FAIL);
-            result.setMessage(e.getMessage());
+            responseEntity = new ResponseEntity(
+                ApiResponse.res(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage(),
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
         } finally {
             consumer.close();
         }
 
-        return result;
+        return responseEntity;
     }
 
     private Properties getKafkaSpecificPartitionProperties() {

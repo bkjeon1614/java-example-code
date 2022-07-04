@@ -1,12 +1,13 @@
 package com.example.bkjeon.base.services.api.v1.log;
 
 import com.example.bkjeon.dto.common.log.CommonESLogSaveRequestDTO;
-import com.example.bkjeon.enums.ResponseResult;
-import com.example.bkjeon.model.ApiResponseMessage;
+import com.example.bkjeon.model.response.ApiResponse;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,17 +24,21 @@ public class CommonLogController {
 
     @ApiOperation("로그 저장 API")
     @PostMapping
-    public ApiResponseMessage setLog(
+    public ResponseEntity setLog(
         @RequestBody @Valid final CommonESLogSaveRequestDTO commonESLogSaveRequestDTO,
         BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> list = bindingResult.getAllErrors();
             for (ObjectError e : list) {
-                return new ApiResponseMessage(
-                    ResponseResult.FAIL,
-                    e.getDefaultMessage(),
-                    null
+                return new ResponseEntity(
+                    ApiResponse.res(
+                        HttpStatus.BAD_REQUEST.value(),
+                        e.getDefaultMessage(),
+                        commonESLogSaveRequestDTO,
+                        null
+                    ),
+                    HttpStatus.BAD_REQUEST
                 );
             }
         }

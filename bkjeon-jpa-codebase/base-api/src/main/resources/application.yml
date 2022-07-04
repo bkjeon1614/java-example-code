@@ -36,11 +36,6 @@ spring:
     console:
       enabled: true
 
-decorator:
-  datasource:
-    p6spy:
-      enable-logging: true
-
 # Dev Env (Mysql DB)
 ---
 

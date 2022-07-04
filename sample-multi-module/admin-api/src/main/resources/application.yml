@@ -1,11 +1,17 @@
 spring:
-  profiles: local
+  profiles:
+    default: local
+  datasource:
+    jdbcUrl: jdbc:h2:mem:testdb
+    username: sa
+    driverClassName: org.h2.Driver
   h2:
     console:
       enabled: true
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto : update
+      ddl-auto: create-drop
 
 server:
   port: 8080

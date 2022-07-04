@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: local_dev
 
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
@@ -29,8 +29,11 @@ springdoc:
 ---
 
 spring:
-  profiles: local
+  profiles: local_h2
   datasource:
+    jdbc-url: jdbc:h2:mem:testdb
+    username: sa
+    driverClassName: org.h2.Driver
     data: classpath:sql/init_h2.sql
   h2:
     console:

@@ -1,17 +1,28 @@
 # API Code Base
 
 ## Info
-- Application: http://localhost:8080
-- Swagger: http://localhost:8080/swagger-ui.html
-- jasypt decode: https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
-  - config/JasyptEncryptConfig.java
+- Application: http://localhost:9090
+- Swagger: http://localhost:9090/api/swagger-ui.html
 
 ## Build
-```
-    gradle fullBuild
-```
+- Local
+  ```
+  :base-api:clean :base-api:build -Pprofile=local_h2 -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@
+  ```
+- Not Local
+  ```
+  :base-api:clean :base-api:build -Pprofile=production -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@
+  ```
 
 ## App Start
+- Local
+  - Spring Boot Application Run => ApiApplication.java
+- Not Local
+  ```
+  nohup java -jar base-api-0.0.0.jar -spring.profiles.active=production -Dfile.encoding=UTF-8 -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@ -Xms256M -Xmx512M -XX:OnOutOfMemoryError=\"kill -9 %p\" -XX:+HeapDumpOnOutOfMemoryError &
+  ```
+
+## App Test VM Options
 ```
-    java -jar base-api-0.0.0.jar --spring.profiles.active=dev -Dfile.encoding=UTF-8 -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@ -Xms256M -Xmx512M -XX:OnOutOfMemoryError=\"kill -9 %p\" -XX:+HeapDumpOnOutOfMemoryError
-```
+    gradle -Pprofile=local_h2 -Djasypt.encryptor.password=bkjeon!@ -Dmysql.aeskey=bkjeon!@
+```  

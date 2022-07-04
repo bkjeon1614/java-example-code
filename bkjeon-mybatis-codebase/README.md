@@ -6,15 +6,17 @@ bkjeon-mybatis-codebase <br>
 &nbsp;&nbsp; |- [base-common](/base-common) : 공통 클래스 모듈 <br>
 &nbsp;&nbsp; |- [base-api](/base-api) : API <br>
 &nbsp;&nbsp; |- [base-batch](/base-batch) : Batch <br>
+&nbsp;&nbsp; |- [base-web](/base-web) : WEB (frontend + backend) <br>
 
 ## 2. Development Environment 
 * IDE : IntelliJ IDEA Ultimate
 * SpringBoot 2.2.2.RELEASE
 * Java11
 * Gradle
+* Node 14 And Yarn 1.19
 
 ## 3. Prerequisites
-- Install JDK 11 ([download](https://www.oracle.com/java/technologies/java-archive-javase11-downloads.html))
+- Install JDK 11 ([download](https://jdk.java.net/java-se-ri/11))
 
 ## 4. IDE Setting
 - File -> Settings.. -> Editor -> File Encoding -> "Project Encoding": UTF-8, "Default encoding for properties files": UTF-8
@@ -29,10 +31,12 @@ bkjeon-mybatis-codebase <br>
   ```
 
 ## 5. jasypt key create
+- jasypt decode: https://www.devglan.com/online-tools/jasypt-online-encryption-decryption
+  - config/security/JasyptEncryptConfig.java
 - path: /oy-auth/file/jasypt-1.9.3
   ```
   // H2 DB Config Example
-  $ encrypt input="1234" password="dhfflqmdud1!" algorithm="PBEWITHMD5ANDDES"
+  $ encrypt input="1234" password="bkjeon!@" algorithm="PBEWITHMD5ANDDES"
   ```
 - OUTPUT
   [application.yml] 

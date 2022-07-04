@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.repository.example;
 
-import static com.example.bkjeon.base.entity.example.QBoard.board;
+import static com.example.bkjeon.base.domain.example.QBoard.board;
 
 import com.example.bkjeon.base.domain.example.Board;
 import com.querydsl.jpa.impl.JPAQueryFactory;

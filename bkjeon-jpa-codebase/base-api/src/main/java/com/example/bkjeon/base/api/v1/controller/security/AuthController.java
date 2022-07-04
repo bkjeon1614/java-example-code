@@ -1,12 +1,11 @@
 package com.example.bkjeon.base.api.v1.controller.security;
 
-import com.example.bkjeon.base.api.v1.controller.security.jwt.JwtFilter;
 import com.example.bkjeon.base.api.v1.controller.security.jwt.TokenProvider;
 import com.example.bkjeon.base.api.v1.controller.security.jwt.dto.LoginDTO;
 import com.example.bkjeon.base.api.v1.controller.security.jwt.dto.TokenDTO;
 import com.example.bkjeon.base.api.v1.controller.security.jwt.dto.UserDTO;
-import com.example.bkjeon.base.domain.jwt.User;
 import com.example.bkjeon.base.api.v1.service.security.UserService;
+import com.example.bkjeon.base.domain.jwt.User;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -49,7 +48,7 @@ public class AuthController {
 
         // token을 Response Header와 Body에도 넣어서 리턴한다.
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, jwt);
+        httpHeaders.add("ACCESS-TOKEN", jwt);
 
         return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
     }

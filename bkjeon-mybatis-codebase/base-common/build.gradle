@@ -7,21 +7,21 @@ jar {
 }
 
 dependencies {
-    runtime('com.h2database:h2')
+    runtimeOnly('com.h2database:h2')
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.6'
 
     // mysql
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
     // oracle
     implementation group: 'com.oracle.ojdbc', name: 'ojdbc8', version: '19.3.0.0'
 
     // Windows
-    compile group: 'org.jodconverter', name: 'jodconverter-core', version: '4.0.0-RELEASE'
+    implementation group: 'org.jodconverter', name: 'jodconverter-core', version: '4.0.0-RELEASE'
 
     // Linux
-    compile group: 'com.artofsolving', name: 'jodconverter', version: '2.2.0'
+    implementation group: 'com.artofsolving', name: 'jodconverter', version: '2.2.0'
 
     implementation group: 'commons-httpclient', name: 'commons-httpclient', version: '3.1'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
