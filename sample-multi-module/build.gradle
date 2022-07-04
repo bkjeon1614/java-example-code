@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.6.RELEASE'
+        springBootVersion = '2.6.7'
     }
     repositories {
         mavenCentral()
@@ -21,7 +21,7 @@ subprojects {
 
     group = 'com.bkjeon.admin'
     version = '0.0.0'
-    sourceCompatibility = 1.8
+    sourceCompatibility = 11
 
     repositories {
         mavenCentral()
@@ -43,18 +43,10 @@ subprojects {
     }
 
     dependencies {
-        compileOnly('org.projectlombok:lombok')
-    }
-}
-
-project(':admin-api') {
-    dependencies {
-        compile project(':admin-common')
-    }
-}
-
-project(':admin-web') {
-    dependencies {
-        compile project(':admin-common')
+        compileOnly 'org.projectlombok:lombok:1.18.24'
+        testCompileOnly 'org.projectlombok:lombok:1.18.24'
+        testImplementation 'org.projectlombok:lombok:1.18.24'
+        annotationProcessor 'org.projectlombok:lombok:1.18.24'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
     }
 }
