@@ -3,7 +3,7 @@ Gradle Multi Project
 
 - v1: https://bkjeon1614.tistory.com/38
   - 초기세팅
-- v2: ?
+- v2: https://bkjeon1614.tistory.com/710
   - gradle, java, springboot 버전 업그레이드
   - 생성자 인젝션으로 변경
   - 일부 오작동 코드들 수정
