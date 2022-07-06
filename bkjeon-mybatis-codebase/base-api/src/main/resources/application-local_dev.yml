@@ -1,0 +1,22 @@
+spring:
+  profiles: local_dev
+  oracle:
+    datasource:
+      jdbcUrl: jdbc:oracle:thin:@127.0.0.1:1521/xe
+      username: root
+      password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+  mysql:
+    datasource:
+      jdbcUrl: jdbc:log4jdbc:mysql://127.0.0.1:3306/bkjeon?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8
+      username: root
+      password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+kafka:
+  brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092
+
+elasticsearch:
+  hosts: 127.0.0.1:9200
+  username: elastic
+  password: elastic
