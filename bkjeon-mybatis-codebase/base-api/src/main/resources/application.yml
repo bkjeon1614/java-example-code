@@ -22,10 +22,12 @@ springdoc:
   swagger-ui:
     path: /api/swagger-ui.html
 
+# circuitbreaker
 resilience4j:
   retry:
     configs:
       default:
+        registerHealthIndicator: true # actuator 정보 노출을 위한 설정
         maxRetryAttempts: 5 # 최대 재시도 수
         waitDuration: 5000  # 재시도 사이에 고정된 시간 [ms]
         #retryExceptions:
@@ -46,7 +48,7 @@ resilience4j:
   circuitbreaker:
     configs:
       default:  # 기본 config 명
-        registerHealthIndicator: true
+        registerHealthIndicator: true # actuator 정보 노출을 위한 설정
         slidingWindowType: TIME_BASED
         slidingWindowSize: 10
         minimumNumberOfCalls: 10  # 최소한 호출을 10번을 기록해야 실패 비율을 계산할 수 있다.
@@ -65,3 +67,19 @@ resilience4j:
       circuit-db-select-300:
         baseConfig: default
         slowCallDurationThreshold: 300
+
+# actuator
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*" # 테스트를 위해 actuator 전체 노출
+  health:
+    circuitbreakers:
+      enabled: true # circuitbreakers 정보 노출
+    retryevents:
+      enabled: true # retryevents 정보 노출

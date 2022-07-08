@@ -1,5 +1,7 @@
 package com.example.bkjeon.base.services.api.v1.circuitbreaker;
 
+import java.util.Random;
+
 import org.springframework.stereotype.Service;
 
 import com.example.bkjeon.constants.Resilience4jCode;
@@ -13,7 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 public class CircuitBreakerService {
 
 	private void runtimeException() {
-		throw new RuntimeException("failed");
+		int randomInt = new Random().nextInt(10);
+
+		if(randomInt <= 7) {
+			throw new RuntimeException("failed");
+		}
 	}
 
 	@CircuitBreaker(name = Resilience4jCode.CIRCUIT_TEST_70000, fallbackMethod = "getCircuitBreakerFallback")
