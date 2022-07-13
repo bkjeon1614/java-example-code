@@ -1,6 +1,5 @@
 package com.example.bkjeon.base.interceptor;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;

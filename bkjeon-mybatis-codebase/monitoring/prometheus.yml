@@ -1,0 +1,11 @@
+# prometheus
+global:
+  scrape_interval: 2s  # 10초마다 메트릭을 수집 (default: 1m)
+  scrape_timeout: 10s # request 가 timeout 나는 길이 (default: 10s)
+  evaluation_interval: 2m  # 2분마다 규칙 평가 (default: 1m)
+  external_labels: 'app-monitor'
+scrape_configs:
+  - job_name: 'app-monitor-job'
+    metrics_path: '/api/actuator/prometheus'  # Application prometheus endpoint
+    static_configs:
+      - targets: ['host.docker.internal:9090']  # Application host:port

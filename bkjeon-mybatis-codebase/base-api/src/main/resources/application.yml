@@ -76,8 +76,7 @@ management:
   endpoints:
     web:
       exposure:
-        include:
-          - "*" # 테스트를 위해 actuator 전체 노출
+        include: health, info, metrics, prometheus, retries  # actuator 노출 원하는 정보 선택
   health:
     circuitbreakers:
       enabled: true # circuitbreakers 정보 노출
