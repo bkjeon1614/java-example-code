@@ -5,15 +5,30 @@ import org.elasticsearch.action.admin.indices.alias.Alias;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions.Type;
+import org.elasticsearch.client.core.CountRequest;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 @Slf4j
 public class ESRequestUtil {
 
     private ESRequestUtil() {
         throw new IllegalStateException("Utility class");
+    }
+
+    /**
+     * 모든 문서의 총 개수
+      * @param indexName
+     * @return
+     */
+    public static CountRequest getTotalCntSearchRequest(String indexName) {
+        CountRequest countRequest = new CountRequest(indexName);
+        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+        sourceBuilder.query(QueryBuilders.matchAllQuery());
+        return countRequest.source(sourceBuilder);
     }
 
     /**
