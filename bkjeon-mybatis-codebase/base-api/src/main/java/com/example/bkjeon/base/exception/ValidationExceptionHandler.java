@@ -17,23 +17,23 @@ import java.util.Map;
 @RestControllerAdvice
 public class ValidationExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errorMap = new HashMap<>();
-        ex.getBindingResult().getAllErrors()
-            .forEach(c -> errorMap.put(((FieldError) c).getField(), c.getDefaultMessage()));
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity handleValidationExceptions(MethodArgumentNotValidException ex) {
+		Map<String, String> errorMap = new HashMap<>();
+		ex.getBindingResult().getAllErrors()
+			.forEach(c -> errorMap.put(((FieldError) c).getField(), c.getDefaultMessage()));
 
-        log.warn("Validation Error. when {}, msg {}", ex.getMessage(), ex);
+		log.warn("Validation Error. when {}, msg {}", ex.getMessage(), ex);
 
-        return new ResponseEntity(
-            ApiResponse.res(
-                HttpStatus.BAD_REQUEST.value(),
-                ResponseResult.FAIL.getText(),
-                null,
-                errorMap
-            ),
-            HttpStatus.BAD_REQUEST
-        );
-    }
+		return new ResponseEntity(
+			ApiResponse.res(
+				HttpStatus.BAD_REQUEST.value(),
+				ResponseResult.FAIL.getText(),
+				null,
+				errorMap
+			),
+			HttpStatus.BAD_REQUEST
+		);
+	}
 
 }

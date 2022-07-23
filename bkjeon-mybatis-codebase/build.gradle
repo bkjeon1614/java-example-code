@@ -46,7 +46,7 @@ subprojects {
     def logbackVersion = '1.2.3'
 
     // const
-    def swaggerVersion = '3.0.0'
+    def swaggerVersion = '2.9.2'
     def swaggerExceptionVersion = '1.5.21'
 
     dependencies {
