@@ -90,5 +90,8 @@ subprojects {
         // elasticsearch
         implementation group: 'org.elasticsearch', name: 'elasticsearch', version: '7.1.1'
         implementation group: 'org.elasticsearch.client', name: 'elasticsearch-rest-high-level-client', version: '7.1.1'
+
+        // lib
+        implementation group: 'org.json', name: 'json', version: '20090211'
     }
 }

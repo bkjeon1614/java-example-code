@@ -72,11 +72,7 @@ public class CommonLogAspect {
         }
     }
 
-    /**
-     * Global Logging (Controller)
-     * @param proceedingJoinPoint
-     * @return
-     */
+    // TODO: ExceptionHandler 충돌 이슈로 삭제 예정
     /*
     @Around("execution(* com.example.bkjeon.base.services.api.*.*.*Controller.*(..))")
     public void setCommonControllerLogging(ProceedingJoinPoint proceedingJoinPoint) {
