@@ -1,12 +1,7 @@
 package com.example.bkjeon.base.services.api.v1.board;
 
-import com.example.bkjeon.dto.board.BoardRequestDTO;
-import com.example.bkjeon.enums.ResponseResult;
-import com.example.bkjeon.model.response.ApiResponse;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import javax.validation.Valid;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.bkjeon.dto.board.BoardRequestDTO;
+import com.example.bkjeon.enums.ResponseResult;
+import com.example.bkjeon.model.response.ApiResponse;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -57,18 +60,7 @@ public class BoardController {
     public ResponseEntity setBoard(
         @RequestBody @Valid BoardRequestDTO requestDTO
     ) {
-        if (!boardService.setBoard(requestDTO)) {
-            return new ResponseEntity(
-                ApiResponse.res(
-                    HttpStatus.BAD_REQUEST.value(),
-                    ResponseResult.FAIL.getText(),
-                    requestDTO,
-                    null
-                ),
-                HttpStatus.BAD_REQUEST
-            );
-        }
-
+        boardService.setBoard(requestDTO);
         return new ResponseEntity(
             ApiResponse.res(
                 HttpStatus.OK.value(),

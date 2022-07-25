@@ -1,19 +1,22 @@
 package com.example.bkjeon.base.services.api.v1.board;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.bkjeon.dto.board.BoardRequestDTO;
 import com.example.bkjeon.dto.board.BoardResponseDTO;
 import com.example.bkjeon.entity.board.Board;
 import com.example.bkjeon.enums.ResponseResult;
 import com.example.bkjeon.mapper.board.BoardMapper;
 import com.example.bkjeon.model.response.ApiResponse;
-import java.util.List;
-import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -95,15 +98,12 @@ public class BoardService {
 
     // 메인 게시물 등록
     @Transactional
-    public boolean setBoard(BoardRequestDTO requestDTO) {
+    public void setBoard(BoardRequestDTO requestDTO) {
         try {
             boardMapper.insertBoard(requestDTO.toSaveBoardEntity());
         } catch (Exception e) {
             log.error("setBoard ERROR {}", e.getMessage());
-            return false;
         }
-
-        return true;
     }
 
     // 서브 게시물 등록

@@ -59,7 +59,7 @@
         </if>
     </select>
 
-    <select id="selectBoardListCnt" resultType="int">
+    <select id="selectBoardListCnt" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM tb_board
     </select>
 
@@ -69,7 +69,7 @@
     </select>
 
     <insert id="insertBoard" parameterType="com.example.bkjeon.entity.board.Board">
-        <selectKey resultType="long" keyProperty="groupNo" order="BEFORE">
+        <selectKey resultType="java.lang.Long" keyProperty="groupNo" order="BEFORE">
             SELECT IFNULL(MAX(GROUP_NO), 0) + 1
             FROM tb_board
         </selectKey>
@@ -81,7 +81,7 @@
         <include refid="boardInsertSql" />
     </insert>
 
-    <select id="selectBoardGroupCnt" parameterType="map" resultType="long">
+    <select id="selectBoardGroupCnt" parameterType="map" resultType="java.lang.Long">
         SELECT COUNT(*) AS cnt FROM tb_board WHERE GROUP_NO = ${groupNo}
     </select>
 
