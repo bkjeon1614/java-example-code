@@ -6,6 +6,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 
+/**
+ * 에러 코드 정의
+ * > 코드값은 _ 앞의 첫자리 대문자를 따서 코드값 + Http Status Code 로 합쳐서 만듬
+ * > 에러 메세지는 Common 과 각 도메인별로 관리
+ */
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode {

@@ -13,6 +13,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * message: 에러 메세지
+ * status: http status code
+ * errors: 요청 값에 대한 field, value, reason 작성, 일반적으로 @Valid 로 검증을 진행
+ * code: 에러 코드 값
+ */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ErrorResponse {
