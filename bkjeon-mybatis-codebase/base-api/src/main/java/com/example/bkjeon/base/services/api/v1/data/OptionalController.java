@@ -42,6 +42,9 @@ public class OptionalController {
             .map(s -> String.join(",", s))
             .orElse(null);
         log.info("============ testData3: {}", testData3);
+
+        List<String> testDataList4 = null;
+        log.info("============ testData4: {}", Optional.ofNullable(testDataList4).isPresent()); // false
     }
 
 }

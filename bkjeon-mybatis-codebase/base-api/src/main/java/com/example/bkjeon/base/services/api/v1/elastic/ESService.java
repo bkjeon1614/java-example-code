@@ -1,12 +1,12 @@
 package com.example.bkjeon.base.services.api.v1.elastic;
 
-import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 
 public interface ESService {
 
+    long getDocTotalCnt();
+
     boolean createIndex(
-        RestHighLevelClient client,
         String indexName,
         int settingShardCnt,
         int settingReplicaCnt,
@@ -14,7 +14,6 @@ public interface ESService {
     );
 
     boolean createAliasIndex(
-        RestHighLevelClient client,
         String indexName,
         String aliasIndexName,
         int settingShardCnt,
@@ -22,10 +21,9 @@ public interface ESService {
         XContentBuilder builder
     );
 
-    boolean setIndexAlias(RestHighLevelClient client, String indexName, String aliasIndexName);
+    boolean setIndexAlias(String indexName, String aliasIndexName);
 
     boolean changeIndexAlias(
-        RestHighLevelClient client,
         String beforeIndexName,
         int settingShardCnt,
         int settingReplicaCnt,
@@ -34,12 +32,11 @@ public interface ESService {
         String aliasIndexName
     );
 
-    boolean selectIndexCheck(RestHighLevelClient client, String indexName);
+    boolean selectIndexCheck(String indexName);
 
-    boolean deleteIndex(RestHighLevelClient client, String indexName);
+    boolean deleteIndex(String indexName);
 
-    void insertData(RestHighLevelClient client, String indexName, String documentId,
-        String dataString);
+    void insertData(String indexName, String documentId, String dataString);
 
     void bulkInsertData();
 

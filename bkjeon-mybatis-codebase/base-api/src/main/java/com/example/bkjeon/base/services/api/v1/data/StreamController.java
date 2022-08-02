@@ -1,20 +1,39 @@
 package com.example.bkjeon.base.services.api.v1.data;
 
-import com.example.bkjeon.entity.data.stream.StreamUser;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.bkjeon.entity.data.stream.StreamUser;
+
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("v1/data/stream")
 public class StreamController {
+
+    @ApiOperation("List 에서 조건에 맞는 하나의 객체만 추출")
+    @GetMapping("listToFindOne")
+    public StreamUser getListToFindOne() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("C", 30),
+            new StreamUser("전봉근", 20),
+            new StreamUser("전봉근1", 10),
+            new StreamUser("전봉근2", 40),
+            new StreamUser("E", 50)
+        );
+        StreamUser streamUser = streamUserList.stream()
+            .filter(o -> o.getAge() == 10)
+            .findAny()
+            .orElse(null);
+        return streamUser;
+    }
 
     @ApiOperation("List를 HashMap형태로 변경")
     @GetMapping("listToHashMap")

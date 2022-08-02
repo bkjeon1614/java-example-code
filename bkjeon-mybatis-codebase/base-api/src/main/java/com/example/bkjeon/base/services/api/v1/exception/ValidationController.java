@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.services.api.v1.validation;
+package com.example.bkjeon.base.services.api.v1.exception;
 
 import com.example.bkjeon.base.validation.PostValidator;
 import com.example.bkjeon.dto.validation.PostEnumAssertTrueValidDTO;

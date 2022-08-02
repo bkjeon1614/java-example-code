@@ -1,7 +1,10 @@
+def resilience4jVersion = '1.7.0'
+
 dependencies {
     // Gradle Multi Module
     implementation project(':base-common')
 
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -9,8 +12,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.6'
 
-    // lib
-    implementation group: 'org.json', name: 'json', version: '20090211'
+    // resilience4j (actuator, aop 는 필수로 같이 선언되어야함)
+    implementation 'io.github.resilience4j:resilience4j-spring-boot2:' + resilience4jVersion
+    implementation 'io.github.resilience4j:resilience4j-retry:' + resilience4jVersion
+    implementation 'io.github.resilience4j:resilience4j-circuitbreaker:' + resilience4jVersion
+    implementation 'io.micrometer:micrometer-registry-prometheus'
 }
 
 test {

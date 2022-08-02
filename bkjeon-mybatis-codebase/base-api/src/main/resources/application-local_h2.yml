@@ -1,0 +1,18 @@
+spring:
+  profiles: local_h2
+  datasource:
+    jdbc-url: jdbc:h2:mem:testdb
+    username: sa
+    driverClassName: org.h2.Driver
+    data: classpath:sql/init_h2.sql
+  h2:
+    console:
+      enabled: true
+
+kafka:
+  brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092
+
+elasticsearch:
+  hosts: 10.65.40.183:9200
+  username: elastic
+  password: elastic
