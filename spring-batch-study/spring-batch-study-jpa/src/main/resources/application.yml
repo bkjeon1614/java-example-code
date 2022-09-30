@@ -1,6 +1,9 @@
 spring:
   profiles:
     active: local
+  batch:
+    job:
+      names: ${job.name:NONE}
 
 ---
 spring:
