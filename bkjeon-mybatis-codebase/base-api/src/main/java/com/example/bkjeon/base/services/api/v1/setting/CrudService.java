@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.services.api.v1.example;
+package com.example.bkjeon.base.services.api.v1.setting;
 
 import org.springframework.stereotype.Service;
 

@@ -1,12 +1,19 @@
-package com.example.bkjeon.base.services.api.v1.example;
+package com.example.bkjeon.base.services.api.v1.setting;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("v1/crud")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CrudController {
 
     private final CrudService crudService;
