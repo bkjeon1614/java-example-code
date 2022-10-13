@@ -1,5 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -17,6 +18,56 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("v1/data/stream")
 public class StreamController {
+
+    @ApiOperation("기존 생성된 List<Object> 에 stream 내부에서 새로운 List<Object> 에 대입")
+    @GetMapping("listObjectToListObject")
+    public List<StreamUser> getListObjectToListObject() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("BB", 20),
+            new StreamUser("C", 10),
+            new StreamUser("DD", 20),
+            new StreamUser("E", 20)
+        );
+
+        List<StreamUser> newStreamUserList = new ArrayList<>();
+        streamUserList.stream()
+            .filter(obj -> obj.getAge() == 20)
+            .sorted(Comparator.comparingInt(StreamUser::getAge))
+            .map(StreamUser::new)
+            .collect(Collectors.toCollection(() -> newStreamUserList));
+        return newStreamUserList;
+    }
+
+    @ApiOperation("List<Object> 에서 List<String> 으로 구현")
+    @GetMapping("listObjectToListString")
+    public List<String> getListObjectToListString() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("전봉근BB", 20),
+            new StreamUser("전봉근CC", 10),
+            new StreamUser("전봉근DD", 40),
+            new StreamUser("E", 50)
+        );
+        List<String> users = streamUserList.stream()
+            .map(o -> o.getName())
+            .collect(Collectors.toCollection(ArrayList::new));
+
+        return users;
+    }
+
+    @ApiOperation("Stream.toArray() 을 사용하여 Stream 을 배열로 변환 (List -> array)")
+    @GetMapping("listToArray")
+    public String[] getListToArray() {
+        List<String> list = new ArrayList<>();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+
+        // 같은방식으로 변경하여 사용할 수 있다. String[] -> Integer[]
+        String[] result = list.stream().map(String::toUpperCase).toArray(String[]::new);
+        return result;
+    }
 
     @ApiOperation("List 에서 조건에 맞는 하나의 객체만 추출")
     @GetMapping("listToFindOne")
