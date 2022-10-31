@@ -1,19 +1,41 @@
 package com.example.bkjeon.base.services.api.v1.data;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.bkjeon.config.bean.PdSortMapperBean;
 import com.example.bkjeon.enums.enums.EnumPayGroup;
 import com.example.bkjeon.enums.enums.EnumPayType;
 import com.example.bkjeon.enums.enums.EnumSingleton;
+import com.example.bkjeon.enums.enums.PdSortMapperValue;
 
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("v1/data/enums")
+@RequestMapping("v1/data/enum")
+@RequiredArgsConstructor
 public class EnumController {
+
+	private final PdSortMapperBean pdSortMapperBean;
+
+	@ApiOperation("DB로 관리하기 애매한 enum 값들을 코드 기반으로 관리할 때")
+	@GetMapping("enums")
+	public List<PdSortMapperValue> getEnumList() {
+		// Bean 사용 O
+		return pdSortMapperBean.getPdSortList();
+
+		// Bean 사용 X
+		/*
+		return Arrays.stream(PdSortType.values()).sorted(Comparator.comparing(PdSortType::getPdSortOrder)).map(
+			PdSortMapperValue::new).collect(Collectors.toList());
+		 */
+	}
 
 	/**
 	 * Enum 사용 예제
@@ -21,8 +43,9 @@ public class EnumController {
 	 * - 상태와 행위를 한곳에서 관리
 	 * - 데이터 그룹관리
 	 */
-	@GetMapping
-	public void getEnumList() {
+	@ApiOperation("Enum 사용예제")
+	@GetMapping("enums/findOne")
+	public void findEnum() {
 		log.info(">>>>>>>>>>>>>>>>>> ");
 		log.info("TableType.java 참고");
 		log.info(">>>>>>>>>>>>>>>>>> ");
@@ -34,10 +57,8 @@ public class EnumController {
 		log.info(">>>>>>>>>>>>>>>>>> ");
 	}
 
-	/**
-	 * Enum 을 사용한 싱글톤
-	 */
-	@GetMapping("singleton")
+	@ApiOperation("Enum 을 사용한 싱글톤")
+	@GetMapping("enums/singleton")
 	public void getEnumSingleton() {
 		String name = EnumSingleton.INSTANCE.getName();
 		log.info(">>>>>>>>>>>>>>>>>> {}", name);
