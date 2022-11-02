@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.tasklet.SimpleJobTasklet;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,24 +22,21 @@ public class SimpleJobConfiguration {
 
 	private final JobBuilderFactory jobBuilderFactory;
 	private final StepBuilderFactory stepBuilderFactory;
+	private final SimpleJobTasklet tasklet1;	// 생성자 DI
 
 	@Bean
 	public Job simpleJob() {
 		return jobBuilderFactory.get("simpleJob")
-			.start(simpleStep1(null))
+			.start(simpleStep1())
 			.next(simpleStep2(null))
 			.build();
 	}
 
-	@Bean
-	@JobScope
-	public Step simpleStep1(@Value("#{jobParameters[requestDate]}") String requestDate) {
+	//@Bean
+	//@JobScope
+	public Step simpleStep1() {
 		return stepBuilderFactory.get("simpleStep1")
-			.tasklet((contribution, chunkContext) -> {
-				log.info(">>>>> This is Step1");
-				log.info(">>>>> Request Data: {}", requestDate);
-				return RepeatStatus.FINISHED;
-			})
+			.tasklet(tasklet1)	// 생성자 DI
 			.build();
 	}
 
