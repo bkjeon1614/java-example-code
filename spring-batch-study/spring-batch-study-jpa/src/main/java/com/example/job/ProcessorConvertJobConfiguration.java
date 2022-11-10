@@ -5,18 +5,19 @@ import javax.persistence.EntityManagerFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.database.JpaItemWriter;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.JpaPagingItemReader;
 import org.springframework.batch.item.database.builder.JpaPagingItemReaderBuilder;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 
-import com.example.entity.Product;
-import com.example.entity.ProductNew;
+import com.example.entity.Teacher;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,56 +25,63 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
-public class JpaItemWriterJobConfiguration implements InitializingBean {
+public class ProcessorConvertJobConfiguration implements InitializingBean {
+
+	public static final String JOB_NAME = "ProcessorConvertBatch";
+	public static final String BEAN_PREFIX = JOB_NAME + "_";
+
 	private final JobBuilderFactory jobBuilderFactory;
 	private final StepBuilderFactory stepBuilderFactory;
 	private final EntityManagerFactory entityManagerFactory;
 
-	private static final int chunkSize = 10;
+	@Value("${chunkSize:1000}")
+	private int chunkSize;
 
 	@Override
 	public void afterPropertiesSet() {
 		Assert.notNull(entityManagerFactory, "EntityManagerFactory is required");
 	}
 
-	@Bean
-	public Job jpaItemWriterJob() {
-		return jobBuilderFactory.get("jpaItemWriterJob")
-			.start(jpaItemWriterStep())
+	@Bean(JOB_NAME)
+	public Job job() {
+		return jobBuilderFactory.get(JOB_NAME)
+			.preventRestart()
+			.start(step())
+			.build();
+	}
+
+	@Bean(BEAN_PREFIX + "step")
+	@JobScope
+	public Step step() {
+		return stepBuilderFactory.get(BEAN_PREFIX + "step")
+			.<Teacher, String>chunk(chunkSize)
+			.reader(reader())
+			.processor(processor())
+			.writer(writer())
 			.build();
 	}
 
 	@Bean
-	public Step jpaItemWriterStep() {
-		return stepBuilderFactory.get("jpaItemWriterStep")
-			.<Product, ProductNew>chunk(chunkSize)
-			.reader(jpaItemWriterReader())
-			.processor(jpaItemProcessor())
-			.writer(jpaItemWriter())
-			.build();
-	}
-
-	@Bean
-	public JpaPagingItemReader<Product> jpaItemWriterReader() {
-		return new JpaPagingItemReaderBuilder<Product>()
-			.name("jpaItemWriterReader")
+	public JpaPagingItemReader<Teacher> reader() {
+		return new JpaPagingItemReaderBuilder<Teacher>()
+			.name(BEAN_PREFIX + "reader")
 			.entityManagerFactory(entityManagerFactory)
 			.pageSize(chunkSize)
-			.queryString("SELECT p FROM Product p")
+			.queryString("SELECT t FROM Teacher t")
 			.build();
 	}
 
-	// Processor 추가: Product Entity 를 읽어서 Writer 에는 ProductNew Entity 를 전달하기 위함
 	@Bean
-	public ItemProcessor<Product, ProductNew> jpaItemProcessor() {
-		return product -> new ProductNew(product.getAmount(), product.getTxName(), product.getTxDateTime());
+	public ItemProcessor<Teacher, String> processor() {
+		return teacher -> teacher.getName();
 	}
 
-	@Bean
-	public JpaItemWriter<ProductNew> jpaItemWriter() {
-		JpaItemWriter<ProductNew> jpaItemWriter = new JpaItemWriter<>();
-		jpaItemWriter.setEntityManagerFactory(entityManagerFactory);
-		return jpaItemWriter;
+	private ItemWriter<String> writer() {
+		return items -> {
+			for (String item : items) {
+				log.info("Teacher Name={}", item);
+			}
+		};
 	}
 
 }
