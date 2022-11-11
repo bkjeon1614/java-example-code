@@ -10,13 +10,13 @@ import java.util.*;
 
 @Slf4j
 public final class DateUtil {
-    public static final Integer SECONDS_IN_DAY = 86400;
-    public static final Integer SECONDS_IN_HOUR = 3600;
+    public static final Integer SECONDS_IN_DAY = 86_400;
+    public static final Integer SECONDS_IN_HOUR = 3_600;
     public static final Integer SECONDS_IN_MINUTE = 60;
 
-    public static final Long MILLISECONDS_IN_DAY = 86400000L;
-    public static final Long MILLISECONDS_IN_HOUR = 3600000L;
-    public static final Long MILLISECONDS_IN_MINUTE = 60000L;
+    public static final Long MILLISECONDS_IN_DAY = 86_400_000L;
+    public static final Long MILLISECONDS_IN_HOUR = 3_600_000L;
+    public static final Long MILLISECONDS_IN_MINUTE = 60_000L;
 
     private DateUtil() {
         throw new IllegalStateException("Utility class");
