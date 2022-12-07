@@ -4,9 +4,18 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
 
     <property name="LOG_FILE_APPLICATION" value="${bkjeon.base.logs:-logs}/application.log" />
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] [Request: %X{method} uri=%X{uri} payload=%X{payload}] %-5level %logger{36} - %msg %n
+            </Pattern>
+        </layout>
+    </appender>
+
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread]64 [Request: %X{method} uri=%X{uri} payload=%X{payload}] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
         <file>${LOG_FILE_APPLICATION}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -16,53 +25,53 @@
     </appender>
 
     <springProfile name="local_h2">
-        <logger name="com.example.bkjeon" level="debug"/>
-        <logger name="org.springframework.web" level="debug"/>
-        <logger name="org.springframework.data" level="debug"/>
+        <logger name="com.example.bkjeon" level="debug" />
+        <logger name="org.springframework.web" level="debug" />
+        <logger name="org.springframework.data" level="debug" />
 
-        <logger name="jdbc" level="OFF"/>
-        <logger name="jdbc.connection" level="OFF"/>
-        <logger name="jdbc.sqlonly" level="DEBUG"/>
-        <logger name="jdbc.sqltiming" level="DEBUG"/>
-        <logger name="jdbc.audit" level="OFF"/>
-        <logger name="jdbc.resultset" level="OFF"/>
-        <logger name="jdbc.resultsettable" level="OFF"/>
+        <logger name="jdbc" level="OFF" />
+        <logger name="jdbc.connection" level="OFF" />
+        <logger name="jdbc.sqlonly" level="DEBUG" />
+        <logger name="jdbc.sqltiming" level="DEBUG" />
+        <logger name="jdbc.audit" level="OFF" />
+        <logger name="jdbc.resultset" level="OFF" />
+        <logger name="jdbc.resultsettable" level="OFF" />
 
         <root level="info">
-            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="stdout" />
         </root>
     </springProfile>
 
     <springProfile name="local_dev">
-        <logger name="com.example.bkjeon" level="debug"/>
-        <logger name="org.springframework.web" level="debug"/>
-        <logger name="org.springframework.data" level="debug"/>
+        <logger name="com.example.bkjeon" level="debug" />
+        <logger name="org.springframework.web" level="debug" />
+        <logger name="org.springframework.data" level="debug" />
 
-        <logger name="jdbc" level="OFF"/>
-        <logger name="jdbc.connection" level="OFF"/>
-        <logger name="jdbc.sqlonly" level="DEBUG"/>
-        <logger name="jdbc.sqltiming" level="DEBUG"/>
-        <logger name="jdbc.audit" level="OFF"/>
-        <logger name="jdbc.resultset" level="OFF"/>
-        <logger name="jdbc.resultsettable" level="OFF"/>
+        <logger name="jdbc" level="OFF" />
+        <logger name="jdbc.connection" level="OFF" />
+        <logger name="jdbc.sqlonly" level="DEBUG" />
+        <logger name="jdbc.sqltiming" level="DEBUG" />
+        <logger name="jdbc.audit" level="OFF" />
+        <logger name="jdbc.resultset" level="OFF" />
+        <logger name="jdbc.resultsettable" level="OFF" />
 
         <root level="info">
-            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="stdout" />
         </root>
     </springProfile>
 
     <springProfile name="dev">
-        <logger name="com.example.bkjeon" level="debug"/>
-        <logger name="org.springframework.web" level="debug"/>
-        <logger name="org.springframework.data" level="debug"/>
+        <logger name="com.example.bkjeon" level="debug" />
+        <logger name="org.springframework.web" level="debug" />
+        <logger name="org.springframework.data" level="debug" />
 
-        <logger name="jdbc" level="OFF"/>
-        <logger name="jdbc.connection" level="OFF"/>
-        <logger name="jdbc.sqlonly" level="OFF"/>
-        <logger name="jdbc.sqltiming" level="OFF"/>
-        <logger name="jdbc.audit" level="OFF"/>
-        <logger name="jdbc.resultset" level="OFF"/>
-        <logger name="jdbc.resultsettable" level="OFF"/>
+        <logger name="jdbc" level="OFF" />
+        <logger name="jdbc.connection" level="OFF" />
+        <logger name="jdbc.sqlonly" level="OFF" />
+        <logger name="jdbc.sqltiming" level="OFF" />
+        <logger name="jdbc.audit" level="OFF" />
+        <logger name="jdbc.resultset" level="OFF" />
+        <logger name="jdbc.resultsettable" level="OFF" />
 
         <root level="info">
             <appender-ref ref="FILE"/>
@@ -70,20 +79,20 @@
     </springProfile>
 
     <springProfile name="production">
-        <logger name="com.example.bkjeon" level="info"/>
-        <logger name="org.springframework.web" level="info"/>
-        <logger name="org.springframework.data" level="info"/>
+        <logger name="com.example.bkjeon" level="info" />
+        <logger name="org.springframework.web" level="info" />
+        <logger name="org.springframework.data" level="info" />
         
-        <logger name="jdbc" level="OFF"/>
-        <logger name="jdbc.connection" level="OFF"/>
-        <logger name="jdbc.sqlonly" level="OFF"/>
-        <logger name="jdbc.sqltiming" level="OFF"/>
-        <logger name="jdbc.audit" level="OFF"/>
-        <logger name="jdbc.resultset" level="OFF"/>
-        <logger name="jdbc.resultsettable" level="OFF"/>
+        <logger name="jdbc" level="OFF" />
+        <logger name="jdbc.connection" level="OFF" />
+        <logger name="jdbc.sqlonly" level="OFF" />
+        <logger name="jdbc.sqltiming" level="OFF" />
+        <logger name="jdbc.audit" level="OFF" />
+        <logger name="jdbc.resultset" level="OFF" />
+        <logger name="jdbc.resultsettable" level="OFF" />
         
         <root level="info">
-            <appender-ref ref="FILE"/>
+            <appender-ref ref="FILE" />
         </root>
     </springProfile>
 </configuration>

@@ -1,22 +1,25 @@
 package com.example.bkjeon.base.services.api.v1.file;
 
-import com.example.bkjeon.util.file.ExcelUtil;
-import com.example.bkjeon.entity.file.FileExportXlsxExample;
-import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
+import com.example.bkjeon.entity.file.FileExportXlsxExample;
+import com.example.bkjeon.util.file.ExcelUtil;
+
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("v1/file")
 public class FileExportController {
 

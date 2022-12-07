@@ -82,3 +82,7 @@ management:
       enabled: true # circuitbreakers 정보 노출
     retryevents:
       enabled: true # retryevents 정보 노출
+
+# SpEL
+spel:
+  value: 100
