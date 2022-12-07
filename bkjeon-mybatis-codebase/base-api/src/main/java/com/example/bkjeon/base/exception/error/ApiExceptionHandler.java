@@ -7,9 +7,8 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.example.bkjeon.enums.exception.ErrorCode;
@@ -17,7 +16,7 @@ import com.example.bkjeon.model.response.ApiResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
-@ControllerAdvice
+@RestControllerAdvice
 @Slf4j
 public class ApiExceptionHandler {
 
@@ -27,7 +26,6 @@ public class ApiExceptionHandler {
 	 * 주로 @RequestBody, @RequestPart 어노테이션에서 발생
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	@ResponseBody
 	private ApiResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		Map<String, String> errorMap = new HashMap<>();
 		e.getBindingResult().getAllErrors()
@@ -69,7 +67,6 @@ public class ApiExceptionHandler {
 	 * 주로 @RequestParam Enum binding 못했을 경우 발생
 	 */
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
-	@ResponseBody
 	private ApiResponse handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
 		log.error("=================== MethodArgumentTypeMismatchException Error !!", e);
 		return ApiResponse.builder()
@@ -82,7 +79,6 @@ public class ApiExceptionHandler {
 	 * 지원하지 않은 HTTP method 호출 할 경우 발생
 	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	@ResponseBody
 	private ApiResponse handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 		log.error("=================== HttpRequestMethodNotSupportedException Error !!", e);
 		return ApiResponse.builder()
@@ -97,7 +93,6 @@ public class ApiExceptionHandler {
 	 * @return
 	 */
 	@ExceptionHandler(BoardException.class)
-	@ResponseBody
 	private ApiResponse handleBoardException(BoardException e) {
 		log.error("=================== BoardException Error !!", e);
 		final ErrorCode errorCode = e.getErrorCode();
@@ -110,7 +105,6 @@ public class ApiExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	@ResponseBody
 	private ApiResponse handleException(Exception e) {
 		log.error("=================== Exception Error !!", e);
 		return ApiResponse.builder()
