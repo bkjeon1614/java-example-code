@@ -20,3 +20,9 @@ elasticsearch:
   hosts: 192.168.0.203:9200,192.168.0.204:9200
   username: elastic
   password: elastic
+
+external:
+  api:
+    user:
+      url: https://jsonplaceholder.typicode.com
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ7XCJwb3NpdERlcHRJZFwiOjMsXCJkbW5DZFwiOlwiRUxUXCIsXCJhcGlrZXlJZFwiOlwiRUxUXzE1NTY1MjM

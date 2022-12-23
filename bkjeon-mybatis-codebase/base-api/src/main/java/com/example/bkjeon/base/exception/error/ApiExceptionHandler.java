@@ -104,6 +104,16 @@ public class ApiExceptionHandler {
 			.build();
 	}
 
+	@ExceptionHandler(NullPointerException.class)
+	private ApiResponse handleException(NullPointerException e) {
+		log.error("=================== NullPointerException Error !!", e);
+		return ApiResponse.builder()
+			.statusCode(ErrorCode.INTERNAL_SERVER_ERROR.getStatus())
+			.responseMessage(ErrorCode.INTERNAL_SERVER_ERROR.getMessage())
+			.build();
+	}
+
+	/*
 	@ExceptionHandler(Exception.class)
 	private ApiResponse handleException(Exception e) {
 		log.error("=================== Exception Error !!", e);
@@ -112,5 +122,6 @@ public class ApiExceptionHandler {
 			.responseMessage(ErrorCode.INTERNAL_SERVER_ERROR.getMessage())
 			.build();
 	}
+	 */
 
 }
