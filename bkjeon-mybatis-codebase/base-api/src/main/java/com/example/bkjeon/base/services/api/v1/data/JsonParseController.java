@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -121,6 +122,31 @@ public class JsonParseController {
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> jsonMap = objectMapper.readValue(JSON_OBJECT_STRING, new TypeReference<>(){});
         log.info(">>>>>>>>>>>>>>>>>>>> isJsonToJavaMap: {}", jsonMap.get("title").toString());
+    }
+
+    @ApiOperation("[Jackson] JSON 에는 있지만 Mapping 될 Object 에는 없는 필드를 무시해야하는 경우")
+    @GetMapping("isJsonNotMappingIgnore")
+    public void isJsonNotMappingIgnore() throws IOException {
+        String json = "{\"title\":\"Ryan\",\"age\":30,\"url\":\"www.test.com\"}";
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // JsonTest Object 에서는 "age" 항목이 없습니다. 아래 설정을 안하게되면 익셉션이 발생합니다.
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonTest user = objectMapper.readValue(json, JsonTest.class);
+        log.info(">>>>>>>>>>>>>>>>>>>> isJsonNotMappingIgnore: {}", user.title);
+    }
+
+    @ApiOperation("[Jackson] JSON 에 있는 Property 가 Mapping 될 Object 에 Primitive 인데 null 값이 전달을 무시해야하는 경우")
+    @GetMapping("isJsonPropertyNullIgnore")
+    public void isJsonPropertyNullIgnore() throws IOException {
+        String json = "{\"title\":\"Ryan\",\"type\":null,\"url\":\"www.test.com\"}";
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 기본적으로 FAIL_ON_NULL_FOR_PRIMITIVES 옵션은 false 상태이다. 의도적으로 옵션을 설정해서 테스트를 하였다.
+        // 옵션이 true 가 되게되면, type 이 boolean 인 primitive 자료형이 null 인 json 이 전달되는 경우 익셉션을 발생시킨다.
+        objectMapper.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true);
+        JsonTest user = objectMapper.readValue(json, JsonTest.class);
+        log.info(">>>>>>>>>>>>>>>>>>>> isJsonNotMappingIgnore: {}", user.title);
     }
 
     @ApiOperation("JSON Object Null Check")
