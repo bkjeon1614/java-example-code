@@ -34,7 +34,7 @@ public class JsonParseController {
         + "\"star\": 15"
     + "}";
 
-    private final static String jsonObjectAndObjectString = "{"
+    private final static String JSON_OBJECT_AND_OBJECT_STRING = "{"
         + "\"obj1\": {"
             + "\"title\": \"제목 bkjeon\","
             + "\"url\": \"https://bkjeon1614.tistory.com\","
@@ -152,7 +152,7 @@ public class JsonParseController {
     @ApiOperation("JSON Object Null Check")
     @GetMapping("jsonObjectNullCheck")
     public void jsonObjectNullCheck() throws JSONException {
-        JSONObject jsonObject = new JSONObject(jsonObjectAndObjectString);
+        JSONObject jsonObject = new JSONObject(JSON_OBJECT_AND_OBJECT_STRING);
 
         System.out.println("title object check: " + !jsonObject.getJSONObject("obj2").isNull("title"));
         System.out.println("title2 object check: " + !jsonObject.getJSONObject("obj2").isNull("title2"));
@@ -181,7 +181,7 @@ public class JsonParseController {
         Map<String, Map<String, Object>> retMap = new HashMap<>();
 
         // 가장 큰 JSONObject를 가져옵니다.
-        JSONObject jObject = new JSONObject(jsonObjectAndObjectString);
+        JSONObject jObject = new JSONObject(JSON_OBJECT_AND_OBJECT_STRING);
 
         // 첫번째 JSONObject를 가져와서 key-value를 읽습니다.
         Map<String, Object> retPost1Map = new HashMap<>();

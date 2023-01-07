@@ -3,6 +3,7 @@
 ## Info
 - Application: http://localhost:9090
 - Swagger: http://localhost:9090/api/swagger-ui.html
+- Zipkin Dashboard: http://localhost:9411
 
 ## Build
 - Local
