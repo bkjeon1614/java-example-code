@@ -20,6 +20,19 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("v1/data/stream")
 public class StreamController {
 
+    @ApiOperation("Total Count 개수 얻기")
+    @GetMapping("listToTotalCount")
+    public Long getListToTotalCount() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("BB", 20),
+            new StreamUser("C", 10),
+            new StreamUser("DD", 20),
+            new StreamUser("E", 20)
+        );
+        return streamUserList.stream().collect(Collectors.counting());
+    }
+
     @ApiOperation("기존 생성된 List<Object> 에 stream 내부에서 새로운 List<Object> 에 대입")
     @GetMapping("listObjectToListObject")
     public List<StreamUser> getListObjectToListObject() {
