@@ -20,6 +20,20 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("v1/data/stream")
 public class StreamController {
 
+    @ApiOperation("List Map 형태의 데이터에서 stream 을 통한 max 값 추출(min 도 같은 개념으로 활용 -> Ex) stream().min()...)")
+    @GetMapping("listToMaxValue")
+    public int getListToMaxValue() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("BB", 20),
+            new StreamUser("C", 10),
+            new StreamUser("DD", 20),
+            new StreamUser("E", 20)
+        );
+
+        return streamUserList.stream().max(Comparator.comparing(StreamUser::getAge)).get().getAge();
+    }
+
     @ApiOperation("Total Count 개수 얻기")
     @GetMapping("listToTotalCount")
     public Long getListToTotalCount() {
