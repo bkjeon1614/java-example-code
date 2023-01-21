@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +31,13 @@ public class StreamController {
             new StreamUser("DD", 20),
             new StreamUser("E", 20)
         );
+        Integer maxAge = 0;
+        Optional<StreamUser> maxStreamUserObj = streamUserList.stream().max(Comparator.comparing(StreamUser::getAge));
+        if (maxStreamUserObj.isPresent()) {
+            maxAge = maxStreamUserObj.get().getAge();
+        }
 
-        return streamUserList.stream().max(Comparator.comparing(StreamUser::getAge)).get().getAge();
+        return maxAge;
     }
 
     @ApiOperation("Total Count 개수 얻기")
