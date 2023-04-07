@@ -1,5 +1,12 @@
 spring:
   profiles: local_dev
+  sleuth:
+    sampler:
+      probability: 1.0
+    enabled: false
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: false
   oracle:
     datasource:
       jdbcUrl: jdbc:oracle:thin:@127.0.0.1:1521/xe

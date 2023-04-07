@@ -3,11 +3,6 @@ spring:
     active: local_dev
   application:
     name: bkjeon-mybatis-codebase
-  sleuth:
-    sampler:
-      probability: 1.0
-  zipkin:
-    base-url: http://127.0.0.1:9411
 
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
