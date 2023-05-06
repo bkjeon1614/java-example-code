@@ -17,8 +17,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'
+    testImplementation 'org.mockito:mockito-core:3.9.0'
 
     // cache
     implementation 'org.springframework.boot:spring-boot-starter-cache'
@@ -39,9 +43,31 @@ dependencies {
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-zipkin', version: '2.2.3.RELEASE'
 }
 
-test {
-    useJUnitPlatform()
+// ---------------- Test Start
+task integrationTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'integration'   // 통합 테스트
+    }
 
     systemProperty "jasypt.encryptor.password", System.getProperty("jasypt.encryptor.password")
     systemProperty "mysql.aeskey", System.getProperty("mysql.aeskey")
 }
+
+task unitTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'unit'  // 단위 테스트
+    }
+
+    systemProperty "jasypt.encryptor.password", System.getProperty("jasypt.encryptor.password")
+    systemProperty "mysql.aeskey", System.getProperty("mysql.aeskey")
+}
+
+task acceptanceTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'acceptance'  // 인수 테스트
+    }
+
+    systemProperty "jasypt.encryptor.password", System.getProperty("jasypt.encryptor.password")
+    systemProperty "mysql.aeskey", System.getProperty("mysql.aeskey")
+}
+// ---------------- Test End
