@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommonLogController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.services.api.v1.log</a> &gt; <span class="el_source">CommonLogController.java</span></div><h1>CommonLogController.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.services.api.v1.log;
+
+import com.example.bkjeon.dto.common.log.CommonESLogSaveRequestDTO;
+import com.example.bkjeon.model.response.ApiResponse;
+import io.swagger.annotations.ApiOperation;
+import java.util.List;
+import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequestMapping(&quot;v1/logs&quot;)
+@RestController
+<span class="fc" id="L20">@RequiredArgsConstructor</span>
+public class CommonLogController {
+
+    private final CommonLogService commonLogService;
+
+    @ApiOperation(&quot;로그 저장 API&quot;)
+    @PostMapping
+    public ResponseEntity setLog(
+        @RequestBody @Valid final CommonESLogSaveRequestDTO commonESLogSaveRequestDTO,
+        BindingResult bindingResult
+    ) {
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (bindingResult.hasErrors()) {</span>
+<span class="nc" id="L32">            List&lt;ObjectError&gt; list = bindingResult.getAllErrors();</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">            for (ObjectError e : list) {</span>
+<span class="nc" id="L34">                return new ResponseEntity(</span>
+<span class="nc" id="L35">                    ApiResponse.res(</span>
+<span class="nc" id="L36">                        HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L37">                        e.getDefaultMessage(),</span>
+                        commonESLogSaveRequestDTO,
+                        null
+                    ),
+                    HttpStatus.BAD_REQUEST
+                );
+            }
+        }
+
+<span class="nc" id="L46">        return commonLogService.setESLog(commonESLogSaveRequestDTO);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,9 +1,11 @@
 # API Code Base
 
 ## Info
-- Application: http://localhost:9090
+- Application: http://localhost:9090/api
 - Swagger: http://localhost:9090/api/swagger-ui.html
 - Zipkin Dashboard: http://localhost:9411
+- Spotbugs: http://localhost:9090/api/spotbugs.html
+- jacoco: http://localhost:9090/api/jacoco/index.html
 
 ## Build
 - Local

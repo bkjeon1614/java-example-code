@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EnumController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.services.api.v1.data</a> &gt; <span class="el_source">EnumController.java</span></div><h1>EnumController.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.services.api.v1.data;
+
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.bkjeon.config.bean.PdSortMapperBean;
+import com.example.bkjeon.enums.enums.EnumPayGroup;
+import com.example.bkjeon.enums.enums.EnumPayType;
+import com.example.bkjeon.enums.enums.EnumSingleton;
+import com.example.bkjeon.enums.enums.PdSortMapperValue;
+
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+<span class="fc" id="L19">@Slf4j</span>
+@RestController
+@RequestMapping(&quot;v1/data/enum&quot;)
+<span class="fc" id="L22">@RequiredArgsConstructor</span>
+public class EnumController {
+
+	private final PdSortMapperBean pdSortMapperBean;
+
+	@ApiOperation(&quot;DB로 관리하기 애매한 enum 값들을 코드 기반으로 관리할 때&quot;)
+	@GetMapping(&quot;enums&quot;)
+	public List&lt;PdSortMapperValue&gt; getEnumList() {
+		// Bean 사용 O
+<span class="nc" id="L31">		return pdSortMapperBean.getPdSortList();</span>
+
+		// Bean 사용 X
+		/*
+		return Arrays.stream(PdSortType.values()).sorted(Comparator.comparing(PdSortType::getPdSortOrder)).map(
+			PdSortMapperValue::new).collect(Collectors.toList());
+		 */
+	}
+
+	/**
+	 * Enum 사용 예제
+	 * - 데이터들간의 연관관계 표현
+	 * - 상태와 행위를 한곳에서 관리
+	 * - 데이터 그룹관리
+	 */
+	@ApiOperation(&quot;Enum 사용예제&quot;)
+	@GetMapping(&quot;enums/findOne&quot;)
+	public void findEnum() {
+<span class="nc" id="L49">		log.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; &quot;);</span>
+<span class="nc" id="L50">		log.info(&quot;TableType.java 참고&quot;);</span>
+<span class="nc" id="L51">		log.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; &quot;);</span>
+<span class="nc" id="L52">		log.info(&quot;Code에게 직접 계산을 요청 -&gt; EnumCalculatorType.calculate(); 참고&quot;);</span>
+<span class="nc" id="L53">		log.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; &quot;);</span>
+<span class="nc" id="L54">		EnumPayGroup payGroup = EnumPayGroup.findByPayCode(EnumPayType.KAKAO_PAY);</span>
+<span class="nc" id="L55">		log.info(&quot;결제수단: KAKAO_PAY 코드값 payGroup.name(): {}&quot;, payGroup.name());</span>
+<span class="nc" id="L56">		log.info(&quot;결제수단: KAKAO_PAY 코드값 payGroup.getTitle(): {}&quot;, payGroup.getTitle());</span>
+<span class="nc" id="L57">		log.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; &quot;);</span>
+<span class="nc" id="L58">	}</span>
+
+	@ApiOperation(&quot;Enum 을 사용한 싱글톤&quot;)
+	@GetMapping(&quot;enums/singleton&quot;)
+	public void getEnumSingleton() {
+<span class="nc" id="L63">		String name = EnumSingleton.INSTANCE.getName();</span>
+<span class="nc" id="L64">		log.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; {}&quot;, name);</span>
+<span class="nc" id="L65">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
