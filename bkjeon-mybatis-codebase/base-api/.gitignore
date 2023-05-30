@@ -29,3 +29,4 @@ out/
 
 ### VS Code ###
 .vscode/
+jacoco

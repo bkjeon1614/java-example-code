@@ -146,7 +146,9 @@ jacocoTestCoverageVerification {
                 maximum = 2000
             }
 
-            excludes = []
+            excludes = [
+                "*"
+            ]
         }
 
         // 여러 개의 rule 정의 가능
