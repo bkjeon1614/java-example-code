@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ESServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.services.api.v1.elastic</a> &gt; <span class="el_source">ESServiceImpl.java</span></div><h1>ESServiceImpl.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.services.api.v1.elastic;
+
+import java.io.IOException;
+
+import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.support.master.AcknowledgedResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.core.CountRequest;
+import org.elasticsearch.client.core.CountResponse;
+import org.elasticsearch.client.indices.CreateIndexRequest;
+import org.elasticsearch.client.indices.CreateIndexResponse;
+import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentType;
+import org.springframework.stereotype.Service;
+
+import com.example.bkjeon.base.config.elastic.ESSearchConfig;
+import com.example.bkjeon.util.elastic.ESRequestUtil;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+<span class="fc" id="L29">@Slf4j</span>
+@Service
+<span class="fc" id="L31">@RequiredArgsConstructor</span>
+public class ESServiceImpl implements ESService {
+
+    private final ESSearchConfig esSearchConfig;
+
+    public long getDocTotalCnt() {
+<span class="nc" id="L37">        long totalCnt = 0;</span>
+<span class="nc" id="L38">        CountRequest countRequest = ESRequestUtil.getTotalCntSearchRequest(&quot;indexName&quot;);</span>
+
+        try {
+<span class="nc" id="L41">            CountResponse countResponse = esSearchConfig</span>
+<span class="nc" id="L42">                .restHighLevelClient()</span>
+<span class="nc" id="L43">                .count(countRequest, RequestOptions.DEFAULT);</span>
+<span class="nc" id="L44">            totalCnt = countResponse.getCount();</span>
+<span class="nc" id="L45">        } catch (Exception e) {</span>
+<span class="nc" id="L46">            log.error(&quot;getDocTotalCnt Error: {}&quot;, e);</span>
+<span class="nc" id="L47">        }</span>
+
+<span class="nc" id="L49">        return totalCnt;</span>
+    }
+
+    /**
+     * 인덱스 생성
+     * @param indexName 생성할 인덱스명
+     * @param settingShardCnt 샤드수
+     * @param settingReplicaCnt 레플리카수
+     * @param builder queryDSL
+     * @return boolean
+     */
+    @Override
+    public boolean createIndex(
+        String indexName,
+        int settingShardCnt,
+        int settingReplicaCnt,
+        XContentBuilder builder
+    ) {
+<span class="nc" id="L67">        boolean acknowledged = false;</span>
+
+        try {
+            // 신규 인덱스 생성
+<span class="nc" id="L71">            CreateIndexRequest createIndexRequest = ESRequestUtil.getCreateIndexRequest(</span>
+                indexName,
+                settingShardCnt,
+                settingReplicaCnt,
+                builder
+            );
+<span class="nc" id="L77">            CreateIndexResponse createIndexResponse = esSearchConfig.restHighLevelClient().indices().create(</span>
+                createIndexRequest,
+                RequestOptions.DEFAULT
+            );
+<span class="nc" id="L81">            acknowledged = createIndexResponse.isAcknowledged();</span>
+
+<span class="nc" id="L83">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L84">            log.info(&quot;index create acknowledged: {}&quot;, acknowledged);</span>
+<span class="nc" id="L85">            log.info(&quot;Create Index Name: {}&quot;, indexName);</span>
+<span class="nc" id="L86">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L87">        } catch (IOException e) {</span>
+<span class="nc" id="L88">            log.error(&quot;createIndex Error !!: {}&quot;, e);</span>
+<span class="nc" id="L89">        }</span>
+
+<span class="nc" id="L91">        return acknowledged;</span>
+    }
+
+    /**
+     * 인덱스 생성(별칭포함)
+     * @param indexName 생성할 인덱스명
+     * @param settingShardCnt 샤드수
+     * @param settingReplicaCnt 레플리카수
+     * @param builder queryDSL
+     * @return boolean
+     */
+    @Override
+    public boolean createAliasIndex(
+        String indexName,
+        String aliasIndexName,
+        int settingShardCnt,
+        int settingReplicaCnt,
+        XContentBuilder builder
+    ) {
+<span class="nc" id="L110">        boolean acknowledged = false;</span>
+
+        try {
+            // 신규 인덱스 생성
+<span class="nc" id="L114">            CreateIndexRequest createIndexRequest = ESRequestUtil.getCreateIndexAliasRequest(</span>
+                indexName,
+                settingShardCnt,
+                settingReplicaCnt,
+                builder,
+                aliasIndexName
+            );
+<span class="nc" id="L121">            CreateIndexResponse createIndexResponse = esSearchConfig.restHighLevelClient().indices().create(</span>
+                createIndexRequest,
+                RequestOptions.DEFAULT
+            );
+<span class="nc" id="L125">            acknowledged = createIndexResponse.isAcknowledged();</span>
+
+<span class="nc" id="L127">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L128">            log.info(&quot;index create (Alias Set) acknowledged: {}&quot;, acknowledged);</span>
+<span class="nc" id="L129">            log.info(&quot;Create Index Name (Alias Set): {}&quot;, indexName);</span>
+<span class="nc" id="L130">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L131">        } catch (IOException e) {</span>
+<span class="nc" id="L132">            log.error(&quot;createIndex Error !!: {}&quot;, e);</span>
+<span class="nc" id="L133">        }</span>
+
+<span class="nc" id="L135">        return acknowledged;</span>
+    }
+
+    /**
+     * 인덱스 별칭 설정
+     * @param indexName 설정할 인덱스명
+     * @param aliasIndexName 별칭
+     * @return boolean
+     */
+    @Override
+    public boolean setIndexAlias(
+        String indexName,
+        String aliasIndexName
+    ) {
+<span class="nc" id="L149">        boolean result = true;</span>
+
+        try {
+<span class="nc" id="L152">            IndicesAliasesRequest createAliasRequest = ESRequestUtil.getCreateAliasRequest(</span>
+                indexName,
+                aliasIndexName
+            );
+<span class="nc" id="L156">            AcknowledgedResponse createAliasResponse = esSearchConfig.restHighLevelClient()</span>
+<span class="nc" id="L157">                .indices()</span>
+<span class="nc" id="L158">                .updateAliases(createAliasRequest, RequestOptions.DEFAULT);</span>
+
+<span class="nc" id="L160">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L161">            log.info(&quot;Set Alias Index Name Response: {}&quot;, createAliasResponse.isAcknowledged());</span>
+<span class="nc" id="L162">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L163">        } catch (IOException ioe) {</span>
+<span class="nc" id="L164">            log.error(&quot;setIndexAlias Error !!: {}&quot;, ioe);</span>
+<span class="nc" id="L165">            result = false;</span>
+<span class="nc" id="L166">        }</span>
+
+<span class="nc" id="L168">        return result;</span>
+    }
+
+    /**
+     * 신규 인덱스 생성 후 인덱스 별칭 교체
+     * @param beforeIndexName 이전 인덱스
+     * @param indexName 생성할 인덱스명
+     * @param settingShardCnt 샤드수
+     * @param settingReplicaCnt 레플리카수
+     * @param indexName 인덱스명
+     * @param aliasIndexName  별칭
+     * @return boolean
+     */
+    @Override
+    public boolean changeIndexAlias(
+        String beforeIndexName,
+        int settingShardCnt,
+        int settingReplicaCnt,
+        XContentBuilder builder,
+        String indexName,
+        String aliasIndexName
+    ) {
+<span class="nc" id="L190">        boolean result = true;</span>
+
+        try {
+            // 신규 인덱스 생성
+<span class="nc" id="L194">            CreateIndexRequest createIndexRequest = ESRequestUtil.getCreateIndexRequest(</span>
+                indexName,
+                settingShardCnt,
+                settingReplicaCnt,
+                builder
+            );
+<span class="nc" id="L200">            CreateIndexResponse createIndexResponse = esSearchConfig</span>
+<span class="nc" id="L201">                .restHighLevelClient().indices().create(</span>
+                createIndexRequest,
+                RequestOptions.DEFAULT
+            );
+<span class="nc" id="L205">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L206">            log.info(&quot;index create acknowledged: {}&quot;, createIndexResponse.isAcknowledged());</span>
+<span class="nc" id="L207">            log.info(&quot;Create Index Name: {}&quot;, indexName);</span>
+<span class="nc" id="L208">            log.info(&quot;===================================================&quot;);</span>
+
+            // 기존 별칭 제거
+<span class="nc" id="L211">            IndicesAliasesRequest removeAliasRequest = ESRequestUtil</span>
+<span class="nc" id="L212">                .getRemoveAliasRequest(</span>
+                beforeIndexName,
+                aliasIndexName
+            );
+<span class="nc" id="L216">            AcknowledgedResponse removeAliasResponse = esSearchConfig</span>
+<span class="nc" id="L217">                .restHighLevelClient()</span>
+<span class="nc" id="L218">                .indices()</span>
+<span class="nc" id="L219">                .updateAliases(removeAliasRequest, RequestOptions.DEFAULT);</span>
+
+            // 신규 별칭 매핑
+<span class="nc" id="L222">            IndicesAliasesRequest createAliasRequest = ESRequestUtil</span>
+<span class="nc" id="L223">                .getCreateAliasRequest(</span>
+                indexName,
+                aliasIndexName
+            );
+<span class="nc" id="L227">            AcknowledgedResponse createAliasResponse = esSearchConfig.restHighLevelClient()</span>
+<span class="nc" id="L228">                .indices()</span>
+<span class="nc" id="L229">                .updateAliases(createAliasRequest, RequestOptions.DEFAULT);</span>
+<span class="nc" id="L230">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L231">            log.info(&quot;Delete Alias Index Name Response: {}&quot;, removeAliasResponse.isAcknowledged());</span>
+<span class="nc" id="L232">            log.info(&quot;Add Alias Index Name Response: {}&quot;, createAliasResponse.isAcknowledged());</span>
+<span class="nc" id="L233">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L234">        } catch (IOException ioe) {</span>
+<span class="nc" id="L235">            log.error(&quot;changeIndexAlias Error !!: {}&quot;, ioe);</span>
+<span class="nc" id="L236">            result = false;</span>
+<span class="nc" id="L237">        }</span>
+
+<span class="nc" id="L239">        return result;</span>
+    }
+
+    /**
+     * 인덱스 존재 유무 체크
+     * @param indexName
+     * @return boolean
+     */
+    @Override
+    public boolean selectIndexCheck(String indexName) {
+<span class="nc" id="L249">        boolean exists = false;</span>
+<span class="nc" id="L250">        GetIndexRequest indexCheckRequest = new GetIndexRequest(indexName);</span>
+
+        try {
+<span class="nc" id="L253">            exists = esSearchConfig</span>
+<span class="nc" id="L254">                .restHighLevelClient()</span>
+<span class="nc" id="L255">                .indices()</span>
+<span class="nc" id="L256">                .exists(indexCheckRequest, RequestOptions.DEFAULT);</span>
+<span class="nc" id="L257">        } catch (IOException ioe) {</span>
+<span class="nc" id="L258">            log.error(&quot;selectIndexCheck Error !!: {}&quot;, ioe);</span>
+<span class="nc" id="L259">        }</span>
+
+<span class="nc" id="L261">        return exists;</span>
+    }
+
+    /**
+     * 인덱스 제거
+     * @param indexName
+     * @return
+     */
+    @Override
+    public boolean deleteIndex(String indexName) {
+<span class="nc" id="L271">        boolean result = true;</span>
+
+        try {
+<span class="nc" id="L274">            DeleteIndexRequest request = new DeleteIndexRequest(indexName);</span>
+<span class="nc" id="L275">            AcknowledgedResponse response = esSearchConfig</span>
+<span class="nc" id="L276">                .restHighLevelClient()</span>
+<span class="nc" id="L277">                .indices()</span>
+<span class="nc" id="L278">                .delete(request, RequestOptions.DEFAULT);</span>
+
+<span class="nc" id="L280">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L281">            log.info(&quot;Delete Index Name: {}&quot;, indexName);</span>
+<span class="nc" id="L282">            log.info(&quot;Delete Index Name Response: {}&quot;, response.isAcknowledged());</span>
+<span class="nc" id="L283">            log.info(&quot;===================================================&quot;);</span>
+<span class="nc" id="L284">        } catch (IOException ioe) {</span>
+<span class="nc" id="L285">            log.error(&quot;deleteIndex Error !!: {}&quot;, ioe);</span>
+<span class="nc" id="L286">            result = false;</span>
+<span class="nc" id="L287">        }</span>
+
+<span class="nc" id="L289">        return result;</span>
+    }
+
+    /**
+     * 단일 데이터 insert (향후 다량의 데이터를 저장해야하는 경우 BulkProcess 클래스를 사용하여 메소드 추가 필요)
+     * @param indexName
+     * @param dataString
+     */
+    @Override
+    public void insertData(
+        String indexName,
+        String documentId,
+        String dataString
+    ) {
+<span class="nc" id="L303">        BulkRequest bulkRequest = new BulkRequest();</span>
+<span class="nc" id="L304">        IndexRequest indexRequest = new IndexRequest(indexName);</span>
+
+        try {
+<span class="nc" id="L307">            log.info(&quot;==================== insert Request indexName: {}&quot;, indexName);</span>
+<span class="nc" id="L308">            log.info(&quot;==================== insert Request Data: {}&quot;, dataString);</span>
+
+<span class="nc" id="L310">            indexRequest.source(dataString, XContentType.JSON);</span>
+<span class="nc" id="L311">            bulkRequest.add(indexRequest);</span>
+<span class="nc" id="L312">            esSearchConfig.restHighLevelClient().bulkAsync(</span>
+                bulkRequest,
+                RequestOptions.DEFAULT,
+<span class="nc" id="L315">                new ActionListener&lt;&gt;() {</span>
+                    @Override
+                    public void onResponse(BulkResponse bulkResponse) {
+<span class="nc" id="L318">                        log.info(</span>
+                            &quot;==================== insert Request ResultType: {}&quot;,
+<span class="nc" id="L320">                            bulkResponse.status()</span>
+                        );
+<span class="nc" id="L322">                    }</span>
+
+                    @Override
+                    public void onFailure(Exception e) {
+<span class="nc" id="L326">                        log.error(</span>
+                            &quot;==================== bulkResponse error: {}&quot;,
+                            e
+                        );
+<span class="nc" id="L330">                    }</span>
+                }
+            );
+<span class="nc" id="L333">        } catch (Exception e) {</span>
+<span class="nc" id="L334">            log.error(&quot;insertData Exception Error !!: {}&quot;, e);</span>
+<span class="nc" id="L335">        }</span>
+<span class="nc" id="L336">    }</span>
+
+    @Override
+    public void bulkInsertData() {
+
+        // Ex: 클래스 생성필요
+        /**
+         * public class BulkData {
+         *
+         *     public enum Type {
+         *         CREATE, UPDATE, DELETE
+         *     }
+         *
+         *     private String indexName;
+         *     private String typeName;
+         *     private String id;
+         *     private Map&lt;String, Object&gt; jsonMap;
+         *     private Type actionType;
+         * }
+         */
+<span class="nc" id="L356">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KafkaProducerController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.services.api.v1.kafka</a> &gt; <span class="el_source">KafkaProducerController.java</span></div><h1>KafkaProducerController.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.services.api.v1.kafka;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+<span class="fc" id="L13">@RequiredArgsConstructor</span>
+@RequestMapping(&quot;v1/kafka&quot;)
+public class KafkaProducerController {
+
+    private final KafkaProducerService kafkaProducerService;
+
+    @ApiOperation(&quot;동기전송&quot;)
+    @PostMapping(&quot;sendMessageSync&quot;)
+    public ResponseEntity producerSendMessageSync() {
+<span class="nc" id="L22">        return kafkaProducerService.producerSendMessageSync();</span>
+    }
+
+    @ApiOperation(&quot;비동기전송&quot;)
+    @PostMapping(&quot;sendMessageAsync&quot;)
+    public ResponseEntity producerSendMessageAsync() {
+<span class="nc" id="L28">        return kafkaProducerService.producerSendMessageAsync();</span>
+    }
+
+    @ApiOperation(&quot;Key를 지정하여 특정 파티션으로 메세지 전송&quot;)
+    @PostMapping(&quot;sendKeyMessage&quot;)
+    public ResponseEntity producerSendKeyMessage() {
+<span class="nc" id="L34">        return kafkaProducerService.producerSendKeyMessage();</span>
+    }
+
+    @ApiOperation(&quot;수동커밋&quot;)
+    @PostMapping(&quot;sendMessageManualCommit&quot;)
+    public ResponseEntity consumerSendMessageManualCommit() {
+<span class="nc" id="L40">        return kafkaProducerService.consumerSendMessageManualCommit();</span>
+    }
+
+    @ApiOperation(&quot;특정 파티션에서만 메세지를 가져옴&quot;)
+    @GetMapping(&quot;specificPartitionMessage&quot;)
+    public ResponseEntity getSpecificPartitionMessage() {
+<span class="nc" id="L46">        return kafkaProducerService.getSpecificPartitionMessage();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

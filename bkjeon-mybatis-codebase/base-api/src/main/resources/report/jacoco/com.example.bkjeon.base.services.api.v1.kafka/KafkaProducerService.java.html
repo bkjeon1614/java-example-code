@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KafkaProducerService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.services.api.v1.kafka</a> &gt; <span class="el_source">KafkaProducerService.java</span></div><h1>KafkaProducerService.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.services.api.v1.kafka;
+
+import com.example.bkjeon.entity.kafka.KafkaProducerCallBack;
+import com.example.bkjeon.enums.ResponseResult;
+import com.example.bkjeon.model.response.ApiResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.CommitFailedException;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.common.TopicPartition;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Properties;
+
+<span class="fc" id="L24">@Slf4j</span>
+@Service
+<span class="fc" id="L26">public class KafkaProducerService {</span>
+
+    @Value(&quot;${kafka.brokers}&quot;)
+    private String brokers;
+
+    /**
+     * topic create command: /home/bkjeon/app/kafka/bin/kafka-topics.sh --zookeeper 192.168.0.200:2181,192.168.0.201:2181,192.168.0.202:2181/bkjeon-kafka --replication-factor 3 --partitions 1 --topic bkjeon-topic --create
+     * @return
+     */
+    public ResponseEntity producerSendMessageSync() {
+        ResponseEntity responseEntity;
+<span class="nc" id="L37">        Producer&lt;String, String&gt; producer = new KafkaProducer&lt;&gt;(getKafkaProperties());</span>
+
+        try {
+<span class="nc" id="L40">            RecordMetadata metadata = producer.send(</span>
+                new ProducerRecord&lt;&gt;(&quot;bkjeon-topic&quot;, &quot;Hello Bkjeon Sync Message&quot;)
+<span class="nc" id="L42">            ).get();</span>
+
+            // 에러가 없으면 메세지가 기록된 offset을 알 수 있는 RecoardMetadata를 얻을 수 있다.
+<span class="nc" id="L45">            log.info(&quot;Partition: %d, Offset: %d&quot;, metadata.partition(), metadata.offset());</span>
+
+<span class="nc" id="L47">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L48">                ApiResponse.res(</span>
+<span class="nc" id="L49">                    HttpStatus.OK.value(),</span>
+<span class="nc" id="L50">                    ResponseResult.SUCCESS.getText(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
+<span class="nc" id="L56">        } catch (Exception e) {</span>
+<span class="nc" id="L57">            log.error(&quot;producerSendMessageSync ERROR {}&quot;, e);</span>
+<span class="nc" id="L58">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L59">                ApiResponse.res(</span>
+<span class="nc" id="L60">                    HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L61">                    e.getMessage(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
+        } finally {
+<span class="nc" id="L68">            producer.close();</span>
+        }
+
+<span class="nc" id="L71">        return responseEntity;</span>
+    }
+
+    /**
+     * topic create command: /home/bkjeon/app/kafka/bin/kafka-topics.sh --zookeeper 192.168.0.200:2181,192.168.0.201:2181,192.168.0.202:2181/bkjeon-kafka --replication-factor 3 --partitions 1 --topic bkjeon-topic --create
+     * @return
+     */
+    public ResponseEntity producerSendMessageAsync() {
+        ResponseEntity responseEntity;
+<span class="nc" id="L80">        Producer&lt;String, String&gt; producer = new KafkaProducer&lt;&gt;(getKafkaProperties());</span>
+
+        try {
+            // KafkaProducerCallBack
+<span class="nc" id="L84">            producer.send(</span>
+                new ProducerRecord&lt;&gt;(&quot;bkjeon-topic&quot;, &quot;Hello Bkjeon Async Message&quot;),
+                new KafkaProducerCallBack()
+            );
+
+<span class="nc" id="L89">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L90">                ApiResponse.res(</span>
+<span class="nc" id="L91">                    HttpStatus.OK.value(),</span>
+<span class="nc" id="L92">                    ResponseResult.SUCCESS.getText(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
+<span class="nc" id="L98">        } catch (Exception e) {</span>
+<span class="nc" id="L99">            log.error(&quot;producerSendMessageAsync ERROR {}&quot;, e);</span>
+<span class="nc" id="L100">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L101">                ApiResponse.res(</span>
+<span class="nc" id="L102">                    HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L103">                    e.getMessage(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
+        } finally {
+<span class="nc" id="L110">            producer.close();</span>
+        }
+
+<span class="nc" id="L113">        return responseEntity;</span>
+    }
+
+    /**
+     * topic create command: /home/bkjeon/app/kafka/bin/kafka-topics.sh --zookeeper 192.168.0.200:2181,192.168.0.201:2181,192.168.0.202:2181/bkjeon-kafka --replication-factor 1 --partitions 2 --topic bkjeon-topic-partitions --create
+     * @return
+     */
+    public ResponseEntity producerSendKeyMessage() {
+        ResponseEntity responseEntity;
+<span class="nc" id="L122">        Producer&lt;String, String&gt; producer = new KafkaProducer&lt;&gt;(getKafkaProperties());</span>
+<span class="nc" id="L123">        String exampleTopic = &quot;bkjeon-topic-partitions&quot;;</span>
+<span class="nc" id="L124">        String oddKey = &quot;1&quot;;</span>
+<span class="nc" id="L125">        String evenKey = &quot;2&quot;;</span>
+
+        try {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">            for (int i=1; i&lt;11; i++) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">                if (i % 2 == 1) {</span>
+<span class="nc" id="L130">                    producer.send(</span>
+                        new ProducerRecord&lt;&gt;(
+                            exampleTopic,
+                            oddKey,
+<span class="nc" id="L134">                            String.format(&quot;%d - Send OddKey Message - key=&quot; + oddKey, i)</span>
+                        )
+                    );
+                } else {
+<span class="nc" id="L138">                    producer.send(</span>
+                        new ProducerRecord&lt;&gt;(
+                            exampleTopic,
+                            evenKey,
+<span class="nc" id="L142">                            String.format(&quot;%d - Send EventKey Message - key=&quot; + evenKey, i)</span>
+                        )
+                    );
+                }
+            }
+
+<span class="nc" id="L148">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L149">                ApiResponse.res(</span>
+<span class="nc" id="L150">                    HttpStatus.OK.value(),</span>
+<span class="nc" id="L151">                    ResponseResult.SUCCESS.getText(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
+<span class="nc" id="L157">        } catch (Exception e) {</span>
+<span class="nc" id="L158">            log.error(&quot;producerSendKeyMessage ERROR {}&quot;, e);</span>
+<span class="nc" id="L159">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L160">                ApiResponse.res(</span>
+<span class="nc" id="L161">                    HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L162">                    e.getMessage(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
+        } finally {
+<span class="nc" id="L169">            producer.close();</span>
+        }
+
+<span class="nc" id="L172">        return responseEntity;</span>
+    }
+
+    public ResponseEntity consumerSendMessageManualCommit() {
+        ResponseEntity responseEntity;
+<span class="nc" id="L177">        KafkaConsumer&lt;String, String&gt; consumer = new KafkaConsumer&lt;&gt;(getKafkaCommitProperties());</span>
+<span class="nc" id="L178">        consumer.subscribe(Arrays.asList(&quot;bkjeon-topic&quot;));</span>
+
+        try {
+<span class="nc" id="L181">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L182">                ApiResponse.res(</span>
+<span class="nc" id="L183">                    HttpStatus.OK.value(),</span>
+<span class="nc" id="L184">                    ResponseResult.SUCCESS.getText(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
+
+            while (true) {
+                // poll을 호출해 bkjeon-topic으로부터 메세지를 가져옴
+<span class="nc" id="L193">                ConsumerRecords&lt;String, String&gt; records = consumer.poll(100);</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">                for (ConsumerRecord&lt;String, String&gt; record: records) {</span>
+<span class="nc" id="L195">                    System.out.printf(</span>
+                        &quot;Topic: %s, Partiton: %s, Offset: %d, Key: %s, Value: %s\n&quot;,
+<span class="nc" id="L197">                        record.topic(),</span>
+<span class="nc" id="L198">                        record.partition(),</span>
+<span class="nc" id="L199">                        record.offset(),</span>
+<span class="nc" id="L200">                        record.key(),</span>
+<span class="nc" id="L201">                        record.value()</span>
+                    );
+<span class="nc" id="L203">                }</span>
+                try {
+                    // 메세지를 모두 가져온 후 커밋
+                    // 만약 데이터베이스에 저장하는 내용을 추가할 경우 consumer.commitSync(); 위에 명시 즉, 저장 후 수동커밋
+<span class="nc" id="L207">                    consumer.commitSync();</span>
+<span class="nc" id="L208">                } catch (CommitFailedException e) {</span>
+<span class="nc" id="L209">                    log.error(&quot;consumerSendMessageManualCommit CommitFailedException ERROR {}&quot;, e);</span>
+<span class="nc" id="L210">                    responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L211">                        ApiResponse.res(</span>
+<span class="nc" id="L212">                            HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L213">                            e.getMessage(),</span>
+                            null,
+                            null
+                        ),
+                        HttpStatus.BAD_REQUEST
+                    );
+<span class="nc" id="L219">                }</span>
+<span class="nc" id="L220">            }</span>
+<span class="nc" id="L221">        } catch (Exception e) {</span>
+<span class="nc" id="L222">            log.error(&quot;consumerSendMessageManualCommit Exception ERROR {}&quot;, e);</span>
+<span class="nc" id="L223">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L224">                ApiResponse.res(</span>
+<span class="nc" id="L225">                    HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L226">                    e.getMessage(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
+        } finally {
+<span class="nc" id="L233">            consumer.close();</span>
+        }
+
+<span class="nc" id="L236">        return responseEntity;</span>
+    }
+
+    public ResponseEntity getSpecificPartitionMessage() {
+        ResponseEntity responseEntity;
+<span class="nc" id="L241">        KafkaConsumer&lt;String, String&gt; consumer = new KafkaConsumer&lt;&gt;(getKafkaSpecificPartitionProperties());</span>
+<span class="nc" id="L242">        String topic = &quot;bkjeon-topic&quot;;</span>
+
+        // 토픽의 파티션을 정의
+<span class="nc" id="L245">        TopicPartition partition0 = new TopicPartition(topic, 0);</span>
+<span class="nc" id="L246">        TopicPartition partition1 = new TopicPartition(topic, 1);</span>
+
+        // 배열로 파티션 0, 1 할당
+<span class="nc" id="L249">        consumer.assign(Arrays.asList(partition0, partition1));</span>
+
+        // 특정 오프셋으로부터 메세지 가져오기
+        // seek(파티션 번호, 오프셋 번호)를 정의하면 컨슈머가 다음 poll()하는 위치를 지정할 수 있다.
+        // 즉, 0번과 1번 파티션의 2번 오프셋부터 메세지를 가져오게 된다.
+<span class="nc" id="L254">        consumer.seek(partition0, 2);</span>
+<span class="nc" id="L255">        consumer.seek(partition1, 2);</span>
+
+        try {
+<span class="nc" id="L258">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L259">                ApiResponse.res(</span>
+<span class="nc" id="L260">                    HttpStatus.OK.value(),</span>
+<span class="nc" id="L261">                    ResponseResult.SUCCESS.getText(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.OK
+            );
+
+            while (true) {
+<span class="nc" id="L269">                ConsumerRecords&lt;String, String&gt; records = consumer.poll(100);</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">                for (ConsumerRecord&lt;String, String&gt; record: records) {</span>
+<span class="nc" id="L271">                    System.out.printf(</span>
+                        &quot;Topic: %s, Partiton: %s, Offset: %d, Key: %s, Value: %s\n&quot;,
+<span class="nc" id="L273">                        record.topic(),</span>
+<span class="nc" id="L274">                        record.partition(),</span>
+<span class="nc" id="L275">                        record.offset(),</span>
+<span class="nc" id="L276">                        record.key(),</span>
+<span class="nc" id="L277">                        record.value()</span>
+                    );
+<span class="nc" id="L279">                }</span>
+                try {
+<span class="nc" id="L281">                    consumer.commitSync();</span>
+<span class="nc" id="L282">                } catch (CommitFailedException e) {</span>
+<span class="nc" id="L283">                    log.error(&quot;consumerSendMessageManualCommit CommitFailedException ERROR {}&quot;, e);</span>
+<span class="nc" id="L284">                    responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L285">                        ApiResponse.res(</span>
+<span class="nc" id="L286">                            HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L287">                            e.getMessage(),</span>
+                            null,
+                            null
+                        ),
+                        HttpStatus.BAD_REQUEST
+                    );
+<span class="nc" id="L293">                }</span>
+<span class="nc" id="L294">            }</span>
+<span class="nc" id="L295">        } catch (Exception e) {</span>
+<span class="nc" id="L296">            log.error(&quot;getSpecificPartitionMessage Exception ERROR {}&quot;, e.getMessage());</span>
+<span class="nc" id="L297">            responseEntity = new ResponseEntity(</span>
+<span class="nc" id="L298">                ApiResponse.res(</span>
+<span class="nc" id="L299">                    HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L300">                    e.getMessage(),</span>
+                    null,
+                    null
+                ),
+                HttpStatus.BAD_REQUEST
+            );
+        } finally {
+<span class="nc" id="L307">            consumer.close();</span>
+        }
+
+<span class="nc" id="L310">        return responseEntity;</span>
+    }
+
+    private Properties getKafkaSpecificPartitionProperties() {
+        // Properties Objest Start
+<span class="nc" id="L315">        Properties props = new Properties();</span>
+
+        // 브로커 리스트 정의
+<span class="nc" id="L318">        props.put(&quot;bootstrap.servers&quot;, brokers);</span>
+<span class="nc" id="L319">        props.put(&quot;group.id&quot;, &quot;bkjeon-partition&quot;);</span>
+
+        // 수동커밋 설정
+<span class="nc" id="L322">        props.put(&quot;enable.auto.commit&quot;, &quot;false&quot;);</span>
+
+<span class="nc" id="L324">        props.put(&quot;auto.offset.reset&quot;, &quot;latest&quot;);</span>
+<span class="nc" id="L325">        props.put(&quot;key.deserializer&quot;, &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);</span>
+<span class="nc" id="L326">        props.put(&quot;value.deserializer&quot;, &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);</span>
+
+<span class="nc" id="L328">        return props;</span>
+    }
+
+    private Properties getKafkaCommitProperties() {
+        // Properties Objest Start
+<span class="nc" id="L333">        Properties props = new Properties();</span>
+
+        // 브로커 리스트 정의
+<span class="nc" id="L336">        props.put(&quot;bootstrap.servers&quot;, brokers);</span>
+<span class="nc" id="L337">        props.put(&quot;group.id&quot;, &quot;bkjeon-manual&quot;);</span>
+
+        // 수동커밋 설정
+<span class="nc" id="L340">        props.put(&quot;enable.auto.commit&quot;, &quot;false&quot;);</span>
+
+<span class="nc" id="L342">        props.put(&quot;auto.offset.reset&quot;, &quot;latest&quot;);</span>
+<span class="nc" id="L343">        props.put(&quot;key.deserializer&quot;, &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);</span>
+<span class="nc" id="L344">        props.put(&quot;value.deserializer&quot;, &quot;org.apache.kafka.common.serialization.StringDeserializer&quot;);</span>
+
+<span class="nc" id="L346">        return props;</span>
+    }
+
+    private Properties getKafkaProperties() {
+        // Properties Objest Start
+<span class="nc" id="L351">        Properties props = new Properties();</span>
+
+        // 브로커 리스트 정의
+<span class="nc" id="L354">        props.put(&quot;bootstrap.servers&quot;, brokers);</span>
+
+        // 옵션 추가
+<span class="nc" id="L357">        props.put(&quot;acks&quot;, &quot;1&quot;);</span>
+<span class="nc" id="L358">        props.put(&quot;compression.type&quot;, &quot;gzip&quot;);</span>
+
+        // 메세지의 키와 값에 문자열을 사용할 예정이므로 내장된 StringSerializer를 지정
+<span class="nc" id="L361">        props.put(&quot;key.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);</span>
+<span class="nc" id="L362">        props.put(&quot;value.serializer&quot;, &quot;org.apache.kafka.common.serialization.StringSerializer&quot;);</span>
+
+<span class="nc" id="L364">        return props;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

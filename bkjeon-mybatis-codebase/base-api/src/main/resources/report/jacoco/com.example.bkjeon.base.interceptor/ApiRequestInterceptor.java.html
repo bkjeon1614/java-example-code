@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApiRequestInterceptor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.interceptor</a> &gt; <span class="el_source">ApiRequestInterceptor.java</span></div><h1>ApiRequestInterceptor.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.interceptor;
+
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+<span class="nc" id="L10">public class ApiRequestInterceptor extends HandlerInterceptorAdapter {</span>
+
+    /**
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String apiKey = request.getHeader(&quot;ACCESS-TOKEN&quot;);
+        String path = request.getRequestURI();
+
+        if (StringUtils.isNotBlank(apiKey)) {
+            String[] availablePaths = ApiKeyAuthPaths.getAvailablePaths(apiKey);
+            for (String availablePath : availablePaths) {
+                Pattern pattern = Pattern.compile(availablePath);
+                Matcher matcher = pattern.matcher(path);
+                if (matcher.matches()) {
+                    return true;
+                }
+            }
+        }
+        response.setStatus(401);
+        return false;
+    }
+    */
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

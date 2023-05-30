@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,51 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("v1/data/stream")
 public class StreamController {
+
+    @ApiOperation("List Map 형태의 데이터에서 stream 을 통한 sum 값 추출")
+    @GetMapping("listToSum")
+    public Long getListToSum() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("BB", 20),
+            new StreamUser("C", 10),
+            new StreamUser("DD", 20),
+            new StreamUser("E", 20)
+        );
+        return streamUserList.stream().mapToLong(StreamUser::getAge).sum();
+    }
+
+    @ApiOperation("List Map 형태의 데이터에서 stream 을 통한 max 값 추출(min 도 같은 개념으로 활용 -> Ex) stream().min()...)")
+    @GetMapping("listToMaxValue")
+    public int getListToMaxValue() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("BB", 20),
+            new StreamUser("C", 10),
+            new StreamUser("DD", 20),
+            new StreamUser("E", 20)
+        );
+        Integer maxAge = 0;
+        Optional<StreamUser> maxStreamUserObj = streamUserList.stream().max(Comparator.comparing(StreamUser::getAge));
+        if (maxStreamUserObj.isPresent()) {
+            maxAge = maxStreamUserObj.get().getAge();
+        }
+
+        return maxAge;
+    }
+
+    @ApiOperation("Total Count 개수 얻기")
+    @GetMapping("listToTotalCount")
+    public Long getListToTotalCount() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("BB", 20),
+            new StreamUser("C", 10),
+            new StreamUser("DD", 20),
+            new StreamUser("E", 20)
+        );
+        return streamUserList.stream().collect(Collectors.counting());
+    }
 
     @ApiOperation("기존 생성된 List<Object> 에 stream 내부에서 새로운 List<Object> 에 대입")
     @GetMapping("listObjectToListObject")
@@ -145,7 +192,7 @@ public class StreamController {
     @ApiOperation("나이 오름차순으로 배열 정렬")
     @GetMapping("listObjectSort")
     public List<StreamUser> listObjectSortData() {
-        List<StreamUser> streamUserArr = Arrays.asList(
+        List<StreamUser> streamUserList = Arrays.asList(
             new StreamUser("C", 30),
             new StreamUser("D", 40),
             new StreamUser("전봉근", 10),
@@ -153,7 +200,7 @@ public class StreamController {
             new StreamUser("E", 50)
         );
 
-        List<StreamUser> sortedList = streamUserArr.stream()
+        List<StreamUser> sortedList = streamUserList.stream()
             .sorted(Comparator.comparingInt(StreamUser::getAge))
             .collect(Collectors.toList());
         sortedList.forEach(System.out::println);
@@ -163,7 +210,7 @@ public class StreamController {
     @ApiOperation("나이 내림차순으로 배열 정렬")
     @GetMapping("listObjectReverseSort")
     public List<StreamUser> listObjectReverseSortData() {
-        List<StreamUser> streamUserArr = Arrays.asList(
+        List<StreamUser> streamUserList = Arrays.asList(
             new StreamUser("전봉근", 30),
             new StreamUser("D", 40),
             new StreamUser("홍길동", 10),
@@ -171,11 +218,28 @@ public class StreamController {
             new StreamUser("E", 50)
         );
 
-        List<StreamUser> sortedList = streamUserArr.stream()
+        List<StreamUser> sortedList = streamUserList.stream()
             .sorted(Comparator.comparingInt(StreamUser::getAge).reversed())
             .collect(Collectors.toList());
         sortedList.forEach(System.out::println);
         return sortedList;
+    }
+
+    @ApiOperation("List Map 데이터 구분자 String 으로 변환")
+    @GetMapping("isListMapToSplitStr")
+    public String isListMapToSplitStr() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("전봉근", 30),
+            new StreamUser("D", 40),
+            new StreamUser("홍길동", 10),
+            new StreamUser("B", 20),
+            new StreamUser("E", 50)
+        );
+
+        // Objects.requireNonNull() 을 활용한 가독성 증가 및 명시적인 코드 작성
+        return Objects.requireNonNull(streamUserList, "데이터가 존재하지 않습니다.").stream()
+            .map(item -> item.getName())
+            .collect(Collectors.joining(","));
     }
 
 }

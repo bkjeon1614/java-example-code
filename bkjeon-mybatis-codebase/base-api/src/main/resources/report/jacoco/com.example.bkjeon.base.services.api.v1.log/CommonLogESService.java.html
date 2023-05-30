@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommonLogESService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.services.api.v1.log</a> &gt; <span class="el_source">CommonLogESService.java</span></div><h1>CommonLogESService.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.services.api.v1.log;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
+import org.springframework.stereotype.Service;
+
+import com.example.bkjeon.base.config.elastic.ESSearchConfig;
+import com.example.bkjeon.base.services.api.v1.elastic.ESService;
+import com.example.bkjeon.dto.common.log.CommonESLogSaveRequestDTO;
+import com.example.bkjeon.entity.common.log.CommonESLog;
+import com.example.bkjeon.enums.elastic.CreateIndexType;
+import com.example.bkjeon.enums.elastic.ESFieldType;
+import com.example.bkjeon.util.security.EncryptUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+<span class="fc" id="L24">@Slf4j</span>
+@Service
+<span class="fc" id="L26">@RequiredArgsConstructor</span>
+public class CommonLogESService {
+
+    private final static String INDEX_NAME_PREFIX = &quot;service-common-log&quot;;
+<span class="fc" id="L30">    private final static Integer SETTING_SHARD_CNT = 1;</span>
+<span class="fc" id="L31">    private final static Integer SETTING_REPLICA_CNT = 1;</span>
+
+    private final ESSearchConfig esSearchConfig;
+    private final ESService esService;
+
+    /**
+     * 로그 인덱스(-1 year) 유무 체크 (origin 인덱스로 체크)
+     * @return
+     */
+    public boolean selectBeforeIndexCheck() {
+<span class="nc" id="L41">        SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy&quot;);</span>
+<span class="nc" id="L42">        Integer nowDateY = Integer.parseInt(dateFormat.format(new Date()));</span>
+
+<span class="nc" id="L44">        String beforeIndexName = INDEX_NAME_PREFIX + &quot;-&quot; + (nowDateY - 1);</span>
+
+<span class="nc" id="L46">        return esService.selectIndexCheck(beforeIndexName);</span>
+    }
+
+    /**
+     * 로그 인덱스 유무 체크 (origin 인덱스로 체크)
+     * @return
+     */
+    public boolean selectOriginIndexCheck() {
+<span class="nc" id="L54">        SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy&quot;);</span>
+<span class="nc" id="L55">        Integer nowDateY = Integer.parseInt(dateFormat.format(new Date()));</span>
+<span class="nc" id="L56">        String nowIndexName = INDEX_NAME_PREFIX + &quot;-&quot; + nowDateY;</span>
+
+<span class="nc" id="L58">        return esService.selectIndexCheck(nowIndexName);</span>
+    }
+
+    /**
+     * 로그 인덱스 생성
+     * @Param IndexCreateType (Enum: CreateIndexType.java 참고)
+     * @return
+     */
+    public boolean createCommonLogIndex(String createIndexType) {
+<span class="nc" id="L67">        boolean result = true;</span>
+
+<span class="nc" id="L69">        SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy&quot;);</span>
+<span class="nc" id="L70">        Integer nowDateY = Integer.parseInt(dateFormat.format(new Date()));</span>
+
+<span class="nc" id="L72">        String nowIndexName = INDEX_NAME_PREFIX + &quot;-&quot; + nowDateY;</span>
+<span class="nc" id="L73">        String beforeIndexName = INDEX_NAME_PREFIX + &quot;-&quot; + (nowDateY - 1);</span>
+
+        try {
+<span class="nc" id="L76">            XContentBuilder builder = XContentFactory.jsonBuilder();</span>
+<span class="nc" id="L77">            builder.startObject()</span>
+<span class="nc" id="L78">                .field(&quot;dynamic&quot;, &quot;strict&quot;)</span>
+<span class="nc" id="L79">                .startObject(&quot;properties&quot;)</span>
+<span class="nc" id="L80">                .startObject(&quot;log_id&quot;)</span>
+<span class="nc" id="L81">                .field(&quot;type&quot;, ESFieldType.KEYWORD.getType())</span>
+<span class="nc" id="L82">                .endObject()</span>
+<span class="nc" id="L83">                .startObject(&quot;log_type&quot;)</span>
+<span class="nc" id="L84">                .field(&quot;type&quot;, ESFieldType.KEYWORD.getType())</span>
+<span class="nc" id="L85">                .endObject()</span>
+<span class="nc" id="L86">                .startObject(&quot;call_url&quot;)</span>
+<span class="nc" id="L87">                .field(&quot;type&quot;, ESFieldType.TEXT.getType())</span>
+<span class="nc" id="L88">                .endObject()</span>
+<span class="nc" id="L89">                .startObject(&quot;call_mthd_sp_val&quot;)</span>
+<span class="nc" id="L90">                .field(&quot;type&quot;, ESFieldType.KEYWORD.getType())</span>
+<span class="nc" id="L91">                .endObject()</span>
+<span class="nc" id="L92">                .startObject(&quot;call_para_val&quot;)</span>
+<span class="nc" id="L93">                .field(&quot;type&quot;, ESFieldType.TEXT.getType())</span>
+<span class="nc" id="L94">                .endObject()</span>
+<span class="nc" id="L95">                .startObject(&quot;svc_call_nm&quot;)</span>
+<span class="nc" id="L96">                .field(&quot;type&quot;, ESFieldType.TEXT.getType())</span>
+<span class="nc" id="L97">                .endObject()</span>
+<span class="nc" id="L98">                .startObject(&quot;svc_mthd_nm&quot;)</span>
+<span class="nc" id="L99">                .field(&quot;type&quot;, ESFieldType.TEXT.getType())</span>
+<span class="nc" id="L100">                .endObject()</span>
+<span class="nc" id="L101">                .startObject(&quot;exec_tme&quot;)</span>
+<span class="nc" id="L102">                .field(&quot;type&quot;, ESFieldType.LONG.getType())</span>
+<span class="nc" id="L103">                .endObject()</span>
+<span class="nc" id="L104">                .startObject(&quot;log_desc&quot;)</span>
+<span class="nc" id="L105">                .field(&quot;type&quot;, ESFieldType.TEXT.getType())</span>
+<span class="nc" id="L106">                .endObject()</span>
+<span class="nc" id="L107">                .startObject(&quot;login_id&quot;)</span>
+<span class="nc" id="L108">                .field(&quot;type&quot;, ESFieldType.KEYWORD.getType())</span>
+<span class="nc" id="L109">                .endObject()</span>
+<span class="nc" id="L110">                .startObject(&quot;sys_reg_date_time&quot;)</span>
+<span class="nc" id="L111">                .field(&quot;type&quot;, ESFieldType.TEXT.getType())</span>
+<span class="nc" id="L112">                .endObject()</span>
+<span class="nc" id="L113">                .endObject()</span>
+<span class="nc" id="L114">                .endObject();</span>
+
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            if (CreateIndexType.INDEX_ALIAS_CHANGE.getType().equals(createIndexType)) {</span>
+                // 일반 인덱스 생성 후 별칭 교체
+<span class="nc" id="L118">                result = esService.changeIndexAlias(</span>
+                    beforeIndexName,
+<span class="nc" id="L120">                    SETTING_SHARD_CNT,</span>
+<span class="nc" id="L121">                    SETTING_REPLICA_CNT,</span>
+                    builder,
+                    nowIndexName,
+                    INDEX_NAME_PREFIX
+                );
+<span class="nc bnc" id="L126" title="All 2 branches missed.">            } else if (CreateIndexType.INDEX_ALIAS_CREATE.getType().equals(createIndexType)) {</span>
+                // 별칭 인덱스 생성
+<span class="nc" id="L128">                result = esService.createAliasIndex(</span>
+                    nowIndexName,
+                    INDEX_NAME_PREFIX,
+<span class="nc" id="L131">                    SETTING_SHARD_CNT,</span>
+<span class="nc" id="L132">                    SETTING_REPLICA_CNT,</span>
+                    builder
+                );
+            }
+
+<span class="nc" id="L137">        } catch (Exception e) {</span>
+<span class="nc" id="L138">            log.error(&quot;createCommonLogIndex Error !!: {}&quot;, e);</span>
+<span class="nc" id="L139">            result = false;</span>
+<span class="nc" id="L140">        }</span>
+
+<span class="nc" id="L142">        return result;</span>
+    }
+
+    /**
+     * 로그 데이터 저장
+     * @param commonESLogSaveRequestDTO
+     */
+    public void insertCommonLogData(CommonESLogSaveRequestDTO commonESLogSaveRequestDTO) {
+<span class="nc" id="L150">        long newTime = System.currentTimeMillis();</span>
+<span class="nc" id="L151">        SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyyMMddhhmmss&quot;, Locale.KOREAN);</span>
+<span class="nc" id="L152">        String nowDateTime = dateFormat.format(new Date(newTime));</span>
+
+<span class="nc" id="L154">        ObjectMapper objectMapper = new ObjectMapper();</span>
+
+        try {
+            // id(=pk) 가공
+<span class="nc" id="L158">            String combinationId = commonESLogSaveRequestDTO.getLogType()</span>
+<span class="nc" id="L159">                + commonESLogSaveRequestDTO.getSvcCallNm()</span>
+<span class="nc" id="L160">                + commonESLogSaveRequestDTO.getLoginId()</span>
+                + nowDateTime;
+<span class="nc" id="L162">            String encodingId = EncryptUtil.getStringToSHA256Encrypt(combinationId);</span>
+
+<span class="nc" id="L164">            CommonESLog commonLog = CommonESLog.builder()</span>
+<span class="nc" id="L165">                .logId(encodingId)</span>
+<span class="nc" id="L166">                .logType(commonESLogSaveRequestDTO.getLogType())</span>
+<span class="nc" id="L167">                .callUrl(commonESLogSaveRequestDTO.getCallUrl())</span>
+<span class="nc" id="L168">                .callMthdSpVal(commonESLogSaveRequestDTO.getCallMthdSpVal())</span>
+<span class="nc" id="L169">                .callParaVal(commonESLogSaveRequestDTO.getCallParaVal())</span>
+<span class="nc" id="L170">                .svcCallNm(commonESLogSaveRequestDTO.getSvcCallNm())</span>
+<span class="nc" id="L171">                .svcMthdNm(commonESLogSaveRequestDTO.getSvcMthdNm())</span>
+<span class="nc" id="L172">                .execTme(commonESLogSaveRequestDTO.getExecTme())</span>
+<span class="nc" id="L173">                .logDesc(commonESLogSaveRequestDTO.getLogDesc())</span>
+<span class="nc" id="L174">                .loginId(commonESLogSaveRequestDTO.getLoginId())</span>
+<span class="nc" id="L175">                .sysRegDateTime(nowDateTime)</span>
+<span class="nc" id="L176">                .build();</span>
+
+<span class="nc" id="L178">            esService.insertData(</span>
+                INDEX_NAME_PREFIX,
+                combinationId,
+<span class="nc" id="L181">                objectMapper.writeValueAsString(commonLog)</span>
+            );
+<span class="nc" id="L183">        } catch (JsonProcessingException jpe) {</span>
+<span class="nc" id="L184">            log.error(&quot;insertData JsonProcessingException Error !!: {}&quot;, jpe);</span>
+<span class="nc" id="L185">        } catch (Exception e) {</span>
+<span class="nc" id="L186">            log.error(&quot;insertCommonLogData Exception Error !!: {}&quot;, e);</span>
+<span class="nc" id="L187">        }</span>
+<span class="nc" id="L188">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

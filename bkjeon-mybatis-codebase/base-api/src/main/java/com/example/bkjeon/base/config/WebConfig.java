@@ -12,7 +12,8 @@ public class WebConfig implements WebMvcConfigurer, WebMvcRegistrations {
 
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
         "classpath:/META-INF/resources/",
-        "classpath:/META-INF/resources/webjars/"
+        "classpath:/META-INF/resources/webjars/",
+        "classpath:/report/"
     };
 
     @Override

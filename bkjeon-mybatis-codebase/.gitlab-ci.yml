@@ -1,0 +1,50 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:gralde:
+  stage: build
+  before_script:
+    - node -v
+    - npm -v
+    - java -version
+  script:
+    - cd big-bro-api/
+    - ./gradlew clean
+    - ./gradlew fullBuild
+  tags:
+    - dev-svr
+  artifacts:
+    paths:
+      - big-bro-api/build/libs/*.jar
+    expire_in: 1 week
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
+
+test:
+  stage: test
+  script:
+    - cd big-bro-api/
+    - ./gradlew check
+  tags:
+    - dev-svr
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
+
+deploy:ec2:
+  stage: deploy
+  script:
+    - cd script
+    - cp bigbro-start.sh /home/gitlab-runner/bigbro-start.sh
+    - chmod 775 /home/gitlab-runner/bigbro-start.sh
+    - cd ..
+    - cd big-bro-api/build/libs
+    - cp big-bro-api.jar /home/gitlab-runner/app/big-bro-api.jar
+    - sh /home/gitlab-runner/bigbro-start.sh stop
+    - sh /home/gitlab-runner/bigbro-start.sh start
+  tags:
+    - dev-svr
+  rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master"

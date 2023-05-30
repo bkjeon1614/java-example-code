@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonParseController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.services.api.v1.data</a> &gt; <span class="el_source">JsonParseController.java</span></div><h1>JsonParseController.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.services.api.v1.data;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.swagger.annotations.ApiOperation;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+
+<span class="fc" id="L26">@Slf4j</span>
+@RestController
+@RequestMapping(&quot;v1/data/json&quot;)
+<span class="fc" id="L29">public class JsonParseController {</span>
+
+    private final static String JSON_OBJECT_STRING = &quot;{&quot;
+        + &quot;\&quot;title\&quot;: \&quot;Hi Bong Keun\&quot;,&quot;
+        + &quot;\&quot;url\&quot;: \&quot;https://bkjeon1614.tistory.com\&quot;,&quot;
+        + &quot;\&quot;star\&quot;: 15&quot;
+    + &quot;}&quot;;
+
+    private final static String JSON_OBJECT_AND_OBJECT_STRING = &quot;{&quot;
+        + &quot;\&quot;obj1\&quot;: {&quot;
+            + &quot;\&quot;title\&quot;: \&quot;제목 bkjeon\&quot;,&quot;
+            + &quot;\&quot;url\&quot;: \&quot;https://bkjeon1614.tistory.com\&quot;,&quot;
+            + &quot;\&quot;draft\&quot;: false&quot;
+        + &quot; },&quot;
+        + &quot;\&quot;obj2\&quot;: {&quot;
+            + &quot;\&quot;title\&quot;: \&quot;제목입니다2 2222\&quot;,&quot;
+            + &quot;\&quot;url\&quot;: \&quot;https://bkjeon1614.tistory.com\&quot;,&quot;
+            + &quot;\&quot;draft\&quot;: false&quot;
+        + &quot;}&quot;
+    + &quot;}&quot;;
+
+    private final static String JSON_OBJECT_AND_ARRAY_AND_OBJECT_STRING = &quot;{&quot;
+        + &quot;\&quot;list\&quot;: [&quot;
+            + &quot;{&quot;
+                + &quot;\&quot;title\&quot;: \&quot;제목11\&quot;,&quot;
+                + &quot;\&quot;url\&quot;: \&quot;https://bkjeon1614.tistory.com\&quot;,&quot;
+                + &quot;\&quot;type\&quot;: false&quot;
+            + &quot;},&quot;
+            + &quot;{&quot;
+                + &quot;\&quot;title\&quot;: \&quot;제목22\&quot;,&quot;
+                + &quot;\&quot;url\&quot;: \&quot;https://bkjeon1614.tistory.com\&quot;,&quot;
+                + &quot;\&quot;type\&quot;: true&quot;
+            + &quot;},&quot;
+            + &quot;{&quot;
+                + &quot;\&quot;title\&quot;: \&quot;제목33\&quot;,&quot;
+                + &quot;\&quot;url\&quot;: \&quot;https://bkjeon1614.tistory.com\&quot;,&quot;
+                + &quot;\&quot;type\&quot;: true&quot;
+            + &quot;}&quot;
+        + &quot;]&quot;
+    + &quot;}&quot;;
+
+    private final static String ARRAY_AND_OBJECT_STRING = &quot;[&quot;
+        + &quot;{&quot;
+            + &quot;\&quot;title\&quot;: \&quot;제목11\&quot;,&quot;
+            + &quot;\&quot;url\&quot;: \&quot;https://bkjeon1614.tistory.com\&quot;,&quot;
+            + &quot;\&quot;type\&quot;: false&quot;
+        + &quot;},&quot;
+        + &quot;{&quot;
+            + &quot;\&quot;title\&quot;: \&quot;제목22\&quot;,&quot;
+            + &quot;\&quot;url\&quot;: \&quot;https://bkjeon1614.tistory.com\&quot;,&quot;
+            + &quot;\&quot;type\&quot;: true&quot;
+        + &quot;},&quot;
+        + &quot;{&quot;
+            + &quot;\&quot;title\&quot;: \&quot;제목33\&quot;,&quot;
+            + &quot;\&quot;url\&quot;: \&quot;https://bkjeon1614.tistory.com\&quot;,&quot;
+            + &quot;\&quot;type\&quot;: true&quot;
+        + &quot;}&quot;
+    + &quot;]&quot;;
+
+<span class="nc" id="L88">    @ToString</span>
+    @Getter
+<span class="nc" id="L90">    public static class JsonTest {</span>
+<span class="nc" id="L91">        private String title;</span>
+<span class="nc" id="L92">        private String url;</span>
+<span class="nc" id="L93">        private boolean type;</span>
+    }
+
+    // TODO: 여기서부터 옮겨야돼
+    @ApiOperation(&quot;[Jackson] Convert JSON to JsonNode&quot;)
+    @GetMapping(&quot;isJsonStrToJsonNode&quot;)
+    public void isJsonStrToJsonNode() throws IOException {
+<span class="nc" id="L100">        ObjectMapper objectMapper = new ObjectMapper();</span>
+
+<span class="nc" id="L102">        JsonNode jsonNode = objectMapper.readTree(JSON_OBJECT_STRING);</span>
+<span class="nc" id="L103">        log.info(</span>
+            &quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; jsonNode1: title: {}, url: {}, star: {}&quot;,
+<span class="nc" id="L105">            jsonNode.get(&quot;title&quot;).asText(),</span>
+<span class="nc" id="L106">            jsonNode.get(&quot;url&quot;).asText(),</span>
+<span class="nc" id="L107">            jsonNode.get(&quot;star&quot;).asText()</span>
+        );
+<span class="nc" id="L109">    }</span>
+
+    @ApiOperation(&quot;[jackson] Convert JSON Array String to Java List&quot;)
+    @GetMapping(&quot;isJsonArrayStrToList&quot;)
+    public void isJsonArrayStrToList() throws IOException {
+<span class="nc" id="L114">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L115">        List&lt;JsonTest&gt; jsonTestList = objectMapper.readValue(ARRAY_AND_OBJECT_STRING, new TypeReference&lt;&gt;(){});</span>
+<span class="nc" id="L116">        log.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; jsonTestList: {}&quot;, jsonTestList.toString());</span>
+<span class="nc" id="L117">    }</span>
+
+    @ApiOperation(&quot;[Jackson] Convert JSON to Java Map&quot;)
+    @GetMapping(&quot;isJsonToJavaMap&quot;)
+    public void isJsonToJavaMap() throws IOException {
+<span class="nc" id="L122">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L123">        Map&lt;String, Object&gt; jsonMap = objectMapper.readValue(JSON_OBJECT_STRING, new TypeReference&lt;&gt;(){});</span>
+<span class="nc" id="L124">        log.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; isJsonToJavaMap: {}&quot;, jsonMap.get(&quot;title&quot;).toString());</span>
+<span class="nc" id="L125">    }</span>
+
+    @ApiOperation(&quot;[Jackson] JSON 에는 있지만 Mapping 될 Object 에는 없는 필드를 무시해야하는 경우&quot;)
+    @GetMapping(&quot;isJsonNotMappingIgnore&quot;)
+    public void isJsonNotMappingIgnore() throws IOException {
+<span class="nc" id="L130">        String json = &quot;{\&quot;title\&quot;:\&quot;Ryan\&quot;,\&quot;age\&quot;:30,\&quot;url\&quot;:\&quot;www.test.com\&quot;}&quot;;</span>
+<span class="nc" id="L131">        ObjectMapper objectMapper = new ObjectMapper();</span>
+
+        // JsonTest Object 에서는 &quot;age&quot; 항목이 없습니다. 아래 설정을 안하게되면 익셉션이 발생합니다.
+<span class="nc" id="L134">        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);</span>
+<span class="nc" id="L135">        JsonTest user = objectMapper.readValue(json, JsonTest.class);</span>
+<span class="nc" id="L136">        log.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; isJsonNotMappingIgnore: {}&quot;, user.title);</span>
+<span class="nc" id="L137">    }</span>
+
+    @ApiOperation(&quot;[Jackson] JSON 에 있는 Property 가 Mapping 될 Object 에 Primitive 인데 null 값이 전달을 무시해야하는 경우&quot;)
+    @GetMapping(&quot;isJsonPropertyNullIgnore&quot;)
+    public void isJsonPropertyNullIgnore() throws IOException {
+<span class="nc" id="L142">        String json = &quot;{\&quot;title\&quot;:\&quot;Ryan\&quot;,\&quot;type\&quot;:null,\&quot;url\&quot;:\&quot;www.test.com\&quot;}&quot;;</span>
+<span class="nc" id="L143">        ObjectMapper objectMapper = new ObjectMapper();</span>
+
+        // 기본적으로 FAIL_ON_NULL_FOR_PRIMITIVES 옵션은 false 상태이다. 의도적으로 옵션을 설정해서 테스트를 하였다.
+        // 옵션이 true 가 되게되면, type 이 boolean 인 primitive 자료형이 null 인 json 이 전달되는 경우 익셉션을 발생시킨다.
+<span class="nc" id="L147">        objectMapper.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, true);</span>
+<span class="nc" id="L148">        JsonTest user = objectMapper.readValue(json, JsonTest.class);</span>
+<span class="nc" id="L149">        log.info(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; isJsonNotMappingIgnore: {}&quot;, user.title);</span>
+<span class="nc" id="L150">    }</span>
+
+    @ApiOperation(&quot;JSON Object Null Check&quot;)
+    @GetMapping(&quot;jsonObjectNullCheck&quot;)
+    public void jsonObjectNullCheck() throws JSONException {
+<span class="nc" id="L155">        JSONObject jsonObject = new JSONObject(JSON_OBJECT_AND_OBJECT_STRING);</span>
+
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        System.out.println(&quot;title object check: &quot; + !jsonObject.getJSONObject(&quot;obj2&quot;).isNull(&quot;title&quot;));</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">        System.out.println(&quot;title2 object check: &quot; + !jsonObject.getJSONObject(&quot;obj2&quot;).isNull(&quot;title2&quot;));</span>
+<span class="nc" id="L159">    }</span>
+
+    @ApiOperation(&quot;Key-Value만 있는 JSON Parse&quot;)
+    @GetMapping(&quot;baseParseObject&quot;)
+    public Map&lt;String, Object&gt; getJsonParseBase() throws JSONException {
+        // JSONObjet를 가져와서 key-value를 읽습니다.
+<span class="nc" id="L165">        JSONObject jObject = new JSONObject(JSON_OBJECT_STRING);</span>
+<span class="nc" id="L166">        String title = jObject.getString(&quot;title&quot;);</span>
+<span class="nc" id="L167">        String url = jObject.getString(&quot;url&quot;);</span>
+<span class="nc" id="L168">        int star = jObject.getInt(&quot;star&quot;);</span>
+
+<span class="nc" id="L170">        Map&lt;String, Object&gt; retMap = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L171">        retMap.put(&quot;title&quot;, title);</span>
+<span class="nc" id="L172">        retMap.put(&quot;url&quot;, url);</span>
+<span class="nc" id="L173">        retMap.put(&quot;star&quot;, star);</span>
+
+<span class="nc" id="L175">        return retMap;</span>
+    }
+
+    @ApiOperation(&quot;하위에 여러 Object가 있는 JSON&quot;)
+    @GetMapping(&quot;downMultiParseObject&quot;)
+    public Map&lt;String, Map&lt;String, Object&gt;&gt; getJsonParseMultiObject() throws JSONException {
+<span class="nc" id="L181">        Map&lt;String, Map&lt;String, Object&gt;&gt; retMap = new HashMap&lt;&gt;();</span>
+
+        // 가장 큰 JSONObject를 가져옵니다.
+<span class="nc" id="L184">        JSONObject jObject = new JSONObject(JSON_OBJECT_AND_OBJECT_STRING);</span>
+
+        // 첫번째 JSONObject를 가져와서 key-value를 읽습니다.
+<span class="nc" id="L187">        Map&lt;String, Object&gt; retPost1Map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L188">        JSONObject post1Object = jObject.getJSONObject(&quot;obj1&quot;);</span>
+<span class="nc" id="L189">        String title = post1Object.getString(&quot;title&quot;);</span>
+<span class="nc" id="L190">        String url = post1Object.getString(&quot;url&quot;);</span>
+<span class="nc" id="L191">        boolean draft = post1Object.getBoolean(&quot;draft&quot;);</span>
+<span class="nc" id="L192">        retPost1Map.put(&quot;title&quot;, title);</span>
+<span class="nc" id="L193">        retPost1Map.put(&quot;url&quot;, url);</span>
+<span class="nc" id="L194">        retPost1Map.put(&quot;draft&quot;, draft);</span>
+
+        // 두번째 JSONObject를 가져와서 key-value를 읽습니다.
+<span class="nc" id="L197">        Map&lt;String, Object&gt; retPost2Map = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L198">        JSONObject post2Object = jObject.getJSONObject(&quot;obj2&quot;);</span>
+<span class="nc" id="L199">        title = post2Object.getString(&quot;title&quot;);</span>
+<span class="nc" id="L200">        url = post2Object.getString(&quot;url&quot;);</span>
+<span class="nc" id="L201">        draft = post2Object.getBoolean(&quot;draft&quot;);</span>
+<span class="nc" id="L202">        retPost2Map.put(&quot;title&quot;, title);</span>
+<span class="nc" id="L203">        retPost2Map.put(&quot;url&quot;, url);</span>
+<span class="nc" id="L204">        retPost2Map.put(&quot;draft&quot;, draft);</span>
+
+        // 최종 데이터 가공
+<span class="nc" id="L207">        retMap.put(&quot;obj1&quot;, retPost1Map);</span>
+<span class="nc" id="L208">        retMap.put(&quot;obj2&quot;, retPost2Map);</span>
+
+<span class="nc" id="L210">        return retMap;</span>
+    }
+
+    @ApiOperation(&quot;Array 가 있는 JSON&quot;)
+    @GetMapping(&quot;arrayParseObject&quot;)
+    public List&lt;Map&lt;String, Object&gt;&gt; getJsonParseArrayObject() throws JSONException {
+<span class="nc" id="L216">        List&lt;Map&lt;String, Object&gt;&gt; retListMap = new ArrayList&lt;&gt;();</span>
+
+        // 가장 큰 JSONObject를 가져옵니다.
+<span class="nc" id="L219">        JSONObject jObject = new JSONObject(JSON_OBJECT_AND_ARRAY_AND_OBJECT_STRING);</span>
+
+        // 배열을 가져옵니다.
+<span class="nc" id="L222">        JSONArray jArray = jObject.getJSONArray(&quot;list&quot;);</span>
+
+        // 배열의 모든 아이템을 출력합니다.
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        for (int i = 0; i &lt; jArray.length(); i++) {</span>
+<span class="nc" id="L226">            Map&lt;String, Object&gt; objMap = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L228">            JSONObject obj = jArray.getJSONObject(i);</span>
+<span class="nc" id="L229">            String title = obj.getString(&quot;title&quot;);</span>
+<span class="nc" id="L230">            String url = obj.getString(&quot;url&quot;);</span>
+<span class="nc" id="L231">            boolean draft = obj.getBoolean(&quot;type&quot;);</span>
+
+<span class="nc" id="L233">            objMap.put(&quot;title&quot;, title);</span>
+<span class="nc" id="L234">            objMap.put(&quot;url&quot;, url);</span>
+<span class="nc" id="L235">            objMap.put(&quot;type&quot;, draft);</span>
+<span class="nc" id="L236">            retListMap.add(objMap);</span>
+        }
+
+<span class="nc" id="L239">        return retListMap;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

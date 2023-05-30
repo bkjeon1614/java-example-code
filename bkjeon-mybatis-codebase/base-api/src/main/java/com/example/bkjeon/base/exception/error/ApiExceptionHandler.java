@@ -1,6 +1,7 @@
 package com.example.bkjeon.base.exception.error;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.validation.BindException;
@@ -54,11 +55,13 @@ public class ApiExceptionHandler {
 	 */
 	@ExceptionHandler(BindException.class)
 	private ApiResponse handleBindException(BindException e) {
+		final List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+
 		log.error("=================== BindException Error !!", e);
 		final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE_BINDING_ERROR, e.getBindingResult());
 		return ApiResponse.builder()
 			.statusCode(response.getStatus())
-			.responseMessage(response.getMessage())
+			.responseMessage(response.getMessage() + ": " + fieldErrors.get(0).getDefaultMessage())
 			.build();
 	}
 
@@ -104,6 +107,16 @@ public class ApiExceptionHandler {
 			.build();
 	}
 
+	@ExceptionHandler(NullPointerException.class)
+	private ApiResponse handleException(NullPointerException e) {
+		log.error("=================== NullPointerException Error !!", e);
+		return ApiResponse.builder()
+			.statusCode(ErrorCode.INTERNAL_SERVER_ERROR.getStatus())
+			.responseMessage(ErrorCode.INTERNAL_SERVER_ERROR.getMessage())
+			.build();
+	}
+
+	/*
 	@ExceptionHandler(Exception.class)
 	private ApiResponse handleException(Exception e) {
 		log.error("=================== Exception Error !!", e);
@@ -112,5 +125,6 @@ public class ApiExceptionHandler {
 			.responseMessage(ErrorCode.INTERNAL_SERVER_ERROR.getMessage())
 			.build();
 	}
+	 */
 
 }

@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: local_dev
+  application:
+    name: bkjeon-mybatis-codebase
 
 mybatis:
   mapper-locations: classpath:mybatis/**/*.xml
