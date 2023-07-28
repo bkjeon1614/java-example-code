@@ -97,4 +97,19 @@ public class CacheService {
         return exampleList;
     }
 
+    @Cacheable(value = "foo", key = "#exampleType", cacheManager = "isLettuceCacheManager")
+    public List<CacheExampleData> getRedisExampleList(String exampleType) {
+        List<CacheExampleData> exampleList = new ArrayList<>();
+
+        for (int i=1; i<7; i++) {
+            CacheExampleData cacheExampleData = CacheExampleData.builder()
+                .exampleNo(i)
+                .writer(exampleType)
+                .build();
+            exampleList.add(cacheExampleData);
+        }
+
+        return exampleList;
+    }
+
 }

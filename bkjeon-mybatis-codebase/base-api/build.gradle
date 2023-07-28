@@ -32,6 +32,7 @@ dependencies {
     // cache
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.6'
+    implementation('org.springframework.boot:spring-boot-starter-data-redis')
 
     // resilience4j (actuator, aop 는 필수로 같이 선언되어야함)
     implementation 'io.github.resilience4j:resilience4j-spring-boot2:' + resilience4jVersion

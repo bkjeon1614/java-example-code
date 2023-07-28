@@ -19,6 +19,9 @@ spring:
       username: root
       password: ENC(+ZVnlLxUPZ+UErIx+qIr+UC7PsbH8JPI)
       driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: localhost
+    port: 6379
 
 kafka:
   brokers: 192.168.0.203:9092,192.168.0.204:9092,192.168.0.205:9092
