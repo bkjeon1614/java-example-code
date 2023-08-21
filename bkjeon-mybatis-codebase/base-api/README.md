@@ -7,6 +7,52 @@
 - Spotbugs: http://localhost:9090/api/spotbugs.html
 - jacoco: http://localhost:9090/api/jacoco/index.html
 
+## Required
+- Redis (Docker Compose)    
+  [docker-compose.yml]
+  ```
+  version: '2'
+  
+  networks:
+  app-tier:
+  driver: bridge
+  
+  services:
+  redis:
+  image: 'bitnami/redis:latest'
+  environment:
+  - REDIS_REPLICATION_MODE=master
+    - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+    - app-tier
+    ports:
+    - 6379:6379
+    redis-slave-1:
+    image: 'bitnami/redis:latest'
+    environment:
+    - REDIS_REPLICATION_MODE=slave
+    - REDIS_MASTER_HOST=redis
+    - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+    - 6479:6379
+    depends_on:
+    - redis
+    networks:
+    - app-tier
+    redis-slave-2:
+    image: 'bitnami/redis:latest'
+    environment:
+    - REDIS_REPLICATION_MODE=slave
+    - REDIS_MASTER_HOST=redis
+    - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+    - 6579:6379
+    depends_on:
+    - redis
+    networks:
+    - app-tier  
+    ```
+
 ## Build
 - Local
   ```

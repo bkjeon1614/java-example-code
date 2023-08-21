@@ -2,7 +2,6 @@ package com.example.bkjeon.base.config.redis;
 
 import java.time.Duration;
 
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -13,7 +12,6 @@ import org.springframework.data.redis.connection.RedisStaticMasterReplicaConfigu
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -22,11 +20,10 @@ import io.lettuce.core.ReadFrom;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@EnableRedisRepositories
 @RequiredArgsConstructor
 public class RedisConfig {
 
-	private final RedisProperties redisProperties;
+	private final RedisReplicaProperties redisProperties;
 
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
@@ -43,19 +40,18 @@ public class RedisConfig {
 
 		LettuceClientConfiguration clientConfig = LettuceClientConfiguration
 			.builder()
-			.readFrom(ReadFrom.SLAVE_PREFERRED)
+			.readFrom(ReadFrom.REPLICA_PREFERRED)
 			.commandTimeout(Duration.ofMillis(500))
 			.build();
+
 		RedisStaticMasterReplicaConfiguration staticMasterReplicaConfiguration =
 			new RedisStaticMasterReplicaConfiguration(
 				redisProperties.getHost(),
 				redisProperties.getPort()
 			);
 
-		/*
 		redisProperties.getReplicas()
 			.forEach(replica -> staticMasterReplicaConfiguration.addNode(replica.getHost(), replica.getPort()));
-		 */
 		connectionFactory = new LettuceConnectionFactory(staticMasterReplicaConfiguration, clientConfig);
 
 		return connectionFactory;
