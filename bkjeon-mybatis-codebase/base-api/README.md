@@ -6,6 +6,7 @@
 - Zipkin Dashboard: http://localhost:9411
 - Spotbugs: http://localhost:9090/api/spotbugs.html
 - jacoco: http://localhost:9090/api/jacoco/index.html
+- actuator: http://localhost:9090/api/actuator
 
 ## Required
 - Redis (Docker Compose)    

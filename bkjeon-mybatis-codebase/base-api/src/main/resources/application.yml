@@ -75,10 +75,18 @@ management:
   endpoint:
     health:
       show-details: always
+      enabled: true
+    heapdump:
+      enabled: true
+    caches:
+      enabled: false
+    beans:
+      enabled: false
   endpoints:
     web:
       exposure:
-        include: health, info, metrics, prometheus, retries  # actuator 노출 원하는 정보 선택
+        include: health, heapdump, info, metrics, prometheus, retries, applicationLibInfo  # actuator 노출 원하는 정보 선택
+        exclude: beans
   health:
     circuitbreakers:
       enabled: true # circuitbreakers 정보 노출
