@@ -7,12 +7,14 @@ import org.springframework.boot.actuate.endpoint.annotation.Selector;
 import org.springframework.boot.actuate.endpoint.annotation.WriteOperation;
 import org.springframework.boot.actuate.endpoint.web.annotation.WebEndpoint;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Component
 // @Endpoint(id = "applicationLibInfo")
 // @JmxEndpoint(id = "applicationLibInfo")
 @WebEndpoint(id = "applicationLibInfo") // web 만 열어준다.
