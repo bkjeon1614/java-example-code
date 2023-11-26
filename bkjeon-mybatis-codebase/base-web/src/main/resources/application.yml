@@ -29,6 +29,14 @@ mybatis:
     default-statement-timeout: 30
     map-underscore-to-camel-case: true
 
+info: # /actuator/info 정보가 표시되는것을 볼 수 있다.
+  app-info:
+    projectName: ${ext.projectName}
+    group: ${group}
+    version: ${version}
+    javaVersion: ${sourceCompatibility}
+
+
 server:
   port: 9090
 

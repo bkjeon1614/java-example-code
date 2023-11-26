@@ -1,12 +1,28 @@
 plugins {
     id "com.github.spotbugs" version "5.0.14"
     id 'jacoco'
+    id "com.gorylenko.gradle-git-properties" version "2.2.3"
 }
+
+springBoot {
+    buildInfo()
+}
+
+group 'com.bkjeon.codebase'
+version '0.0.0'
+sourceCompatibility = 11
 
 def resilience4jVersion = '1.7.0'
 
 ext {
     set('springCloudVersion', "Hoxton.SR3")
+    projectName = 'base-api'
+}
+
+processResources {
+    filesMatching('**/application.yml') {
+        expand(project.properties)
+    }
 }
 
 dependencyManagement {
@@ -19,7 +35,6 @@ dependencies {
     // Gradle Multi Module
     implementation project(':base-common')
 
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'

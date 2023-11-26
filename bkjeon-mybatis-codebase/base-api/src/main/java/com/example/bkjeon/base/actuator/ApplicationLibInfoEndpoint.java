@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.services.api.v1.actuator;
+package com.example.bkjeon.base.actuator;
 
 import com.example.bkjeon.dto.actuator.LibarayInfo;
 import lombok.extern.slf4j.Slf4j;

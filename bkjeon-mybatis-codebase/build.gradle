@@ -20,10 +20,6 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: "com.github.node-gradle.node"
 
-    group 'com.bkjeon.codebase'
-    version '0.0.0'
-    sourceCompatibility = 11
-
     repositories {
         mavenCentral()
     }
@@ -53,6 +49,7 @@ subprojects {
         // Spring
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
         // Lombok
         compileOnly 'org.projectlombok:lombok'
