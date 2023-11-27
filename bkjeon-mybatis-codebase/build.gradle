@@ -50,6 +50,8 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation group: 'io.micrometer', name: 'micrometer-core', version: '1.12.0'
+        testImplementation 'io.rest-assured:xml-path:4.2.0'
 
         // Lombok
         compileOnly 'org.projectlombok:lombok'

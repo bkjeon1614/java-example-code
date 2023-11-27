@@ -1,7 +1,7 @@
-package com.example.bkjeon.base.services.api.v1.actuator;
+package com.example.bkjeon.base.services.api.v1.actuator.controller;
 
-import com.example.bkjeon.base.actuator.counter.ApplicationRequestManager;
-import com.example.bkjeon.base.actuator.counter.ApplicationRequestWithoutMicrometer;
+import com.example.bkjeon.base.services.api.v1.actuator.service.ApplicationRequestManager;
+import com.example.bkjeon.base.services.api.v1.actuator.service.ApplicationRequestWithoutMicrometer;
 import io.micrometer.core.annotation.Counted;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

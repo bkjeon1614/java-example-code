@@ -1,6 +1,6 @@
 package com.example.bkjeon.base.config.actuator;
 
-import com.example.bkjeon.base.actuator.counter.ApplicationRequestWithoutMicrometer;
+import com.example.bkjeon.base.services.api.v1.actuator.service.ApplicationRequestWithoutMicrometer;
 import io.micrometer.core.instrument.FunctionCounter;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;

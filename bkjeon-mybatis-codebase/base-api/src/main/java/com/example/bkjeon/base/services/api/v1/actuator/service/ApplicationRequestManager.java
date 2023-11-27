@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.actuator.counter;
+package com.example.bkjeon.base.services.api.v1.actuator.service;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;

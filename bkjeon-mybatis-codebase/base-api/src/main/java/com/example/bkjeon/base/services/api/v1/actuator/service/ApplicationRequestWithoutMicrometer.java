@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.actuator.counter;
+package com.example.bkjeon.base.services.api.v1.actuator.service;
 
 import org.springframework.stereotype.Service;
 
