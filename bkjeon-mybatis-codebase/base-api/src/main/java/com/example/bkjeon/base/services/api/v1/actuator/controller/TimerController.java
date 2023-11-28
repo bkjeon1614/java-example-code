@@ -1,10 +1,12 @@
 package com.example.bkjeon.base.services.api.v1.actuator.controller;
 
+import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +41,13 @@ public class TimerController {
 
         sample.stop(meterRegistry.timer("my.timer2"));
 
+        return HttpStatus.OK.getReasonPhrase();
+    }
+
+    @Timed("my.timer3")
+    @GetMapping("timer3/{sleepSecond}")
+    public String getTimer3(@PathVariable("sleepSecond") int sleepSecond) throws InterruptedException {
+        Thread.sleep(sleepSecond * 1000);
         return HttpStatus.OK.getReasonPhrase();
     }
 
