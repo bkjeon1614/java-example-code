@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.actuator.gauge;
+package com.example.bkjeon.base.config.actuator.gauge;
 
 import com.example.bkjeon.base.services.api.v1.actuator.service.gauge.QueueManager;
 import io.micrometer.core.instrument.Gauge;

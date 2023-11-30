@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.actuator.counter;
+package com.example.bkjeon.base.config.actuator.counter;
 
 import io.micrometer.core.aop.CountedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
