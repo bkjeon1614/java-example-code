@@ -1,5 +1,7 @@
 package com.example.bkjeon.base.services.api.v1.actuator.controller;
 
+import com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterMapService;
+import com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterService;
 import com.example.bkjeon.base.services.api.v1.actuator.service.gauge.QueueManager;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -19,6 +21,8 @@ public class GaugeController {
 
     private final QueueManager queueManager;
     private final MeterRegistry meterRegistry;
+    private final GaugeCounterService gaugeCounterService;
+    private final GaugeCounterMapService gaugeCounterMapService;
 
     @GetMapping("req")
     public double gaugeReq() {
@@ -26,6 +30,12 @@ public class GaugeController {
         return Gauge.builder(METRIC_NAME, queueManager, QueueManager::getSize)
             .register(meterRegistry)
             .value();
+    }
+
+    @GetMapping("req2")
+    public void gaugeReq2() {
+        gaugeCounterService.increment();
+        gaugeCounterMapService.increment("bkjeon");
     }
 
 }
