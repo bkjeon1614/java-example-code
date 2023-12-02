@@ -1,5 +1,14 @@
 spring:
   profiles: local_dev
+  boot:
+    admin:
+      client:
+        instance:
+          service-url: http://127.0.0.1:9090/api
+          name: bkjeon-api
+        url:
+          - http://127.0.0.1:9091
+        auto-registration: true
   sleuth:
     sampler:
       probability: 1.0

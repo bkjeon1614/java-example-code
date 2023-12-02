@@ -37,6 +37,7 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: '2.2.2'
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
