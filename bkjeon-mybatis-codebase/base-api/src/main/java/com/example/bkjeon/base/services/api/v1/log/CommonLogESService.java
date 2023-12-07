@@ -1,15 +1,7 @@
 package com.example.bkjeon.base.services.api.v1.log;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
-import org.springframework.stereotype.Service;
-
 import com.example.bkjeon.base.config.elastic.ESSearchConfig;
-import com.example.bkjeon.base.services.api.v1.elastic.ESService;
+import com.example.bkjeon.base.services.api.v1.elastic.ESIndexService;
 import com.example.bkjeon.dto.common.log.CommonESLogSaveRequestDTO;
 import com.example.bkjeon.entity.common.log.CommonESLog;
 import com.example.bkjeon.enums.elastic.CreateIndexType;
@@ -17,9 +9,14 @@ import com.example.bkjeon.enums.elastic.ESFieldType;
 import com.example.bkjeon.util.security.EncryptUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
@@ -31,7 +28,7 @@ public class CommonLogESService {
     private final static Integer SETTING_REPLICA_CNT = 1;
 
     private final ESSearchConfig esSearchConfig;
-    private final ESService esService;
+    private final ESIndexService esIndexService;
 
     /**
      * 로그 인덱스(-1 year) 유무 체크 (origin 인덱스로 체크)
@@ -43,7 +40,7 @@ public class CommonLogESService {
 
         String beforeIndexName = INDEX_NAME_PREFIX + "-" + (nowDateY - 1);
 
-        return esService.selectIndexCheck(beforeIndexName);
+        return esIndexService.selectIndexCheck(beforeIndexName);
     }
 
     /**
@@ -55,7 +52,7 @@ public class CommonLogESService {
         Integer nowDateY = Integer.parseInt(dateFormat.format(new Date()));
         String nowIndexName = INDEX_NAME_PREFIX + "-" + nowDateY;
 
-        return esService.selectIndexCheck(nowIndexName);
+        return esIndexService.selectIndexCheck(nowIndexName);
     }
 
     /**
@@ -115,7 +112,7 @@ public class CommonLogESService {
 
             if (CreateIndexType.INDEX_ALIAS_CHANGE.getType().equals(createIndexType)) {
                 // 일반 인덱스 생성 후 별칭 교체
-                result = esService.changeIndexAlias(
+                result = esIndexService.changeIndexAlias(
                     beforeIndexName,
                     SETTING_SHARD_CNT,
                     SETTING_REPLICA_CNT,
@@ -125,7 +122,7 @@ public class CommonLogESService {
                 );
             } else if (CreateIndexType.INDEX_ALIAS_CREATE.getType().equals(createIndexType)) {
                 // 별칭 인덱스 생성
-                result = esService.createAliasIndex(
+                result = esIndexService.createAliasIndex(
                     nowIndexName,
                     INDEX_NAME_PREFIX,
                     SETTING_SHARD_CNT,
@@ -175,7 +172,7 @@ public class CommonLogESService {
                 .sysRegDateTime(nowDateTime)
                 .build();
 
-            esService.insertData(
+            esIndexService.insertData(
                 INDEX_NAME_PREFIX,
                 combinationId,
                 objectMapper.writeValueAsString(commonLog)

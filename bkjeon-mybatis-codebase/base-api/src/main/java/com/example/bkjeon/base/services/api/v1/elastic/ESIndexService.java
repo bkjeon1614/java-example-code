@@ -1,7 +1,10 @@
 package com.example.bkjeon.base.services.api.v1.elastic;
 
+import com.example.bkjeon.base.config.elastic.ESSearchConfig;
+import com.example.bkjeon.util.elastic.ESRequestUtil;
 import java.io.IOException;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -10,7 +13,6 @@ import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.CountRequest;
 import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.client.indices.CreateIndexRequest;
@@ -20,22 +22,16 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.stereotype.Service;
 
-import com.example.bkjeon.base.config.elastic.ESSearchConfig;
-import com.example.bkjeon.util.elastic.ESRequestUtil;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ESServiceImpl implements ESService {
+public class ESIndexService {
 
     private final ESSearchConfig esSearchConfig;
 
     public long getDocTotalCnt() {
         long totalCnt = 0;
-        CountRequest countRequest = ESRequestUtil.getTotalCntSearchRequest("indexName");
+        CountRequest countRequest = ESRequestUtil.getTotalCntSearchRequest("zipkin-span-2023-01-07");
 
         try {
             CountResponse countResponse = esSearchConfig
@@ -57,7 +53,6 @@ public class ESServiceImpl implements ESService {
      * @param builder queryDSL
      * @return boolean
      */
-    @Override
     public boolean createIndex(
         String indexName,
         int settingShardCnt,
@@ -99,7 +94,6 @@ public class ESServiceImpl implements ESService {
      * @param builder queryDSL
      * @return boolean
      */
-    @Override
     public boolean createAliasIndex(
         String indexName,
         String aliasIndexName,
@@ -141,7 +135,6 @@ public class ESServiceImpl implements ESService {
      * @param aliasIndexName 별칭
      * @return boolean
      */
-    @Override
     public boolean setIndexAlias(
         String indexName,
         String aliasIndexName
@@ -178,7 +171,6 @@ public class ESServiceImpl implements ESService {
      * @param aliasIndexName  별칭
      * @return boolean
      */
-    @Override
     public boolean changeIndexAlias(
         String beforeIndexName,
         int settingShardCnt,
@@ -244,7 +236,6 @@ public class ESServiceImpl implements ESService {
      * @param indexName
      * @return boolean
      */
-    @Override
     public boolean selectIndexCheck(String indexName) {
         boolean exists = false;
         GetIndexRequest indexCheckRequest = new GetIndexRequest(indexName);
@@ -266,7 +257,6 @@ public class ESServiceImpl implements ESService {
      * @param indexName
      * @return
      */
-    @Override
     public boolean deleteIndex(String indexName) {
         boolean result = true;
 
@@ -294,7 +284,6 @@ public class ESServiceImpl implements ESService {
      * @param indexName
      * @param dataString
      */
-    @Override
     public void insertData(
         String indexName,
         String documentId,
@@ -335,7 +324,6 @@ public class ESServiceImpl implements ESService {
         }
     }
 
-    @Override
     public void bulkInsertData() {
 
         // Ex: 클래스 생성필요
