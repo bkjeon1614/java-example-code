@@ -23,6 +23,24 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("v1/data/stream")
 public class StreamController {
 
+    // 1~5 이내의 숫자만 가능
+    private static final String REG_EXP = "^[0-9]{1,5}$";
+
+    @ApiOperation("정규식 체크")
+    @GetMapping("regExp")
+    public void getRegExpList() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51021614", 20),
+            new StreamUser("5102", 10)
+        );
+        List<String> streamUserRegExpList = streamUserList.stream()
+            .map(StreamUser::getName)
+            .filter(o -> o.matches(REG_EXP))
+            .collect(Collectors.toList());
+        System.out.println(streamUserRegExpList.toString());
+    }
+
     @ApiOperation("전체 데이터에서 skip / limit 를 활용한 페이지네이션 처리")
     @GetMapping("skipAndLimit")
     public List<StreamUser> getSkipAndLimit(
