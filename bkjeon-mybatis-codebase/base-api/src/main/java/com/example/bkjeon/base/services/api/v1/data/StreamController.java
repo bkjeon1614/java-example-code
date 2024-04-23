@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import java.util.stream.Stream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,39 @@ public class StreamController {
 
     // 1~5 이내의 숫자만 가능
     private static final String REG_EXP = "^[0-9]{1,5}$";
+
+    @ApiOperation("Stream List Merge(=concat)")
+    @GetMapping("listConcat")
+    public void isListConcat() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51021614", 20),
+            new StreamUser("5102", 10)
+        );
+        List<StreamUser> streamUserList2 = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51022BB", 10)
+        );
+
+        // merge
+        List<StreamUser> mergeList = Stream.concat(streamUserList.stream(), streamUserList2.stream())
+            .distinct()
+            .collect(Collectors.toList());
+        System.out.println(mergeList.size());   // 5
+    }
+
+    @ApiOperation("Stream List to Map 변환")
+    @GetMapping("listToMap")
+    public void isListToMap() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51021614", 20),
+            new StreamUser("5102", 10)
+        );
+        Map<String, Integer> streamUserMap = streamUserList.stream()
+            .collect(Collectors.toMap(StreamUser::getName, StreamUser::getAge));
+        System.out.println(streamUserMap.get("5102"));  // 10
+    }
 
     @ApiOperation("정규식 체크")
     @GetMapping("regExp")
