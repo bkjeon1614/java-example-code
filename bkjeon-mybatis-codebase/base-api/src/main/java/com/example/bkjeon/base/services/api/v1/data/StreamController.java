@@ -58,6 +58,22 @@ public class StreamController {
         Map<String, Integer> streamUserMap = streamUserList.stream()
             .collect(Collectors.toMap(StreamUser::getName, StreamUser::getAge));
         System.out.println(streamUserMap.get("5102"));  // 10
+
+        // 키 중복 제외
+        List<StreamUser> streamUserList2 = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51021614", 20),
+            new StreamUser("5102", 10),
+            new StreamUser("5102", 20)
+        );
+        // 1. 기존 값을 유지할 경우
+        Map<String, Integer> streamUserMap2 = streamUserList2.stream()
+            .collect(Collectors.toMap(StreamUser::getName, StreamUser::getAge, (oldValue, newValue) -> oldValue));
+        System.out.println(streamUserMap2.get("5102")); // 10
+        // 2. 새로운 값을 유지할 경우
+        Map<String, Integer> streamUserMap3 = streamUserList2.stream()
+            .collect(Collectors.toMap(StreamUser::getName, StreamUser::getAge, (oldValue, newValue) -> newValue));
+        System.out.println(streamUserMap3.get("5102")); // 20
     }
 
     @ApiOperation("정규식 체크")
