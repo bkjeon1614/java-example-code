@@ -1,4 +1,4 @@
-package com.example.bkjeon.entity.data.data;
+package com.example.bkjeon.domain.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,7 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.data;
 
-import com.example.bkjeon.entity.data.data.DataUser;
-import com.example.bkjeon.entity.data.stream.StreamUser;
+import com.example.bkjeon.domain.data.DataUser;
 import io.swagger.annotations.ApiOperation;
 import java.util.Arrays;
 import java.util.List;
