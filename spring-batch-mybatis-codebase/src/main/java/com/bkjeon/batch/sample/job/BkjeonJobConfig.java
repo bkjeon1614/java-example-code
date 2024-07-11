@@ -1,6 +1,5 @@
 package com.bkjeon.batch.sample.job;
 
-import com.bkjeon.batch.sample.job.param.SampleParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -8,48 +7,45 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.builder.JobBuilder;
-import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
- * --job.name=SAMPLE_JOB --date=2023-06-01 --chunkSize=1300 --requestDate=20240711
+ * --job.name=SAMPLE_JOB requestDate=20240711
  */
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class SampleJobConfig {
+public class BkjeonJobConfig {
 
-    public static final String JOB_NAME = "SAMPLE_JOB";
-
-    private final SampleParam sampleParam;
+    public static final String JOB_NAME = "BKJEON_JOB";
 
     @Bean
-    public Job sampleJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    public Job bkjeonJob(JobRepository jobRepository, Step bkjeonStep) {
         return new JobBuilder(JOB_NAME, jobRepository)
-            .incrementer(new RunIdIncrementer())
-            .start(sampleStep(jobRepository, transactionManager))
+            .start(bkjeonStep)
             .build();
     }
 
     @Bean
     @JobScope
-    public Step sampleStep(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager) {
-        log.info(">>>>> chunkSize = {}", sampleParam.getChunkSize());
-        log.info(">>>>> date = {}", sampleParam.getDate());
-        log.info(">>>>> requestDate = {}", sampleParam.getRequestDate());
-        return new StepBuilder("sampleStep", jobRepository)
-            .tasklet(testTasklet(), platformTransactionManager).build();
+    public Step bkjeonStep(JobRepository jobRepository, Tasklet testTasklet,
+        PlatformTransactionManager platformTransactionManager,
+        @Value("#{jobParameters[requestDate]}") String requestDate) {
+        log.info(">>>>> requestDate: {}", requestDate);
+        return new StepBuilder("bkjeonStep", jobRepository)
+            .tasklet(testTasklet, platformTransactionManager).build();
     }
 
     @Bean
     @StepScope
-    public Tasklet testTasklet() {
+    public Tasklet bkjeonTasklet(){
         return ((contribution, chunkContext) -> {
             log.info(">>>>> This is Step1");
             return RepeatStatus.FINISHED;
