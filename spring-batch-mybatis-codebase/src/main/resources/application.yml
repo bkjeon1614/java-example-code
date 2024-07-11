@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    default: local
+  application:
+    name: spring-batch-mybatis-codebase
+  batch:
+    job:
+      name: ${job.name:NONE}
+  main:
+    web-application-type: none
+
+# /actuator/info
+info:
+  app-info:
+    projectName: ${ext.projectName}
+    group: ${group}
+    version: ${version}
+    javaVersion: ${sourceCompatibility}
+
+---
+
