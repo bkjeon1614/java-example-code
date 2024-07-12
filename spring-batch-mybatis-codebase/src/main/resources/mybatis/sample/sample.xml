@@ -1,0 +1,34 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bkjeon.feature.mapper.sample.SampleMapper">
+
+    <resultMap id="selectSampleListMap" type="com.bkjeon.feature.entity.sample.Sample">
+        <result property="id" column="id"/>
+        <result property="amount" column="amount"/>
+        <result property="txName" column="tx_name"/>
+        <result property="txDateTime" column="tx_date_time"/>
+    </resultMap>
+
+    <select id="selectSampleList" resultMap="selectSampleListMap">
+        SELECT
+            id,
+            amount,
+            tx_name,
+            tx_date_time
+        FROM sample
+        ORDER BY id DESC
+        LIMIT #{_skiprows}, #{_pagesize}
+    </select>
+    
+    <insert id="insertSample" parameterType="com.bkjeon.feature.entity.sample.SampleOut">
+        INSERT INTO sample_out (
+            amount,
+            tx_name,
+            tx_date_time
+        ) VALUES (
+            #{amount},
+            #{txName},
+            #{txDateTime}
+        )
+    </insert>
+
+</mapper>

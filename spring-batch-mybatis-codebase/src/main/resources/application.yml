@@ -9,6 +9,17 @@ spring:
   main:
     web-application-type: none
 
+mybatis:
+  mapper-locations: classpath:mybatis/**/*.xml
+  type-aliases-package: com.bkjeon.feature.mapper
+  configuration:
+    cacheEnabled: false
+    useGeneratedKeys: true
+    defaultExecutorType: REUSE
+    aggressiveLazyLoading: false
+    default-statement-timeout: 30
+    map-underscore-to-camel-case: true
+
 # /actuator/info
 info:
   app-info:

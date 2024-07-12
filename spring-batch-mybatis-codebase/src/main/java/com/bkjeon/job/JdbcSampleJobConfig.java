@@ -1,7 +1,7 @@
-package com.bkjeon.batch.jdbc.job;
+package com.bkjeon.job;
 
-import com.bkjeon.feature.entity.jdbc.JdbcSample;
-import com.bkjeon.feature.rowmapper.jdbc.JdbcSampleRowMapper;
+import com.bkjeon.feature.entity.sample.Sample;
+import com.bkjeon.feature.rowmapper.sample.JdbcSampleRowMapper;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
@@ -27,20 +27,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
- * --job.name=jdbcSampleJob requestDate=20240711
+ * --job.name=JDBC_SAMPLE_JOB requestDate=20240711
  */
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class JdbcSampleJobConfig {
 
+    private static final String JOB_NAME_PREFIX = "JDBC_SAMPLE";
     private static final int CHUNK_SIZE = 10;
 
     private final DataSource dataSource;
 
     @Bean
     public Job jdbcSampleJob(JobRepository jobRepository, Step jdbcSampleJobStep) {
-        return new JobBuilder("jdbcSampleJob", jobRepository)
+        return new JobBuilder(JOB_NAME_PREFIX + "_JOB", jobRepository)
             .start(jdbcSampleJobStep)
             .build();
     }
@@ -50,33 +51,33 @@ public class JdbcSampleJobConfig {
     public Step jdbcSampleJobStep(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager,
         @Value("#{jobParameters[requestDate]}") String requestDate) throws Exception {
         log.info(">>>>> requestDate: {}", requestDate);
-        return new StepBuilder("jdbcSampleJobStep", jobRepository)
-            .<JdbcSample, JdbcSample>chunk(CHUNK_SIZE, platformTransactionManager)
+        return new StepBuilder(JOB_NAME_PREFIX + "_JOB_STEP", jobRepository)
+            .<Sample, Sample>chunk(CHUNK_SIZE, platformTransactionManager)
             .reader(jdbcSamplePagingItemReader())
             .writer(jdbcSamplePagingItemWriter())
             .build();
     }
 
     @Bean
-    public JdbcPagingItemReader<JdbcSample> jdbcSamplePagingItemReader() throws Exception {
-        return new JdbcPagingItemReaderBuilder<JdbcSample>()
+    public JdbcPagingItemReader<Sample> jdbcSamplePagingItemReader() throws Exception {
+        return new JdbcPagingItemReaderBuilder<Sample>()
             .pageSize(CHUNK_SIZE)
             .fetchSize(CHUNK_SIZE)
             .dataSource(dataSource)
             .rowMapper(new JdbcSampleRowMapper())
             .queryProvider(createQueryProvider(dataSource))
             .parameterValues(getParameterValues())
-            .name("jdbcSamplePagingItemReader")
+            .name(JOB_NAME_PREFIX + "_PAGING_ITEM_READER")
             .build();
     }
 
     @Bean
-    public JdbcBatchItemWriter<JdbcSample> jdbcSamplePagingItemWriter() {
-        return new JdbcBatchItemWriterBuilder<JdbcSample>()
+    public JdbcBatchItemWriter<Sample> jdbcSamplePagingItemWriter() {
+        return new JdbcBatchItemWriterBuilder<Sample>()
             .dataSource(dataSource)
             .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
             .sql("""
-                    INSERT INTO JDBC_SAMPLE_OUT (id, amount, tx_name, tx_date_time)
+                    INSERT INTO sample_out (id, amount, tx_name, tx_date_time)
                     VALUES (:id, :amount, :txName, :txDateTime)
                 """)
             .build();
@@ -93,7 +94,7 @@ public class JdbcSampleJobConfig {
         SqlPagingQueryProviderFactoryBean queryProvider = new SqlPagingQueryProviderFactoryBean();
         queryProvider.setDataSource(dataSource);
         queryProvider.setSelectClause("id, amount, tx_name, tx_date_time");
-        queryProvider.setFromClause("from JDBC_SAMPLE");
+        queryProvider.setFromClause("from sample");
         queryProvider.setWhereClause("where amount >= :amount");
 
         Map<String, Order> sortKeys = new HashMap<>(1);

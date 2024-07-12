@@ -1,15 +1,15 @@
-package com.bkjeon.feature.rowmapper.jdbc;
+package com.bkjeon.feature.rowmapper.sample;
 
-import com.bkjeon.feature.entity.jdbc.JdbcSample;
+import com.bkjeon.feature.entity.sample.Sample;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
-public class JdbcSampleRowMapper implements RowMapper<JdbcSample> {
+public class JdbcSampleRowMapper implements RowMapper<Sample> {
 
     @Override
-    public JdbcSample mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return JdbcSample.builder()
+    public Sample mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return Sample.builder()
             .id(rs.getLong("id"))
             .amount(rs.getLong("amount"))
             .txName(rs.getString("tx_name"))
