@@ -10,6 +10,3 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
-
-server:
-  port: 10030
