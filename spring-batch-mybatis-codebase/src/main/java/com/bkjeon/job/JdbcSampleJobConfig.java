@@ -35,7 +35,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class JdbcSampleJobConfig {
 
     private static final String JOB_NAME_PREFIX = "JDBC_SAMPLE";
-    private static final int CHUNK_SIZE = 10;
+    private static final int CHUNK_SIZE = 1000;
 
     private final DataSource dataSource;
 

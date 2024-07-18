@@ -39,13 +39,16 @@
             <appender-ref ref="stdout" />
         </logger>
 
-        <logger name="jdbc" level="off"/>
-        <logger name="jdbc.sqlonly" level="debug"/>
-        <logger name="jdbc.sqltiming" level="off"/>
-        <logger name="jdbc.audit" level="off"/>
-        <logger name="jdbc.resultset" level="off"/>
-        <logger name="jdbc.resultsettable" level="debug"/>
-        <logger name="jdbc.connection" level="off"/>
+        <logger name="jdbc" level="OFF"/>
+        <logger name="jdbc.sqlonly" level="OFF"/>
+        <logger name="jdbc.sqltiming" level="INFO"/>
+        <logger name="jdbc.audit" level="OFF"/>
+        <logger name="jdbc.resultset" level="OFF"/>
+        <logger name="jdbc.resultsettable" level="INFO"/>
+        <logger name="jdbc.connection" level="OFF"/>
+        <logger name="com.insilicogen" level="INFO" additivity="false">
+            <appender-ref ref="STDOUT" />
+        </logger>
 
         <root level="INFO">
             <appender-ref ref="stdout" />

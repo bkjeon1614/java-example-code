@@ -3,10 +3,10 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mysql://localhost:13306/sample?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
+    url: jdbc:log4jdbc:mysql://localhost:13306/sample?socketTimeout=30000&connectTimeout=30000&serverTimezone=Asia/Seoul&useUnicode=yes&characterEncoding=utf8&allowMultiQueries=true
     username: bkjeon
     password: wjsqhdrms
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
   batch:
     jdbc:
-      initialize-schema: always
+      initialize-schema: never
