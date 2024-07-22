@@ -18,6 +18,28 @@
         ORDER BY id DESC
         LIMIT #{_skiprows}, #{_pagesize}
     </select>
+
+    <select id="selectZeroOffsetSampleList" resultMap="selectSampleListMap">
+        SELECT
+            id,
+            amount,
+            tx_name,
+            tx_date_time
+        FROM sample
+        WHERE 1=1
+        AND id > #{_skiprows}
+        LIMIT 0, #{_pagesize}
+    </select>
+
+    <select id="selectCoveringIndexSampleList" resultMap="selectSampleListMap">
+        SELECT *
+        FROM sample AS a
+        INNER JOIN (
+            SELECT id
+            FROM sample
+            LIMIT #{_skiprows}, #{_pagesize}
+        ) AS b ON b.id = a.id
+    </select>
     
     <insert id="insertSample" parameterType="com.bkjeon.feature.entity.sample.SampleOut">
         INSERT INTO sample_out (
