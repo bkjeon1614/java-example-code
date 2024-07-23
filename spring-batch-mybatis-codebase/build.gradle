@@ -24,13 +24,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 
+	// Lombok for reducing boilerplate code
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
 	// DB
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation group: 'org.bgee.log4jdbc-log4j2', name: 'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 
-	// Lombok for reducing boilerplate code
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
 	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
