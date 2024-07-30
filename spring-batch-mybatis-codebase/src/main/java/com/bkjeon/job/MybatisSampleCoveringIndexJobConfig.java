@@ -33,7 +33,7 @@ public class MybatisSampleCoveringIndexJobConfig {
     private static final String JOB_NAME_PREFIX = "MYBATIS_SAMPLE_COVERING_INDEX";
     private static final int CHUNK_SIZE = 3000;
 
-    private final SqlSessionFactory sqlSeesionFactory;
+    private final SqlSessionFactory sqlSessionFactory;
 
     @Bean
     public Job mybatisSampleCoveringIndexJob(JobRepository jobRepository, Step mybatisSampleCoveringIndexJobStep) {
@@ -59,7 +59,7 @@ public class MybatisSampleCoveringIndexJobConfig {
     public MyBatisPagingItemReader<Sample> mybatisSampleCoveringIndexPagingItemReader() {
         return new MyBatisPagingItemReaderBuilder<Sample>()
             .pageSize(CHUNK_SIZE)
-            .sqlSessionFactory(sqlSeesionFactory)
+            .sqlSessionFactory(sqlSessionFactory)
             .queryId("com.bkjeon.feature.mapper.sample.SampleMapper.selectZeroOffsetSampleList")
             .build();
     }
@@ -77,7 +77,7 @@ public class MybatisSampleCoveringIndexJobConfig {
     @Bean
     public MyBatisBatchItemWriter<SampleOut> mybatisSampleCoveringIndexItemWriter() {
         return new MyBatisBatchItemWriterBuilder<SampleOut>()
-            .sqlSessionFactory(sqlSeesionFactory)
+            .sqlSessionFactory(sqlSessionFactory)
             .statementId("com.bkjeon.feature.mapper.sample.SampleMapper.insertSample")
             .build();
     }

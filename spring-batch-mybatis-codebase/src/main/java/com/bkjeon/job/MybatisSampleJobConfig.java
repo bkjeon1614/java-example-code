@@ -33,7 +33,7 @@ public class MybatisSampleJobConfig {
     private static final String JOB_NAME_PREFIX = "MYBATIS_SAMPLE";
     private static final int CHUNK_SIZE = 10;
 
-    private final SqlSessionFactory sqlSeesionFactory;
+    private final SqlSessionFactory sqlSessionFactory;
 
     @Bean
     public Job mybatisSampleJob(JobRepository jobRepository, Step mybatisSampleJobStep) {
@@ -59,7 +59,7 @@ public class MybatisSampleJobConfig {
     public MyBatisPagingItemReader<Sample> mybatisSamplePagingItemReader() {
         return new MyBatisPagingItemReaderBuilder<Sample>()
             .pageSize(CHUNK_SIZE)
-            .sqlSessionFactory(sqlSeesionFactory)
+            .sqlSessionFactory(sqlSessionFactory)
             .queryId("com.bkjeon.feature.mapper.sample.SampleMapper.selectSampleList")
             .build();
     }
@@ -77,7 +77,7 @@ public class MybatisSampleJobConfig {
     @Bean
     public MyBatisBatchItemWriter<SampleOut> mybatisSampleItemWriter() {
         return new MyBatisBatchItemWriterBuilder<SampleOut>()
-            .sqlSessionFactory(sqlSeesionFactory)
+            .sqlSessionFactory(sqlSessionFactory)
             .statementId("com.bkjeon.feature.mapper.sample.SampleMapper.insertSample")
             .build();
     }

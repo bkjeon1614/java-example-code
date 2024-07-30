@@ -33,7 +33,7 @@ public class MybatisSampleZeroOffsetJobConfig {
     private static final String JOB_NAME_PREFIX = "MYBATIS_SAMPLE_ZERO_OFFSET";
     private static final int CHUNK_SIZE = 3000;
 
-    private final SqlSessionFactory sqlSeesionFactory;
+    private final SqlSessionFactory sqlSessionFactory;
 
     @Bean
     public Job mybatisSampleZeroOffsetJob(JobRepository jobRepository, Step mybatisSampleZeroOffsetJobStep) {
@@ -59,7 +59,7 @@ public class MybatisSampleZeroOffsetJobConfig {
     public MyBatisPagingItemReader<Sample> mybatisSampleZeroOffsetPagingItemReader() {
         return new MyBatisPagingItemReaderBuilder<Sample>()
             .pageSize(CHUNK_SIZE)
-            .sqlSessionFactory(sqlSeesionFactory)
+            .sqlSessionFactory(sqlSessionFactory)
             .queryId("com.bkjeon.feature.mapper.sample.SampleMapper.selectZeroOffsetSampleList")
             .build();
     }
@@ -77,7 +77,7 @@ public class MybatisSampleZeroOffsetJobConfig {
     @Bean
     public MyBatisBatchItemWriter<SampleOut> mybatisSampleZeroOffsetItemWriter() {
         return new MyBatisBatchItemWriterBuilder<SampleOut>()
-            .sqlSessionFactory(sqlSeesionFactory)
+            .sqlSessionFactory(sqlSessionFactory)
             .statementId("com.bkjeon.feature.mapper.sample.SampleMapper.insertSample")
             .build();
     }

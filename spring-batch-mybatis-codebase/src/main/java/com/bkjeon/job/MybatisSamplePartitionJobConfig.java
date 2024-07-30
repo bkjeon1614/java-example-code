@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
+// TODO: 작업예정
 /**
  * --job.name=MYBATIS_SAMPLE_PARTITION_JOB requestDate=20240701
  */
@@ -35,7 +36,7 @@ public class MybatisSamplePartitionJobConfig {
     private static final String JOB_NAME_PREFIX = "MYBATIS_SAMPLE_PARTITION";
     private static final int CHUNK_SIZE = 2000;
 
-    private final SqlSessionFactory sqlSeesionFactory;
+    private final SqlSessionFactory sqlSessionFactory;
 
     @Bean
     public Job mybatisSamplePartitionJob(JobRepository jobRepository, Step mybatisSamplePartitionJobStep) {
@@ -64,7 +65,7 @@ public class MybatisSamplePartitionJobConfig {
     public MyBatisPagingItemReader<Sample> mybatisSamplePartitionPagingItemReader() {
         return new MyBatisPagingItemReaderBuilder<Sample>()
             .pageSize(CHUNK_SIZE)
-            .sqlSessionFactory(sqlSeesionFactory)
+            .sqlSessionFactory(sqlSessionFactory)
             .queryId("com.bkjeon.feature.mapper.sample.SampleMapper.selectSampleList")
             .build();
     }
@@ -85,7 +86,7 @@ public class MybatisSamplePartitionJobConfig {
     @Bean
     public MyBatisBatchItemWriter<SampleOut> mybatisSamplePartitionItemWriter() {
         return new MyBatisBatchItemWriterBuilder<SampleOut>()
-            .sqlSessionFactory(sqlSeesionFactory)
+            .sqlSessionFactory(sqlSessionFactory)
             .statementId("com.bkjeon.feature.mapper.sample.SampleMapper.insertSample")
             .build();
     }
