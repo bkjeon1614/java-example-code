@@ -4,7 +4,7 @@
 - [Mybatis Code Base (Mybatis Gradle Multi Project)](https://github.com/bkjeon1614/java-example-code/java11/tree/main/bkjeon-mybatis-codebase)
 - [JPA Code Base (JPA Gradle Multi Project)](https://github.com/bkjeon1614/java-example-code/java11/tree/main/bkjeon-jpa-codebase)
 
-## Spring Batch Code Base
+## Spring Batch Code Base (Java17 폴더로 이동 예정)
 - [Spring Batch Code Base](https://github.com/bkjeon1614/java-example-code/tree/main/spring-batch-mybatis-codebase)
 
 ## Gradle
