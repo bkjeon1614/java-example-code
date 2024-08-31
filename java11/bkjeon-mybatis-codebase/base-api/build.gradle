@@ -1,0 +1,218 @@
+plugins {
+    id "com.github.spotbugs" version "5.0.14"
+    id 'jacoco'
+    id "com.gorylenko.gradle-git-properties" version "2.2.3"
+}
+
+springBoot {
+    buildInfo()
+}
+
+group 'com.bkjeon.codebase'
+version '0.0.0'
+sourceCompatibility = 11
+
+def resilience4jVersion = '1.7.0'
+
+ext {
+    set('springCloudVersion', "Hoxton.SR3")
+    projectName = 'base-api'
+}
+
+processResources {
+    filesMatching('**/application.yml') {
+        expand(project.properties)
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    // Gradle Multi Module
+    implementation project(':base-common')
+
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '3.0.0'
+    testImplementation 'org.mockito:mockito-core:3.9.0'
+
+    // cache
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.6'
+    implementation('org.springframework.boot:spring-boot-starter-data-redis')
+
+    // resilience4j (actuator, aop 는 필수로 같이 선언되어야함)
+    implementation 'io.github.resilience4j:resilience4j-spring-boot2:' + resilience4jVersion
+    implementation 'io.github.resilience4j:resilience4j-retry:' + resilience4jVersion
+    implementation 'io.github.resilience4j:resilience4j-circuitbreaker:' + resilience4jVersion
+    implementation 'io.github.resilience4j:resilience4j-timelimiter:' + resilience4jVersion
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    // LoggingFilter (Spring Version 에 따라 기본으로 제공해주는 경우도 있음)
+    implementation group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0'
+    implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
+
+    // zipkin, sleuth
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-zipkin', version: '2.2.3.RELEASE'
+}
+
+// ---------------- Test Start
+test {
+    finalizedBy 'spotbugsMain'
+    finalizedBy 'jacocoTestReport'
+
+    useJUnitPlatform{
+        excludeTags 'integration'
+    }
+
+    systemProperty "jasypt.encryptor.password", System.getProperty("jasypt.encryptor.password")
+    systemProperty "mysql.aeskey", System.getProperty("mysql.aeskey")
+}
+
+task integrationTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'integration'   // 통합 테스트
+    }
+
+    systemProperty "jasypt.encryptor.password", System.getProperty("jasypt.encryptor.password")
+    systemProperty "mysql.aeskey", System.getProperty("mysql.aeskey")
+}
+
+task unitTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'unit'  // 단위 테스트
+    }
+
+    systemProperty "jasypt.encryptor.password", System.getProperty("jasypt.encryptor.password")
+    systemProperty "mysql.aeskey", System.getProperty("mysql.aeskey")
+}
+
+task acceptanceTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'acceptance'  // 인수 테스트
+    }
+
+    systemProperty "jasypt.encryptor.password", System.getProperty("jasypt.encryptor.password")
+    systemProperty "mysql.aeskey", System.getProperty("mysql.aeskey")
+}
+
+// Static Application Security Testing (SAST) Start
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask) {
+    spotbugs {
+        ignoreFailures = true   // 오류무시여부
+        showStackTraces = true  // 스택트래이스 표시 여부
+        showProgress = true  // 프로그레스바 표시 여부
+    }
+
+    reports {
+        xml.required.set(false) // XML 파일 생성여부
+        html {
+            required = true
+            outputLocation = file("spotbugs.html")   // Report File 추출경로
+        }
+    }
+}
+// Static Application Security Testing (SAST) End
+
+// jacoco start
+jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = file("jacoco")
+    }
+
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true // 활성화
+            element = 'CLASS' // 클래스 단위로 커버리지 체크
+            // includes = []
+
+            // 라인 커버리지 제한을 80%로 설정
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+
+            // 브랜치 커버리지 제한을 80%로 설정
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+
+            // 빈 줄을 제외한 코드의 라인수를 최대 200라인으로 제한합니다.
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 200
+            }
+
+            excludes = [
+                "*"
+            ]
+        }
+
+        // 여러 개의 rule 정의 가능
+        rule {
+        }
+    }
+}
+// jacoco end
+// ---------------- Test End
+
+// Server Define
+def serverFolderName = "base-api"
+def serverFolderDir = projectDir.parent.toString() + "/" + serverFolderName
+def serverFolderResourcesDir = projectDir.toString() + "/src/main/resources/"
+def serverFolderReportDir = serverFolderResourcesDir + "report/"
+
+// Full Build Step Task
+task fullBuildStep {
+    doFirst {
+        delete serverFolderReportDir
+        project.mkdir serverFolderReportDir
+    }
+
+    doLast {
+        // Static Test Files (Spotbugs)
+        copy {
+            from serverFolderDir
+            include "*.html"
+            into serverFolderReportDir
+        }
+
+        // jacoco
+        copy {
+            from serverFolderDir + "/jacoco"
+            into serverFolderReportDir + "/jacoco"
+        }
+
+        // delete
+        delete files("spotbugs.html")
+        delete "jacoco"
+    }
+}
+
+// Full Build ( 해당 명령으로 통합빌드 실행 )
+task fullBuild(type: Zip) {
+    def tasks = [fullBuildStep, clean, bootJar]
+    for (int i = 0; i < tasks.size() - 1; i++) {
+        tasks[i + 1].mustRunAfter(tasks[i])
+    }
+
+    dependsOn(tasks)
+}
+// ---------------- Full Build End
