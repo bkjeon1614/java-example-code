@@ -1,0 +1,22 @@
+group 'com.bkjeon.codebase'
+version '0.0.0'
+sourceCompatibility = 11
+
+ext {
+    projectName = 'base-spring-admin'
+}
+
+processResources {
+    filesMatching('**/application.yml') {
+        expand(project.properties)
+    }
+}
+
+dependencies {
+    // Gradle Multi Module
+    implementation project(':base-common')
+
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation group: 'de.codecentric', name: 'spring-boot-admin-starter-server', version: '2.2.2'
+}

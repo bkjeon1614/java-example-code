@@ -10,12 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.springframework.util.StreamUtils;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-/**
- * 요청된 HTTP 접근
- * [HttpServletRequestWrapper]
- * Servlet 관련 인터페이스 제공
- */
 public class RequestWrapper extends HttpServletRequestWrapper {
 
 	private final byte[] cachedInputStream;
@@ -26,10 +22,12 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 		this.cachedInputStream = StreamUtils.copyToByteArray(requestInputStream);
 	}
 
-	/**
-	 * binary data로 Request Body 정보를 담은 ServletInputStream(inputstream)을 반환한다.
-	 * @return
-	 */
+	public RequestWrapper(MultipartHttpServletRequest request) throws IOException {
+		super(request);
+		InputStream requestInputStream = request.getInputStream();
+		this.cachedInputStream = StreamUtils.copyToByteArray(requestInputStream);
+	}
+
 	@Override
 	public ServletInputStream getInputStream() {
 		return new ServletInputStream() {
@@ -38,7 +36,6 @@ public class RequestWrapper extends HttpServletRequestWrapper {
 			@Override
 			public boolean isFinished() {
 				try {
-					// 더 이상 읽을 byte 가 없을 때 return
 					return cachedBodyInputStream.available() == 0;
 				} catch (IOException e) {
 					e.printStackTrace();

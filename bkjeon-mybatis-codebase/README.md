@@ -41,8 +41,8 @@ bkjeon-mybatis-codebase <br>
   $ docker run --name oracle11g -d -p 1521:1521 -p 8080:8080 jaspeen/oracle-xe-11g
   $ docker exec -it oracle11g sqlplus
   // system / oracle 로 접속
-  SQL> CREATE USER bkjeon IDENTIFIED BY wjsqhdrms;
-  SQL> GRANT CREATE SESSION TO bkjeon;
+  SQL> CREATE USER root IDENTIFIED BY wjsqhdrms;
+  SQL> GRANT CREATE SESSION TO root;
   
   // Elasticsearch 설치
   $ docker run -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" --name elasticsearch7 docker.elastic.co/elasticsearch/elasticsearch:7.1.1

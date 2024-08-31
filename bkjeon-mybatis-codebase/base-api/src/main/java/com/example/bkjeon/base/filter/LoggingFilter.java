@@ -1,52 +1,53 @@
 package com.example.bkjeon.base.filter;
 
-import static javax.ws.rs.core.MediaType.*;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
+import javax.annotation.Nonnull;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.http.MediaType;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
-import lombok.extern.slf4j.Slf4j;
-
-/**
- * 로깅 필터
- * [MDC]
- * 실행 쓰레드들에 공통값을 주입하여 의미있는 정보를 추가해 로깅 할 수 있도록 제공
- * ( Ex: 멀티 스레딩 환경시 실행되는 task 는 로그가 섞여 제대로 확인하기 힘들어서
- * 스레드로컬 변수에 값을 할당하여 트래킹에 용이하게 만드나 매번 해당 값을 주입하기는 번거로워 logback, log4j 등 MDC 를 제공)
- *
- * [doFilterInternal]
- * doFilter 와 동일하지만 단일 요청 스레드 내에서 요청당 한 번만 호출되도록 보장된다.
- */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class LoggingFilter extends OncePerRequestFilter {
+
+	private final MultipartResolver multipartResolver;
 
 	@Override
 	protected void doFilterInternal(
-		HttpServletRequest request,
-		@Nullable HttpServletResponse response,
-		@Nullable FilterChain filterChain
+		@Nonnull HttpServletRequest request,
+		@Nonnull HttpServletResponse response,
+		@Nonnull FilterChain filterChain
 	) throws ServletException, IOException {
 		MDC.put("method", request.getMethod());
 		MDC.put("uri", request.getQueryString() == null
 			? request.getRequestURI()
 			: request.getRequestURI() + "?" + request.getQueryString());
 
-		if (filterChain != null) {
+		if (multipartResolver.isMultipart(request)) {
+			try {
+				MultipartHttpServletRequest multipartRequest = multipartResolver.resolveMultipart(request);
+				doFilterWrapped(new RequestWrapper(multipartRequest), new ResponseWrapper(response), filterChain);
+			} catch (MultipartException e) {
+				throw new ServletException("Multipart request processing failed", e);
+			}
+		} else {
 			doFilterWrapped(new RequestWrapper(request), new ResponseWrapper(response), filterChain);
 		}
 
@@ -70,8 +71,6 @@ public class LoggingFilter extends OncePerRequestFilter {
 		boolean mediaTypeChk = isMediaType(MediaType.valueOf(request.getContentType() == null
 			? APPLICATION_JSON
 			: request.getContentType()));
-
-		// inputStream 을 byte 배열로 반환
 		byte[] content = StreamUtils.copyToByteArray(request.getInputStream());
 		if (mediaTypeChk && content.length > 0) {
 			MDC.put("payload", new String(content));

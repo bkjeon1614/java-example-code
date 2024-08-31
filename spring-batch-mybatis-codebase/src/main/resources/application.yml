@@ -1,0 +1,32 @@
+spring:
+  profiles:
+    default: local
+  application:
+    name: spring-batch-mybatis-codebase
+  batch:
+    job:
+      name: ${job.name:NONE}
+  main:
+    web-application-type: none
+
+mybatis:
+  mapper-locations: classpath:mybatis/**/*.xml
+  type-aliases-package: com.bkjeon.feature.mapper
+  configuration:
+    cacheEnabled: false
+    useGeneratedKeys: true
+    defaultExecutorType: REUSE
+    aggressiveLazyLoading: false
+    default-statement-timeout: 30
+    map-underscore-to-camel-case: true
+
+# /actuator/info
+info:
+  app-info:
+    projectName: ${ext.projectName}
+    group: ${group}
+    version: ${version}
+    javaVersion: ${sourceCompatibility}
+
+---
+

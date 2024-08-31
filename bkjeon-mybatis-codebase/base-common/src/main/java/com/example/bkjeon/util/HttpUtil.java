@@ -1,5 +1,11 @@
 package com.example.bkjeon.util;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
@@ -15,18 +21,30 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Slf4j
 public class HttpUtil {
 
     private HttpUtil() {
         throw new IllegalStateException("Utility class");
+    }
+
+    // Object(=DTO) To Map
+    public static MultiValueMap<String, String> dtoToMapConverter(Object object) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+        try {
+            Map<String, String> map = objectMapper.convertValue(object, new TypeReference<>() {});
+            params.setAll(map);
+        } catch (Exception e) {
+            log.error("Url Parameter Error. requestDto={}", object, e);
+        }
+
+        return params;
     }
 
     public static String requestUrl(HttpMethodBase method) {

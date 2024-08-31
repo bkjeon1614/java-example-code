@@ -1,3 +1,17 @@
+group 'com.bkjeon.codebase'
+version '0.0.0'
+sourceCompatibility = 11
+
+ext {
+    projectName = 'base-batch'
+}
+
+processResources {
+    filesMatching('**/application.yml') {
+        expand(project.properties)
+    }
+}
+
 dependencies {
     // Gradle Multi Module
     implementation project(':base-common')

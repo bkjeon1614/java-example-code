@@ -1,5 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.data;
 
+import io.swagger.annotations.ApiParam;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -9,8 +10,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import java.util.stream.Stream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bkjeon.entity.data.stream.StreamUser;
@@ -20,6 +23,108 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("v1/data/stream")
 public class StreamController {
+
+    // 1~5 이내의 숫자만 가능
+    private static final String REG_EXP = "^[0-9]{1,5}$";
+
+    @ApiOperation("Stream List Merge(=concat)")
+    @GetMapping("listConcat")
+    public void isListConcat() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51021614", 20),
+            new StreamUser("5102", 10)
+        );
+        List<StreamUser> streamUserList2 = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51022BB", 10)
+        );
+
+        // merge
+        List<StreamUser> mergeList = Stream.concat(streamUserList.stream(), streamUserList2.stream())
+            .distinct()
+            .collect(Collectors.toList());
+        System.out.println(mergeList.size());   // 5
+    }
+
+    @ApiOperation("Stream List to Map 변환")
+    @GetMapping("listToMap")
+    public void isListToMap() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51021614", 20),
+            new StreamUser("5102", 10)
+        );
+        Map<String, Integer> streamUserMap = streamUserList.stream()
+            .collect(Collectors.toMap(StreamUser::getName, StreamUser::getAge));
+        System.out.println(streamUserMap.get("5102"));  // 10
+
+        // 키 중복 제외
+        List<StreamUser> streamUserList2 = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51021614", 20),
+            new StreamUser("5102", 10),
+            new StreamUser("5102", 20)
+        );
+        // 1. 기존 값을 유지할 경우
+        Map<String, Integer> streamUserMap2 = streamUserList2.stream()
+            .collect(Collectors.toMap(StreamUser::getName, StreamUser::getAge, (oldValue, newValue) -> oldValue));
+        System.out.println(streamUserMap2.get("5102")); // 10
+        // 2. 새로운 값을 유지할 경우
+        Map<String, Integer> streamUserMap3 = streamUserList2.stream()
+            .collect(Collectors.toMap(StreamUser::getName, StreamUser::getAge, (oldValue, newValue) -> newValue));
+        System.out.println(streamUserMap3.get("5102")); // 20
+    }
+
+    @ApiOperation("정규식 체크")
+    @GetMapping("regExp")
+    public void getRegExpList() {
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("51021614", 20),
+            new StreamUser("5102", 10)
+        );
+        List<String> streamUserRegExpList = streamUserList.stream()
+            .map(StreamUser::getName)
+            .filter(o -> o.matches(REG_EXP))
+            .collect(Collectors.toList());
+        System.out.println(streamUserRegExpList.toString());
+    }
+
+    @ApiOperation("전체 데이터에서 skip / limit 를 활용한 페이지네이션 처리")
+    @GetMapping("skipAndLimit")
+    public List<StreamUser> getSkipAndLimit(
+        @ApiParam(
+            value = "page 번호를 설정할 수 있으며 설정 값은 1-N까지 입니다.",
+            name = "page",
+            defaultValue = "1",
+            required = true
+        ) @RequestParam Integer page,
+        @ApiParam(
+            value = "페이지 별 레코드 갯수를 설정 할 수 있습니다.",
+            name = "limit",
+            defaultValue = "10",
+            required = true
+        ) @RequestParam Integer limit
+    ) {
+        int offset = (page - 1) * limit;
+        List<StreamUser> streamUserList = Arrays.asList(
+            new StreamUser("A", 30),
+            new StreamUser("BB", 20),
+            new StreamUser("C", 10),
+            new StreamUser("DD", 20),
+            new StreamUser("E", 20),
+            new StreamUser("A2", 30),
+            new StreamUser("BB3", 20),
+            new StreamUser("C24", 10),
+            new StreamUser("D234D", 20),
+            new StreamUser("E234", 20),
+            new StreamUser("Asdfa", 30),
+            new StreamUser("BadscB", 20),
+            new StreamUser("C23fsd", 10)
+        );
+        return streamUserList.stream().skip(offset).limit(limit).collect(Collectors.toList());
+    }
 
     @ApiOperation("List Map 형태의 데이터에서 stream 을 통한 sum 값 추출")
     @GetMapping("listToSum")

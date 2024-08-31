@@ -75,15 +75,38 @@ management:
   endpoint:
     health:
       show-details: always
+      enabled: true
+    heapdump:
+      enabled: true
+    caches:
+      enabled: false
+    beans:
+      enabled: false
   endpoints:
     web:
       exposure:
-        include: health, info, metrics, prometheus, retries  # actuator 노출 원하는 정보 선택
+        include: health, heapdump, info, metrics, prometheus, retries, applicationLibInfo, env, git, build  # actuator 노출 원하는 정보 선택
+        exclude: beans
+  info:
+    env:
+      enabled: true
+    git:
+      enabled: true
+      mode: full
+    build:
+      enabled: true
   health:
     circuitbreakers:
       enabled: true # circuitbreakers 정보 노출
     retryevents:
       enabled: true # retryevents 정보 노출
+
+info: # /actuator/info 정보가 표시되는것을 볼 수 있다.
+  app-info:
+    projectName: ${ext.projectName}
+    group: ${group}
+    version: ${version}
+    javaVersion: ${sourceCompatibility}
 
 # SpEL
 spel:

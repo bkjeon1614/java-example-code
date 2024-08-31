@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bkjeon.entity.file.FileExportXlsxExample;
@@ -16,12 +19,20 @@ import com.example.bkjeon.util.file.ExcelUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("v1/file")
 public class FileExportController {
+
+    @ApiOperation("파일 업로드(파일 유무만 체크)")
+    @PostMapping
+    public void fileUpload(@RequestPart("uploadFile") MultipartFile uploadFile) {
+        log.info("=============" + uploadFile.getOriginalFilename());
+        log.info(uploadFile.toString());
+    }
 
     @ApiOperation("xlsx Export")
     @GetMapping
