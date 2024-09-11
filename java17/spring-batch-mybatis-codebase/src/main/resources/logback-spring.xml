@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
+    <springProfile name="dev">
+        <property name="LOGS_ROOT_PATH" value="/app_log" />
+    </springProfile>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                ${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS_ROOT_PATH}/${HOSTNAME}.log</file>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread]64 [Request: %X{method} uri=%X{uri} payload=%X{payload}] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_ROOT_PATH}/${HOSTNAME}.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <springProfile name="local">
+        <logger name="com.bkjeon" level="INFO" additivity="false">
+            <appender-ref ref="stdout" />
+        </logger>
+
+        <logger name="org.springframework" level="INFO" additivity="false">
+            <appender-ref ref="stdout" />
+        </logger>
+
+        <logger name="jdbc" level="OFF"/>
+        <logger name="jdbc.sqlonly" level="OFF"/>
+        <logger name="jdbc.sqltiming" level="INFO"/>
+        <logger name="jdbc.audit" level="OFF"/>
+        <logger name="jdbc.resultset" level="OFF"/>
+        <logger name="jdbc.resultsettable" level="INFO"/>
+        <logger name="jdbc.connection" level="OFF"/>
+        <logger name="com.insilicogen" level="INFO" additivity="false">
+            <appender-ref ref="STDOUT" />
+        </logger>
+
+        <root level="INFO">
+            <appender-ref ref="stdout" />
+        </root>
+    </springProfile>
+
+    <springProfile name="dev">
+        <logger name="com.bkjeon" level="DEBUG" additivity="false">
+            <appender-ref ref="stdout" />
+            <appender-ref ref="ROLLING" />
+        </logger>
+
+        <logger name="org.springframework" level="DEBUG" additivity="false">
+            <appender-ref ref="stdout" />
+            <appender-ref ref="ROLLING" />
+        </logger>
+
+        <root level="DEBUG">
+            <appender-ref ref="stdout" />
+            <appender-ref ref="ROLLING" />
+        </root>
+    </springProfile>
+
+</configuration>
