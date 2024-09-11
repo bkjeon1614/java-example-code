@@ -1,0 +1,28 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bkjeon.mapper.common.log.CommonLogMapper">
+
+    <insert id="insertLog" parameterType="map">
+        INSERT INTO tb_cm_his_l (
+            SVC_CALL_NM,
+            SVC_MTHD_NM,
+            CALL_URL,
+            CALL_MTHD_SP_VAL,
+            CALL_PARA_VAL,
+            EXEC_TME,
+            LOG_DESC,
+            SYS_REGR_ID,
+            SYS_MODR_ID
+        ) VALUES (
+            #{svcCallNm},
+            #{svcMthdNm},
+            #{callUrl},
+            #{callMthdSpVal},
+            #{callParaVal},
+            #{execTme},
+            #{logDesc},
+            #{sysRegrId},
+            #{sysModrId}
+        )
+    </insert>
+
+</mapper>

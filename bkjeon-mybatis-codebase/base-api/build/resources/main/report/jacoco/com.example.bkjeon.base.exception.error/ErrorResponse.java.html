@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ErrorResponse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.exception.error</a> &gt; <span class="el_source">ErrorResponse.java</span></div><h1>ErrorResponse.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.exception.error;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.validation.BindingResult;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import com.example.bkjeon.enums.exception.ErrorCode;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/**
+ * message: 에러 메세지
+ * status: http status code
+ * errors: 요청 값에 대한 field, value, reason 작성, 일반적으로 @Valid 로 검증을 진행
+ * code: 에러 코드 값
+ */
+@Getter
+<span class="nc" id="L23">@NoArgsConstructor(access = AccessLevel.PROTECTED)</span>
+public class ErrorResponse {
+
+<span class="nc" id="L26">	private String message;</span>
+<span class="nc" id="L27">	private int status;</span>
+<span class="nc" id="L28">	private List&lt;FieldError&gt; errors;</span>
+<span class="nc" id="L29">	private String code;</span>
+
+<span class="nc" id="L31">	private ErrorResponse(final ErrorCode code, final List&lt;FieldError&gt; errors) {</span>
+<span class="nc" id="L32">		this.message = code.getMessage();</span>
+<span class="nc" id="L33">		this.status = code.getStatus();</span>
+<span class="nc" id="L34">		this.errors = errors;</span>
+<span class="nc" id="L35">		this.code = code.getCode();</span>
+<span class="nc" id="L36">	}</span>
+
+<span class="nc" id="L38">	private ErrorResponse(final ErrorCode code) {</span>
+<span class="nc" id="L39">		this.message = code.getMessage();</span>
+<span class="nc" id="L40">		this.status = code.getStatus();</span>
+<span class="nc" id="L41">		this.code = code.getCode();</span>
+<span class="nc" id="L42">		this.errors = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L43">	}</span>
+
+	public static ErrorResponse of(final ErrorCode code, final BindingResult bindingResult) {
+<span class="nc" id="L46">		return new ErrorResponse(code, FieldError.of(bindingResult));</span>
+	}
+
+	public static ErrorResponse of(final ErrorCode code) {
+<span class="nc" id="L50">		return new ErrorResponse(code);</span>
+	}
+
+	public static ErrorResponse of(final ErrorCode code, final List&lt;FieldError&gt; errors) {
+<span class="nc" id="L54">		return new ErrorResponse(code, errors);</span>
+	}
+
+	public static ErrorResponse of(MethodArgumentTypeMismatchException e) {
+<span class="nc bnc" id="L58" title="All 2 branches missed.">		final String value = e.getValue() == null ? &quot;&quot; : e.getValue().toString();</span>
+<span class="nc" id="L59">		final List&lt;ErrorResponse.FieldError&gt; errors = ErrorResponse.FieldError.of(e.getName(), value, e.getErrorCode());</span>
+<span class="nc" id="L60">		return new ErrorResponse(ErrorCode.INVALID_INPUT_VALUE_BINDING_ERROR, errors);</span>
+	}
+
+	@Getter
+<span class="nc" id="L64">	@NoArgsConstructor(access = AccessLevel.PROTECTED)</span>
+	public static class FieldError {
+<span class="nc" id="L66">		private String field;</span>
+<span class="nc" id="L67">		private String value;</span>
+<span class="nc" id="L68">		private String reason;</span>
+
+<span class="nc" id="L70">		private FieldError(final String field, final String value, final String reason) {</span>
+<span class="nc" id="L71">			this.field = field;</span>
+<span class="nc" id="L72">			this.value = value;</span>
+<span class="nc" id="L73">			this.reason = reason;</span>
+<span class="nc" id="L74">		}</span>
+
+		public static List&lt;FieldError&gt; of(final String field, final String value, final String reason) {
+<span class="nc" id="L77">			List&lt;FieldError&gt; fieldErrors = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L78">			fieldErrors.add(new FieldError(field, value, reason));</span>
+<span class="nc" id="L79">			return fieldErrors;</span>
+		}
+
+		private static List&lt;FieldError&gt; of(final BindingResult bindingResult) {
+<span class="nc" id="L83">			final List&lt;org.springframework.validation.FieldError&gt; fieldErrors = bindingResult.getFieldErrors();</span>
+<span class="nc" id="L84">			return fieldErrors.stream()</span>
+<span class="nc" id="L85">				.map(error -&gt; new FieldError(</span>
+<span class="nc" id="L86">					error.getField(),</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">					error.getRejectedValue() == null ? &quot;&quot; : error.getRejectedValue().toString(),</span>
+<span class="nc" id="L88">					error.getDefaultMessage()))</span>
+<span class="nc" id="L89">				.collect(Collectors.toList());</span>
+		}
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

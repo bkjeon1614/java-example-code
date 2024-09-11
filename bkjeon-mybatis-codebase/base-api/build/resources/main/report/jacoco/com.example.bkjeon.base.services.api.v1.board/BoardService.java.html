@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoardService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.services.api.v1.board</a> &gt; <span class="el_source">BoardService.java</span></div><h1>BoardService.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.services.api.v1.board;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.bkjeon.dto.board.BoardRequestDTO;
+import com.example.bkjeon.dto.board.BoardResponseDTO;
+import com.example.bkjeon.entity.board.Board;
+import com.example.bkjeon.enums.ResponseResult;
+import com.example.bkjeon.mapper.board.BoardMapper;
+import com.example.bkjeon.model.response.ApiResponse;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+<span class="fc" id="L20">@Slf4j</span>
+@Service
+<span class="fc" id="L22">@RequiredArgsConstructor</span>
+public class BoardService {
+
+    private final BoardMapper boardMapper;
+
+    // 게시글 리스트 조회
+    @Transactional(readOnly = true)
+    public ApiResponse getBoardList(Integer page, Integer size) {
+<span class="fc" id="L30">        Integer offset = (page - 1) * size;</span>
+<span class="fc" id="L31">        List&lt;BoardResponseDTO&gt; boardList = boardMapper.selectBoardList(size, offset).stream()</span>
+<span class="fc" id="L32">            .map(BoardResponseDTO::new)</span>
+<span class="fc" id="L33">            .collect(Collectors.toList());</span>
+
+        // TODO: Response Data 모델 추가 필요
+        // int totalCnt = boardMapper.selectBoardListCnt();
+
+<span class="fc" id="L38">        return ApiResponse.&lt;List&lt;BoardResponseDTO&gt;&gt;builder()</span>
+<span class="fc" id="L39">            .statusCode(HttpStatus.OK.value())</span>
+<span class="fc" id="L40">            .responseMessage(ResponseResult.SUCCESS.getText())</span>
+<span class="fc" id="L41">            .data(boardList)</span>
+<span class="fc" id="L42">            .build();</span>
+    }
+
+    // 게시글 상세 조회
+    @Transactional(readOnly = true)
+    public ApiResponse&lt;BoardResponseDTO&gt; getBoard(Long boardNo) {
+<span class="fc" id="L48">        Board board = boardMapper.selectBoard(boardNo);</span>
+
+<span class="fc" id="L50">        return ApiResponse.&lt;BoardResponseDTO&gt;builder()</span>
+<span class="fc" id="L51">            .statusCode(HttpStatus.OK.value())</span>
+<span class="fc" id="L52">            .responseMessage(ResponseResult.SUCCESS.getText())</span>
+<span class="fc" id="L53">            .data(new BoardResponseDTO(board))</span>
+<span class="fc" id="L54">            .build();</span>
+    }
+
+    // 메인 게시물 등록
+    @Transactional
+    public ApiResponse setBoard(BoardRequestDTO requestDTO) {
+<span class="fc" id="L60">        boardMapper.insertBoard(requestDTO.toSaveBoardEntity());</span>
+<span class="fc" id="L61">        return ApiResponse.builder()</span>
+<span class="fc" id="L62">            .statusCode(HttpStatus.OK.value())</span>
+<span class="fc" id="L63">            .responseMessage(ResponseResult.SUCCESS.getText())</span>
+<span class="fc" id="L64">            .param(requestDTO)</span>
+<span class="fc" id="L65">            .build();</span>
+    }
+
+    // 서브 게시물 등록
+    @Transactional
+    public ApiResponse setBoardReply(Long boardNo, BoardRequestDTO requestDTO) {
+<span class="nc" id="L71">        Integer sortSeq = null;</span>
+<span class="nc" id="L72">        Integer boardLvl = null;</span>
+
+        // CASE 1: 원글의 GROUP_NO, SORT_SEQ, BOARD_LVL 기준으로 답글의 저장될 데이터를 계산한다.
+<span class="nc" id="L75">        Board board = boardMapper.selectBoard(boardNo);</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">        if (board == null) {</span>
+            // TODO: 비즈니스 익셉션 변경 필요
+<span class="nc" id="L78">            return ApiResponse.builder()</span>
+<span class="nc" id="L79">                .statusCode(HttpStatus.BAD_REQUEST.value())</span>
+<span class="nc" id="L80">                .responseMessage(&quot;원글이 존재하지 않습니다. boardNo: &quot; + boardNo)</span>
+<span class="nc" id="L81">                .param(requestDTO)</span>
+<span class="nc" id="L82">                .build();</span>
+        }
+
+<span class="nc bnc" id="L85" title="All 4 branches missed.">        if (board.getBoardLvl() == 1 &amp;&amp; board.getSortSeq() == 0) {</span>
+            // 원글 그룹에 기존에 답글이 있는지 유무 체크
+<span class="nc" id="L87">            Long boardGroupCnt = boardMapper.selectBoardGroupCnt(board.getGroupNo());</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">            if (boardGroupCnt == 1) {</span>
+                // CASE 1: 원글의 답글 등록 (원글 그룹으로 조회했을시 개수가 1개일 경우)
+
+                /**
+                 * 원글의 GROUP_NO, SORT_SEQ, BOARD_LVL 기준으로 답글의 저장될 데이터를 계산한다.
+                 * GROUP_NO: 원글의 GROUP_NO 값, SORT_SEQ: 원글 (SORT_SEQ + 1), BOARD_LVL: 원글 (BOARD_LVL + 1)
+                 */
+<span class="nc" id="L95">                sortSeq = board.getSortSeq() + 1;</span>
+<span class="nc" id="L96">                boardLvl = board.getBoardLvl() + 1;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">            } else if (boardGroupCnt &gt; 1) {</span>
+                // CASE 2: 원글에 답글을 한개 더 작성하는 경우 (원글 그룹으로 조회했을시 개수가 2개 이상일 경우)
+
+                /**
+                 * GROUP_NO가 같으면서 새로운 답글이 상위로 위치하기 위해서
+                 * 기존 원글의 답글들의 SORT_SEQ를 전부 +1 한다.
+                 */
+<span class="nc" id="L104">                boardMapper.updateBoardGroupSort(board.getGroupNo());</span>
+
+                /**
+                 *  GROUP_NO: 원글의 GROUP_NO 값, SORT_SEQ: 원글 (SORT_SEQ + 1), BOARD_LVL: 원글 (BOARD_LVL + 1)
+                 */
+<span class="nc" id="L109">                sortSeq = board.getSortSeq() + 1;</span>
+<span class="nc" id="L110">                boardLvl = board.getBoardLvl() + 1;</span>
+            }
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        } else if (board.getBoardLvl() &gt; 1) {</span>
+            // CASE 3: 답글에 답글을 작성하는 경우
+
+            /**
+             * GROUP_NO가 같으면서 새로운 답글이 상위로 위치하기 위해서
+             * 기존의 답글들의 SORT_SEQ를 전부 +1 한다.
+             */
+<span class="nc" id="L119">            boardMapper.updateBoardReplyGroupSort(board.getGroupNo(), board.getSortSeq());</span>
+
+            /**
+             * GROUP_NO: 원글의 GROUP_NO 값, SORT_SEQ: 원글 (SORT_SEQ + 1), BOARD_LVL: 원글 (BOARD_LVL + 1)
+             */
+<span class="nc" id="L124">            sortSeq = board.getSortSeq() + 1;</span>
+<span class="nc" id="L125">            boardLvl = board.getBoardLvl() + 1;</span>
+        }
+
+        // 답글 저장
+<span class="nc" id="L129">        boardMapper.insertBoardReply(requestDTO.toSaveBoardReplyEntity(board.getGroupNo(), sortSeq, boardLvl));</span>
+
+<span class="nc" id="L131">        return ApiResponse.builder()</span>
+<span class="nc" id="L132">            .statusCode(HttpStatus.OK.value())</span>
+<span class="nc" id="L133">            .responseMessage(ResponseResult.SUCCESS.getText())</span>
+<span class="nc" id="L134">            .param(requestDTO)</span>
+<span class="nc" id="L135">            .build();</span>
+    }
+
+    // 게시글 수정
+    @Transactional
+    public ApiResponse putBoard(Long boardNo, BoardRequestDTO requestDTO) {
+<span class="nc" id="L141">        boardMapper.updateBoard(requestDTO.toUpdateEntity(boardNo));</span>
+<span class="nc" id="L142">        return ApiResponse.builder()</span>
+<span class="nc" id="L143">            .statusCode(HttpStatus.OK.value())</span>
+<span class="nc" id="L144">            .responseMessage(ResponseResult.SUCCESS.getText())</span>
+<span class="nc" id="L145">            .param(requestDTO)</span>
+<span class="nc" id="L146">            .build();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

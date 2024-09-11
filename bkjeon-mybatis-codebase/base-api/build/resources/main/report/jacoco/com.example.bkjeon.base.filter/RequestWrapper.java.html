@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RequestWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">base-api</a> &gt; <a href="index.source.html" class="el_package">com.example.bkjeon.base.filter</a> &gt; <span class="el_source">RequestWrapper.java</span></div><h1>RequestWrapper.java</h1><pre class="source lang-java linenums">package com.example.bkjeon.base.filter;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.ReadListener;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+
+import org.springframework.util.StreamUtils;
+
+/**
+ * 요청된 HTTP 접근
+ * [HttpServletRequestWrapper]
+ * Servlet 관련 인터페이스 제공
+ */
+public class RequestWrapper extends HttpServletRequestWrapper {
+
+	private final byte[] cachedInputStream;
+
+	public RequestWrapper(HttpServletRequest request) throws IOException {
+<span class="fc" id="L24">		super(request);</span>
+<span class="fc" id="L25">		InputStream requestInputStream = request.getInputStream();</span>
+<span class="fc" id="L26">		this.cachedInputStream = StreamUtils.copyToByteArray(requestInputStream);</span>
+<span class="fc" id="L27">	}</span>
+
+	/**
+	 * binary data로 Request Body 정보를 담은 ServletInputStream(inputstream)을 반환한다.
+	 * @return
+	 */
+	@Override
+	public ServletInputStream getInputStream() {
+<span class="fc" id="L35">		return new ServletInputStream() {</span>
+<span class="fc" id="L36">			private final InputStream cachedBodyInputStream = new ByteArrayInputStream(cachedInputStream);</span>
+
+			@Override
+			public boolean isFinished() {
+				try {
+					// 더 이상 읽을 byte 가 없을 때 return
+<span class="nc bnc" id="L42" title="All 2 branches missed.">					return cachedBodyInputStream.available() == 0;</span>
+<span class="nc" id="L43">				} catch (IOException e) {</span>
+<span class="nc" id="L44">					e.printStackTrace();</span>
+				}
+<span class="nc" id="L46">				return false;</span>
+			}
+
+			@Override
+			public boolean isReady() {
+<span class="nc" id="L51">				return true;</span>
+			}
+
+			@Override
+			public void setReadListener(ReadListener readListener) {
+<span class="nc" id="L56">				throw new UnsupportedOperationException();</span>
+			}
+
+			@Override
+			public int read() throws IOException {
+<span class="fc" id="L61">				return cachedBodyInputStream.read();</span>
+			}
+		};
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
