@@ -24,6 +24,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * --job.name=MYBATIS_SAMPLE_JOB requestDate=20240701
+ * [COMPLETED] in 12s679ms
  */
 @Slf4j
 @Configuration
@@ -31,7 +32,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class MybatisSampleJobConfig {
 
     private static final String JOB_NAME_PREFIX = "MYBATIS_SAMPLE";
-    private static final int CHUNK_SIZE = 10;
+    private static final int CHUNK_SIZE = 1000;
 
     private final SqlSessionFactory sqlSessionFactory;
 

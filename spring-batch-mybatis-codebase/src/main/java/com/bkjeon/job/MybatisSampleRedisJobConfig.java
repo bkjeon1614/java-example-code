@@ -44,7 +44,6 @@ public class MybatisSampleRedisJobConfig {
 
     private final StringRedisTemplate redisTemplate;
     private final SqlSessionFactory sqlSessionFactory;
-    private final SampleMapper sampleMapper;
 
     @Bean
     public Job mybatisSampleRedisJob(JobRepository jobRepository,

@@ -10,7 +10,11 @@ public interface SampleMapper {
 
     List<Sample> selectSampleIdsList(List<Long> idList);
     List<Sample> selectSampleList();
+    List<Sample> selectSamplePartitionList();
+    List<Sample> selectZeroOffsetSampleList();
     void insertSample(SampleOut sample);
     void insertSampleOutList(List<SampleOut> sampleList);
+    long findMinId();
+    long findMaxId();
 
 }

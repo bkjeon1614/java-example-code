@@ -24,4 +24,11 @@ public class SampleOut {
         this.txDateTime = txDateTime;
     }
 
+    public SampleOut(Sample sample) {
+        this.id = sample.getId();
+        this.amount = sample.getAmount();
+        this.txName = sample.getTxName();
+        this.txDateTime = sample.getTxDateTime();
+    }
+
 }

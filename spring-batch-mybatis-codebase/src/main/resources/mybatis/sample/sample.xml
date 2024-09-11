@@ -33,6 +33,16 @@
         LIMIT #{_skiprows}, #{_pagesize}
     </select>
 
+    <select id="selectSamplePartitionList" resultMap="selectSampleListMap">
+        SELECT
+            id,
+            amount,
+            tx_name,
+            tx_date_time
+        FROM sample
+        WHERE id BETWEEN #{minId} AND #{maxId}
+    </select>
+
     <select id="selectZeroOffsetSampleList" resultMap="selectSampleListMap">
         SELECT
             id,
@@ -83,5 +93,13 @@
         )
         </foreach>
     </insert>
+
+    <select id="findMinId" resultType="Long">
+        SELECT MIN(id) FROM sample
+    </select>
+
+    <select id="findMaxId" resultType="Long">
+        SELECT MAX(id) FROM sample
+    </select>
 
 </mapper>
