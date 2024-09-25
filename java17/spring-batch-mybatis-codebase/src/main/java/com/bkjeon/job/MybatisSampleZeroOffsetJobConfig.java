@@ -23,50 +23,49 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
- * --job.name=MYBATIS_SAMPLE_JOB requestDate=20240701
- * [COMPLETED] in 12s679ms
+ * --job.name=MYBATIS_SAMPLE_ZERO_OFFSET_JOB requestDate=20240701
  */
 @Slf4j
 @Configuration
 @RequiredArgsConstructor
-public class MybatisSampleJobConfig {
+public class MybatisSampleZeroOffsetJobConfig {
 
-    private static final String JOB_NAME_PREFIX = "MYBATIS_SAMPLE";
-    private static final int CHUNK_SIZE = 1000;
+    private static final String JOB_NAME_PREFIX = "MYBATIS_SAMPLE_ZERO_OFFSET";
+    private static final int CHUNK_SIZE = 3000;
 
     private final SqlSessionFactory sqlSessionFactory;
 
     @Bean
-    public Job mybatisSampleJob(JobRepository jobRepository, Step mybatisSampleJobStep) {
+    public Job mybatisSampleZeroOffsetJob(JobRepository jobRepository, Step mybatisSampleZeroOffsetJobStep) {
         return new JobBuilder(JOB_NAME_PREFIX + "_JOB", jobRepository)
-            .start(mybatisSampleJobStep)
+            .start(mybatisSampleZeroOffsetJobStep)
             .build();
     }
 
     @Bean
     @JobScope
-    public Step mybatisSampleJobStep(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager,
-        @Value("#{jobParameters[requestDate]}") String requestDate) {
+    public Step mybatisSampleZeroOffsetJobStep(JobRepository jobRepository,
+        PlatformTransactionManager platformTransactionManager, @Value("#{jobParameters[requestDate]}") String requestDate) {
         log.info(">>>>> requestDate: {}", requestDate);
         return new StepBuilder(JOB_NAME_PREFIX + "_JOB_STEP", jobRepository)
             .<Sample, SampleOut>chunk(CHUNK_SIZE, platformTransactionManager)
-            .reader(mybatisSamplePagingItemReader())
-            .processor(mybatisSampleItemProcessor())
-            .writer(mybatisSampleItemWriter())
+            .reader(mybatisSampleZeroOffsetPagingItemReader())
+            .processor(mybatisSampleZeroOffsetItemProcessor())
+            .writer(mybatisSampleZeroOffsetItemWriter())
             .build();
     }
 
     @Bean
-    public MyBatisPagingItemReader<Sample> mybatisSamplePagingItemReader() {
+    public MyBatisPagingItemReader<Sample> mybatisSampleZeroOffsetPagingItemReader() {
         return new MyBatisPagingItemReaderBuilder<Sample>()
             .pageSize(CHUNK_SIZE)
             .sqlSessionFactory(sqlSessionFactory)
-            .queryId("com.bkjeon.feature.mapper.sample.SampleMapper.selectSampleList")
+            .queryId("com.bkjeon.feature.mapper.sample.SampleMapper.selectZeroOffsetSampleList")
             .build();
     }
 
     @Bean
-    public ItemProcessor<Sample, SampleOut> mybatisSampleItemProcessor() {
+    public ItemProcessor<Sample, SampleOut> mybatisSampleZeroOffsetItemProcessor() {
         return item -> SampleOut.builder()
             .id(item.getId())
             .amount(item.getAmount())
@@ -76,7 +75,7 @@ public class MybatisSampleJobConfig {
     }
 
     @Bean
-    public MyBatisBatchItemWriter<SampleOut> mybatisSampleItemWriter() {
+    public MyBatisBatchItemWriter<SampleOut> mybatisSampleZeroOffsetItemWriter() {
         return new MyBatisBatchItemWriterBuilder<SampleOut>()
             .sqlSessionFactory(sqlSessionFactory)
             .statementId("com.bkjeon.feature.mapper.sample.SampleMapper.insertSample")
