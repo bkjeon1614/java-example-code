@@ -11,7 +11,6 @@
 - [Gradle Multi Project](https://github.com/bkjeon1614/java-example-code/tree/main/java11/sample-multi-module)
 
 ## Spring Boot (Java11)
-- [Spring Boot + Gradle + React + Typescript](https://github.com/bkjeon1614/java-example-code/tree/main/java11/spring-boot-react-typescript)
 - [Spring Boot + Gradle + Vuejs](https://github.com/bkjeon1614/java-example-code/tree/main/java11/spring-boot-vuejs)
 - [Swagger를 사용한 API문서 자동화](https://github.com/bkjeon1614/java-example-code/tree/main/java11/swagger-example)
 - [Spring Boot Multiple Connection (Mysql, Oracle)](https://github.com/bkjeon1614/java-example-code/tree/main/java11/spring-boot-multiple-db-conn-different)
