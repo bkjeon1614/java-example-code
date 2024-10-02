@@ -22,7 +22,6 @@ import org.springframework.batch.core.partition.support.TaskExecutorPartitionHan
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +41,7 @@ public class MybatisSamplePartitionJobConfig {
     private static final String JOB_NAME = "MYBATIS_SAMPLE_PARTITION_JOB";
     private int chunkSize;
 
-    @Value("${chunkSize:1000}")
+    @Value("${chunkSize:10}")
     public void setChunkSize(int chunkSize){
         this.chunkSize = chunkSize;
     }
@@ -138,7 +137,6 @@ public class MybatisSamplePartitionJobConfig {
         return SampleOut::new;
     }
 
-    /*
     @Bean(name = JOB_NAME + "_WRITER")
     @StepScope
     public MyBatisBatchItemWriter<SampleOut> mybatisSamplePartitionItemWriter(
@@ -151,8 +149,8 @@ public class MybatisSamplePartitionJobConfig {
             .statementId("com.bkjeon.feature.mapper.sample.SampleMapper.insertSample")
             .build();
     }
-     */
 
+    /*
     @Bean(name = JOB_NAME + "_WRITER")
     @StepScope
     public ItemWriter<SampleOut> mybatisSamplePartitionItemWriter(
@@ -163,5 +161,6 @@ public class MybatisSamplePartitionJobConfig {
             log.info("stepExecutionContext maxId={}", maxId);
         };
     }
+     */
 
 }
