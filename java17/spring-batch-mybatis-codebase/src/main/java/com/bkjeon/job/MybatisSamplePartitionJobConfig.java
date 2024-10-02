@@ -1,5 +1,7 @@
 package com.bkjeon.job;
 
+import com.bkjeon.core.listener.CommonChunkListener;
+import com.bkjeon.core.listener.CommonStepListener;
 import com.bkjeon.feature.entity.sample.Sample;
 import com.bkjeon.feature.entity.sample.SampleIdRangePartitioner;
 import com.bkjeon.feature.entity.sample.SampleOut;
@@ -8,7 +10,9 @@ import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.batch.MyBatisBatchItemWriter;
 import org.mybatis.spring.batch.MyBatisPagingItemReader;
+import org.mybatis.spring.batch.builder.MyBatisBatchItemWriterBuilder;
 import org.mybatis.spring.batch.builder.MyBatisPagingItemReaderBuilder;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -18,7 +22,6 @@ import org.springframework.batch.core.partition.support.TaskExecutorPartitionHan
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,7 +41,7 @@ public class MybatisSamplePartitionJobConfig {
     private static final String JOB_NAME = "MYBATIS_SAMPLE_PARTITION_JOB";
     private int chunkSize;
 
-    @Value("${chunkSize:1}")
+    @Value("${chunkSize:10}")
     public void setChunkSize(int chunkSize){
         this.chunkSize = chunkSize;
     }
@@ -106,6 +109,8 @@ public class MybatisSamplePartitionJobConfig {
             .reader(mybatisSamplePartitionPagingItemReader(null, null))
             .processor(processor())
             .writer(mybatisSamplePartitionItemWriter(null, null))
+            .listener(new CommonChunkListener())
+            .listener(new CommonStepListener())
             .build();
     }
 
@@ -114,6 +119,8 @@ public class MybatisSamplePartitionJobConfig {
     public MyBatisPagingItemReader<Sample> mybatisSamplePartitionPagingItemReader(
         @Value("#{stepExecutionContext[minId]}") Long minId,
         @Value("#{stepExecutionContext[maxId]}") Long maxId) {
+
+        log.info("reader minId={}, maxId={}", minId, maxId);
 
         return new MyBatisPagingItemReaderBuilder<Sample>()
             .pageSize(chunkSize)
@@ -130,7 +137,6 @@ public class MybatisSamplePartitionJobConfig {
         return SampleOut::new;
     }
 
-    /*
     @Bean(name = JOB_NAME + "_WRITER")
     @StepScope
     public MyBatisBatchItemWriter<SampleOut> mybatisSamplePartitionItemWriter(
@@ -143,8 +149,8 @@ public class MybatisSamplePartitionJobConfig {
             .statementId("com.bkjeon.feature.mapper.sample.SampleMapper.insertSample")
             .build();
     }
-     */
 
+    /*
     @Bean(name = JOB_NAME + "_WRITER")
     @StepScope
     public ItemWriter<SampleOut> mybatisSamplePartitionItemWriter(
@@ -155,5 +161,6 @@ public class MybatisSamplePartitionJobConfig {
             log.info("stepExecutionContext maxId={}", maxId);
         };
     }
+     */
 
 }

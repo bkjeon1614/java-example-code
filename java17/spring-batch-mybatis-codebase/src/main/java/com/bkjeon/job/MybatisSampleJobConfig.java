@@ -24,7 +24,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * --job.name=MYBATIS_SAMPLE_JOB requestDate=20240701
- * [COMPLETED] in 12s679ms
  */
 @Slf4j
 @Configuration
