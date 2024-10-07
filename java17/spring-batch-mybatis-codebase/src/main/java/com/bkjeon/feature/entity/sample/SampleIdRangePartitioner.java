@@ -8,6 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ExecutionContext;
 
+/**
+ * Partitioner 는 각 Worker Step들에게 어떤 Step Executions 변수를 가지게 할지를 결정하고, 그에 따라 생성할 Worker Step 수를 결정
+ * 해당 Partitioner 는 데이터의 시작 PK 값과 끝 PK 값을 조회해 파티션별로 분할해서 할당하여 처리
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class SampleIdRangePartitioner implements Partitioner {

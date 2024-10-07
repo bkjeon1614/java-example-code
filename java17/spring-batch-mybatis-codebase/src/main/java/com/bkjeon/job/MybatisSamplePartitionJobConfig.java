@@ -56,8 +56,28 @@ public class MybatisSamplePartitionJobConfig {
     private final SqlSessionFactory sqlSessionFactory;
     private final SampleMapper sampleMapper;
 
+    @Bean(name = JOB_NAME + "_PARTITION_HANDLER")
+    public TaskExecutorPartitionHandler partitionHandler(JobRepository jobRepository,
+        PlatformTransactionManager platformTransactionManager) {
+        // 멀티 스레드로 수행이 가능하도록 TaskExecutorPartitionHandler 구현체를 사용
+        TaskExecutorPartitionHandler partitionHandler = new TaskExecutorPartitionHandler();
+
+        // Worker 로 실행할 Step 을 지정
+        // Partitioner가 만들어준 StepExecutions 환경에서 개별적으로 실행
+        partitionHandler.setStep(mybatisSamplePartitionJobStep(jobRepository, platformTransactionManager));
+
+        // 멀티쓰레드로 실행하기 위해 TaskExecutor 를 지정
+        partitionHandler.setTaskExecutor(executor());
+
+        // 쓰레드 개수와 gridSize를 맞추기 위해서 poolSize를 gridSize로 등록
+        partitionHandler.setGridSize(poolSize);
+        return partitionHandler;
+    }
+
     @Bean(name = JOB_NAME + "_TASK_POOL")
     public TaskExecutor executor() {
+        // SimpleAsyncTaskExecutor 를 사용할수도 있지만 해당 구현체는 레드를 계속해서 생성할 수 있기 때문에 실제 운영 환경에서는 대형 장애를 발생시킬 수 있음
+        // 그래서 스레드풀내에서 지정된 갯수만큼 스레드만 생성할 수 있도록 ThreadPoolTaskExecutor 사용
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(poolSize);
         executor.setMaxPoolSize(poolSize);
@@ -65,16 +85,6 @@ public class MybatisSamplePartitionJobConfig {
         executor.setWaitForTasksToCompleteOnShutdown(Boolean.TRUE);
         executor.initialize();
         return executor;
-    }
-
-    @Bean(name = JOB_NAME + "_PARTITION_HANDLER")
-    public TaskExecutorPartitionHandler partitionHandler(JobRepository jobRepository,
-        PlatformTransactionManager platformTransactionManager) {
-        TaskExecutorPartitionHandler partitionHandler = new TaskExecutorPartitionHandler();
-        partitionHandler.setStep(mybatisSamplePartitionJobStep(jobRepository, platformTransactionManager));
-        partitionHandler.setTaskExecutor(executor());
-        partitionHandler.setGridSize(poolSize);
-        return partitionHandler;
     }
 
     @Bean(name = JOB_NAME)
@@ -89,9 +99,9 @@ public class MybatisSamplePartitionJobConfig {
     public Step mybatisSamplePartitionJobStepManager(JobRepository jobRepository,
         PlatformTransactionManager platformTransactionManager) {
         return new StepBuilder(JOB_NAME + "_STEP.MANAGER", jobRepository)
-            .partitioner(JOB_NAME + "_STEP", partitioner())
-            .step(mybatisSamplePartitionJobStep(jobRepository, platformTransactionManager))
-            .partitionHandler(partitionHandler(jobRepository, platformTransactionManager))
+            .partitioner(JOB_NAME + "_STEP", partitioner()) // step1에 사용될 Partitioner 구현체를 등록
+            .step(mybatisSamplePartitionJobStep(jobRepository, platformTransactionManager)) // 파티셔닝될 Step 을 등록, step1 이 Partitioner 로직에 따라 서로 다른 StepExecutions를 가진 여러개로 생성
+            .partitionHandler(partitionHandler(jobRepository, platformTransactionManager))  // 사용할 PartitionHandler 를 등록
             .build();
     }
 
