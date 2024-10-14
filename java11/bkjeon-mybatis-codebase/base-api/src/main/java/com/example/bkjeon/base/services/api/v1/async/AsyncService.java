@@ -1,5 +1,6 @@
 package com.example.bkjeon.base.services.api.v1.async;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -23,6 +24,13 @@ public class AsyncService {
         log.info("============= ListenableFuture Task Start - {}", message);
         Thread.sleep(3000);
         return new AsyncResult<>("bkjeon-" + message);
+    }
+
+    @Async("threadPoolTaskExecutor")
+    public CompletableFuture<String> isCompletableFutureReturn(String message) throws InterruptedException {
+        log.info("============= CompletableFuture Task Start - {}", message);
+        Thread.sleep(3000);
+        return new AsyncResult<>("bkjeon-" + message).completable();
     }
 
 }

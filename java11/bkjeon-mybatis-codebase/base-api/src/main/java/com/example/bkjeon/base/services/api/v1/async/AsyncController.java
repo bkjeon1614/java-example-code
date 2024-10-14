@@ -1,6 +1,7 @@
 package com.example.bkjeon.base.services.api.v1.async;
 
 import io.swagger.annotations.ApiOperation;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,21 @@ public class AsyncController {
         for (int i = 1; i <= 5; i++) {
             ListenableFuture<String> listenableFuture = asyncService.isListenableFutureReturn(i + "");
             listenableFuture.addCallback(System.out::println, error -> System.out.println(error.getMessage()));
+        }
+
+        log.info("=================================================================");
+
+        /**
+         * ListenableFuture 보다 가독성이 좋아졌으며, CompletableFuture 를 사용하기를 권장
+         */
+        for (int i = 1; i <= 5; i++) {
+            CompletableFuture<String> completableFuture = asyncService.isCompletableFutureReturn(i + "");
+            completableFuture
+                .thenAccept(System.out::println)
+                .exceptionally(error -> {
+                    System.out.println(error.getMessage());
+                    return null;
+                });
         }
     }
 
