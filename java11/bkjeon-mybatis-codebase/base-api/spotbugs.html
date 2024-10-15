@@ -1,0 +1,1042 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="UTF-8"/>
+      <title>SpotBugs Report</title>
+      <style type="text/css">
+		.tablerow0 {
+			background: #EEEEEE;
+		}
+
+		.tablerow1 {
+			background: white;
+		}
+
+		.detailrow0 {
+			background: #EEEEEE;
+		}
+
+		.detailrow1 {
+			background: white;
+		}
+
+		.tableheader {
+			background: #b9b9fe;
+			font-size: larger;
+		}
+
+		.tablerow0:hover, .tablerow1:hover {
+			background: #aaffaa;
+		}
+
+		.priority-1 {
+				color: red;
+				font-weight: bold;
+		}
+		.priority-2 {
+				color: orange;
+				font-weight: bold;
+		}
+		.priority-3 {
+				color: green;
+				font-weight: bold;
+		}
+		.priority-4 {
+				color: blue;
+				font-weight: bold;
+		}
+		</style>
+      <script type="text/javascript">
+			function toggleRow(elid) {
+				if (document.getElementById) {
+					element = document.getElementById(elid);
+					if (element) {
+						if (element.style.display == 'none') {
+							element.style.display = 'block';
+							//window.status = 'Toggle on!';
+						} else {
+							element.style.display = 'none';
+							//window.status = 'Toggle off!';
+						}
+					}
+				}
+			}
+		</script>
+   </head>
+   <body>
+      <h1>
+         <a href="https://spotbugs.github.io/">SpotBugs</a> Report</h1>
+      <h2>Project Information</h2>
+      <p>Project: 
+		base-api (spotbugsMain)</p>
+      <p>SpotBugs version: 4.7.3</p>
+      <p>Code analyzed:</p>
+      <ul>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/ApiApplication.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/FeignUserClient.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/entity/FeignUser.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/entity/FeignUser$Address$Geo.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/entity/FeignUser$Address.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/entity/FeignUser$Company.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/FeignUserClientFallback$1.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/FeignUserClientInterceptor.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/FeignUserClientFallback.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/model/FeignUserRequest$FeignUserRequestBuilder.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/model/FeignUserRequest.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/feign/user/FeignUserClientConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/AsyncConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/shutdown/GracefulShutdownEventListener.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/shutdown/GracefulShutdownTomcatConnector.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/shutdown/TomcatConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/WebConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/elastic/ESSearchConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/elastic/ESSearchProperties.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/redis/RedisConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/redis/RedisReplicaProperties.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/ValidatorConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/CacheManagerCheck.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/CounterConfigWithMeterBinder.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/timer/TimedConfiguration.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/timer/TimerConfigWithMeterBinder.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/timer/FunctionTimerConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/timer/TimerConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/timer/TimerConfigWithMeterBinder$1.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/gauge/GaugeConfigWithMeterBinder.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/gauge/GaugeConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/counter/CountConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/ApplicationFunctionCounterConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/actuator/MyStockMeterBinderConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/config/SwaggerConfig.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/actuator/ApplicationInfoContributor.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/actuator/MyStockManager.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/actuator/ApplicationLibInfoEndpoint.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/actuator/ApplicationHealthIndicator.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/aspect/CounterAspect.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/aspect/LogExecutionTimeAspect.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/filter/RequestWrapper.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/filter/RequestWrapper$1.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/filter/ResponseWrapper.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/filter/LoggingFilter.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/exception/error/ApiExceptionHandler.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/exception/error/BoardException.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/exception/error/ErrorResponse$FieldError.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/exception/error/ErrorResponse.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/interceptor/ApiRequestInterceptor.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/feign/FeignExampleController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/shutdown/GracefulShutdownController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/cache/CacheService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/cache/CacheController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/cache/RedisController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/board/BoardController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/board/BoardService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/file/FileExportController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/elastic/ESSearchService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/elastic/ESIndexService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/elastic/ElasticSearchController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/elastic/ESIndexService$1.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/security/EncryptionController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/async/AsyncController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/async/AsyncService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/http/HttpController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/kafka/KafkaProducerService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/kafka/KafkaProducerController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/controller/CounterController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/controller/GaugeController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/controller/TimerController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/controller/TagController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/service/ApplicationRequestWithoutMicrometer.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/service/timer/MyTimerManager.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/service/gauge/GaugeCounterMapService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/service/gauge/QueueManager.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/service/gauge/GaugeCounterService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/service/MyQueueManagerWithTags.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/service/counter/CustomCounterService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/actuator/service/ApplicationRequestManager.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/log/CommonLogESService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/log/CommonLogService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/log/CommonLogController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/setting/SpELController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/setting/AnnotationController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/setting/CrudController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/setting/CrudService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/data/ReflectionController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/data/StreamController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/data/DataController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/data/JsonParseController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/data/JsonParseController$JsonTest.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/data/JsonParseController$1.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/data/EnumController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/data/OptionalController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/data/JsonParseController$2.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/exception/ApiExceptionController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/exception/ValidationController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/circuitbreaker/PrometheusTestController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/circuitbreaker/CircuitBreakerService.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v1/circuitbreaker/CircuitBreakerController.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/services/api/v2/crud/CrudControllerV2.class</li>
+         <li>/Users/lotte/bkjeon/study/java-example-code/java11/bkjeon-mybatis-codebase/base-api/build/classes/java/main/com/example/bkjeon/base/validation/PostValidator.class</li>
+      </ul>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>Metrics</h2>
+      <p>2324 lines of code analyzed,
+	in 103 classes, 
+	in 39 packages.</p>
+      <table width="500" cellpadding="5" cellspacing="2">
+         <tr class="tableheader">
+            <th align="left">Metric</th>
+            <th align="right">Total</th>
+            <th align="right">Density*</th>
+         </tr>
+         <tr class="tablerow0">
+            <td>High Priority Warnings</td>
+            <td align="right">2</td>
+            <td align="right">0.86</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>Medium Priority Warnings</td>
+            <td align="right">41</td>
+            <td align="right">17.64</td>
+         </tr>
+         <tr class="$totalClass">
+            <td>
+               <b>Total Warnings</b>
+            </td>
+            <td align="right">
+               <b>43</b>
+            </td>
+            <td align="right">
+               <b>18.50</b>
+            </td>
+         </tr>
+      </table>
+      <p>
+         <i>(* Defects per Thousand lines of non-commenting source statements)</i>
+      </p>
+      <p>
+         <br/>
+         <br/>
+      </p>
+      <h2>Contents</h2>
+      <ul>
+         <li>
+            <a href="#Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+         </li>
+         <li>
+            <a href="#Warnings_CORRECTNESS">Correctness Warnings</a>
+         </li>
+         <li>
+            <a href="#Warnings_I18N">Internationalization Warnings</a>
+         </li>
+         <li>
+            <a href="#Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+         </li>
+         <li>
+            <a href="#Warnings_STYLE">Dodgy code Warnings</a>
+         </li>
+         <li>
+            <a href="#Details">Details</a>
+         </li>
+      </ul>
+      <h1>Summary</h1>
+      <table width="500" cellpadding="5" cellspacing="2">
+         <tr class="tableheader">
+            <th align="left">Warning Type</th>
+            <th align="right">Number</th>
+         </tr>
+         <tr class="tablerow0">
+            <td>
+               <a href="#Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+            </td>
+            <td align="right">3</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>
+               <a href="#Warnings_CORRECTNESS">Correctness Warnings</a>
+            </td>
+            <td align="right">5</td>
+         </tr>
+         <tr class="tablerow0">
+            <td>
+               <a href="#Warnings_I18N">Internationalization Warnings</a>
+            </td>
+            <td align="right">1</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>
+               <a href="#Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+            </td>
+            <td align="right">29</td>
+         </tr>
+         <tr class="tablerow0">
+            <td>
+               <a href="#Warnings_STYLE">Dodgy code Warnings</a>
+            </td>
+            <td align="right">5</td>
+         </tr>
+         <tr class="tablerow1">
+            <td>
+               <b>Total</b>
+            </td>
+            <td align="right">
+               <b>43</b>
+            </td>
+         </tr>
+      </table>
+      <h1>Warnings</h1>
+      <p>Click on a warning row to see full context information.</p>
+      <h2>
+         <a name="Warnings_BAD_PRACTICE">Bad practice Warnings</a>
+      </h2>
+      <table class="warningtable" width="100%" cellspacing="0">
+         <tr class="tableheader">
+            <th align="left">Code</th>
+            <th align="left">Warning</th>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e892');">
+            <td>
+               <span class="priority-1">DMI</span>
+            </td>
+            <td>Random object created and used only once in com.example.bkjeon.base.services.api.v1.circuitbreaker.CircuitBreakerService.runtimeException()</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e892" style="display: none;">
+                  <a href="#DMI_RANDOM_USED_ONLY_ONCE">Bug type DMI_RANDOM_USED_ONLY_ONCE (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.circuitbreaker.CircuitBreakerService<br/>In method com.example.bkjeon.base.services.api.v1.circuitbreaker.CircuitBreakerService.runtimeException()<br/>Called method java.util.Random.nextInt(int)<br/>At CircuitBreakerService.java:[line 18]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e996');">
+            <td>
+               <span class="priority-2">FS</span>
+            </td>
+            <td>Format string should use %n rather than \n in com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.consumerSendMessageManualCommit()</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e996" style="display: none;">
+                  <a href="#VA_FORMAT_STRING_USES_NEWLINE">Bug type VA_FORMAT_STRING_USES_NEWLINE (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService<br/>In method com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.consumerSendMessageManualCommit()<br/>Called method java.io.PrintStream.printf(String, Object[])<br/>Format string "Topic: %s, Partiton: %s, Offset: %d, Key: %s, Value: %s\n"<br/>At KafkaProducerService.java:[line 195]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e1013');">
+            <td>
+               <span class="priority-2">FS</span>
+            </td>
+            <td>Format string should use %n rather than \n in com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.getSpecificPartitionMessage()</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e1013" style="display: none;">
+                  <a href="#VA_FORMAT_STRING_USES_NEWLINE">Bug type VA_FORMAT_STRING_USES_NEWLINE (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService<br/>In method com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.getSpecificPartitionMessage()<br/>Called method java.io.PrintStream.printf(String, Object[])<br/>Format string "Topic: %s, Partiton: %s, Offset: %d, Key: %s, Value: %s\n"<br/>At KafkaProducerService.java:[line 271]</p>
+            </td>
+         </tr>
+      </table>
+      <h2>
+         <a name="Warnings_CORRECTNESS">Correctness Warnings</a>
+      </h2>
+      <table class="warningtable" width="100%" cellspacing="0">
+         <tr class="tableheader">
+            <th align="left">Code</th>
+            <th align="left">Warning</th>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e649');">
+            <td>
+               <span class="priority-2">UwF</span>
+            </td>
+            <td>Unwritten field: com.example.bkjeon.base.feign.user.entity.FeignUser$Address$Geo.lat</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e649" style="display: none;">
+                  <a href="#UWF_UNWRITTEN_FIELD">Bug type UWF_UNWRITTEN_FIELD (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.feign.user.entity.FeignUser$Address$Geo<br/>Field com.example.bkjeon.base.feign.user.entity.FeignUser$Address$Geo.lat<br/>At FeignUser.java:[line 29]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e662');">
+            <td>
+               <span class="priority-2">UwF</span>
+            </td>
+            <td>Unwritten field: com.example.bkjeon.base.feign.user.entity.FeignUser$Address$Geo.lng</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e662" style="display: none;">
+                  <a href="#UWF_UNWRITTEN_FIELD">Bug type UWF_UNWRITTEN_FIELD (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.feign.user.entity.FeignUser$Address$Geo<br/>Field com.example.bkjeon.base.feign.user.entity.FeignUser$Address$Geo.lng<br/>At FeignUser.java:[line 30]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e675');">
+            <td>
+               <span class="priority-2">UwF</span>
+            </td>
+            <td>Unwritten field: com.example.bkjeon.base.feign.user.entity.FeignUser$Company.bs</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e675" style="display: none;">
+                  <a href="#UWF_UNWRITTEN_FIELD">Bug type UWF_UNWRITTEN_FIELD (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.feign.user.entity.FeignUser$Company<br/>Field com.example.bkjeon.base.feign.user.entity.FeignUser$Company.bs<br/>At FeignUser.java:[line 38]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e688');">
+            <td>
+               <span class="priority-2">UwF</span>
+            </td>
+            <td>Unwritten field: com.example.bkjeon.base.feign.user.entity.FeignUser$Company.catchPhrase</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e688" style="display: none;">
+                  <a href="#UWF_UNWRITTEN_FIELD">Bug type UWF_UNWRITTEN_FIELD (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.feign.user.entity.FeignUser$Company<br/>Field com.example.bkjeon.base.feign.user.entity.FeignUser$Company.catchPhrase<br/>At FeignUser.java:[line 37]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e701');">
+            <td>
+               <span class="priority-2">UwF</span>
+            </td>
+            <td>Unwritten field: com.example.bkjeon.base.feign.user.entity.FeignUser$Company.name</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e701" style="display: none;">
+                  <a href="#UWF_UNWRITTEN_FIELD">Bug type UWF_UNWRITTEN_FIELD (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.feign.user.entity.FeignUser$Company<br/>Field com.example.bkjeon.base.feign.user.entity.FeignUser$Company.name<br/>At FeignUser.java:[line 36]</p>
+            </td>
+         </tr>
+      </table>
+      <h2>
+         <a name="Warnings_I18N">Internationalization Warnings</a>
+      </h2>
+      <table class="warningtable" width="100%" cellspacing="0">
+         <tr class="tableheader">
+            <th align="left">Code</th>
+            <th align="left">Warning</th>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e715');">
+            <td>
+               <span class="priority-1">Dm</span>
+            </td>
+            <td>Found reliance on default encoding in com.example.bkjeon.base.filter.LoggingFilter.logRequest(RequestWrapper): new String(byte[])</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e715" style="display: none;">
+                  <a href="#DM_DEFAULT_ENCODING">Bug type DM_DEFAULT_ENCODING (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.filter.LoggingFilter<br/>In method com.example.bkjeon.base.filter.LoggingFilter.logRequest(RequestWrapper)<br/>Called method new String(byte[])<br/>At LoggingFilter.java:[line 76]</p>
+            </td>
+         </tr>
+      </table>
+      <h2>
+         <a name="Warnings_MALICIOUS_CODE">Malicious code vulnerability Warnings</a>
+      </h2>
+      <table class="warningtable" width="100%" cellspacing="0">
+         <tr class="tableheader">
+            <th align="left">Code</th>
+            <th align="left">Warning</th>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e514');">
+            <td>
+               <span class="priority-2">EI</span>
+            </td>
+            <td>com.example.bkjeon.base.config.redis.RedisReplicaProperties.getMain() may expose internal representation by returning RedisReplicaProperties.main</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e514" style="display: none;">
+                  <a href="#EI_EXPOSE_REP">Bug type EI_EXPOSE_REP (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.redis.RedisReplicaProperties<br/>In method com.example.bkjeon.base.config.redis.RedisReplicaProperties.getMain()<br/>Field com.example.bkjeon.base.config.redis.RedisReplicaProperties.main<br/>At RedisReplicaProperties.java:[line 20]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e530');">
+            <td>
+               <span class="priority-2">EI</span>
+            </td>
+            <td>com.example.bkjeon.base.config.redis.RedisReplicaProperties.getReplicas() may expose internal representation by returning RedisReplicaProperties.replicas</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e530" style="display: none;">
+                  <a href="#EI_EXPOSE_REP">Bug type EI_EXPOSE_REP (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.redis.RedisReplicaProperties<br/>In method com.example.bkjeon.base.config.redis.RedisReplicaProperties.getReplicas()<br/>Field com.example.bkjeon.base.config.redis.RedisReplicaProperties.replicas<br/>At RedisReplicaProperties.java:[line 21]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e583');">
+            <td>
+               <span class="priority-2">EI</span>
+            </td>
+            <td>com.example.bkjeon.base.config.shutdown.GracefulShutdownTomcatConnector.getConnector() may expose internal representation by returning GracefulShutdownTomcatConnector.connector</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e583" style="display: none;">
+                  <a href="#EI_EXPOSE_REP">Bug type EI_EXPOSE_REP (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.shutdown.GracefulShutdownTomcatConnector<br/>In method com.example.bkjeon.base.config.shutdown.GracefulShutdownTomcatConnector.getConnector()<br/>Field com.example.bkjeon.base.config.shutdown.GracefulShutdownTomcatConnector.connector<br/>At GracefulShutdownTomcatConnector.java:[line 18]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e617');">
+            <td>
+               <span class="priority-2">EI</span>
+            </td>
+            <td>com.example.bkjeon.base.exception.error.ErrorResponse.getErrors() may expose internal representation by returning ErrorResponse.errors</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e617" style="display: none;">
+                  <a href="#EI_EXPOSE_REP">Bug type EI_EXPOSE_REP (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.exception.error.ErrorResponse<br/>In method com.example.bkjeon.base.exception.error.ErrorResponse.getErrors()<br/>Field com.example.bkjeon.base.exception.error.ErrorResponse.errors<br/>At ErrorResponse.java:[line 28]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e371');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.aspect.CounterAspect(CustomCounterService) may expose internal representation by storing an externally mutable object into CounterAspect.customCounterService</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e371" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.aspect.CounterAspect<br/>In method new com.example.bkjeon.base.aspect.CounterAspect(CustomCounterService)<br/>Field com.example.bkjeon.base.aspect.CounterAspect.customCounterService<br/>Local variable named customCounterService<br/>At CounterAspect.java:[line 22]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e389');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.config.actuator.ApplicationFunctionCounterConfig(ApplicationRequestWithoutMicrometer, MeterRegistry) may expose internal representation by storing an externally mutable object into ApplicationFunctionCounterConfig.meterRegistry</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e389" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.actuator.ApplicationFunctionCounterConfig<br/>In method new com.example.bkjeon.base.config.actuator.ApplicationFunctionCounterConfig(ApplicationRequestWithoutMicrometer, MeterRegistry)<br/>Field com.example.bkjeon.base.config.actuator.ApplicationFunctionCounterConfig.meterRegistry<br/>Local variable named meterRegistry<br/>At ApplicationFunctionCounterConfig.java:[line 12]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e407');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.config.actuator.gauge.GaugeConfig(QueueManager, MeterRegistry) may expose internal representation by storing an externally mutable object into GaugeConfig.meterRegistry</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e407" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.actuator.gauge.GaugeConfig<br/>In method new com.example.bkjeon.base.config.actuator.gauge.GaugeConfig(QueueManager, MeterRegistry)<br/>Field com.example.bkjeon.base.config.actuator.gauge.GaugeConfig.meterRegistry<br/>Local variable named meterRegistry<br/>At GaugeConfig.java:[line 12]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e425');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.config.actuator.timer.TimerConfig(MeterRegistry) may expose internal representation by storing an externally mutable object into TimerConfig.meterRegistry</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e425" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.actuator.timer.TimerConfig<br/>In method new com.example.bkjeon.base.config.actuator.timer.TimerConfig(MeterRegistry)<br/>Field com.example.bkjeon.base.config.actuator.timer.TimerConfig.meterRegistry<br/>Local variable named meterRegistry<br/>At TimerConfig.java:[line 10]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e460');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.config.elastic.ESSearchConfig(ESSearchProperties) may expose internal representation by storing an externally mutable object into ESSearchConfig.esSearchProperties</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e460" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.elastic.ESSearchConfig<br/>In method new com.example.bkjeon.base.config.elastic.ESSearchConfig(ESSearchProperties)<br/>Field com.example.bkjeon.base.config.elastic.ESSearchConfig.esSearchProperties<br/>Local variable named esSearchProperties<br/>At ESSearchConfig.java:[line 17]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e478');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>com.example.bkjeon.base.config.elastic.ESSearchProperties.setHosts(List) may expose internal representation by storing an externally mutable object into ESSearchProperties.hosts</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e478" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.elastic.ESSearchProperties<br/>In method com.example.bkjeon.base.config.elastic.ESSearchProperties.setHosts(List)<br/>Field com.example.bkjeon.base.config.elastic.ESSearchProperties.hosts<br/>Local variable named hosts<br/>At ESSearchProperties.java:[line 10]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e496');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.config.redis.RedisConfig(RedisReplicaProperties) may expose internal representation by storing an externally mutable object into RedisConfig.redisProperties</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e496" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.redis.RedisConfig<br/>In method new com.example.bkjeon.base.config.redis.RedisConfig(RedisReplicaProperties)<br/>Field com.example.bkjeon.base.config.redis.RedisConfig.redisProperties<br/>Local variable named redisProperties<br/>At RedisConfig.java:[line 23]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e547');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>com.example.bkjeon.base.config.redis.RedisReplicaProperties.setMain(RedisProperties) may expose internal representation by storing an externally mutable object into RedisReplicaProperties.main</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e547" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.redis.RedisReplicaProperties<br/>In method com.example.bkjeon.base.config.redis.RedisReplicaProperties.setMain(RedisProperties)<br/>Field com.example.bkjeon.base.config.redis.RedisReplicaProperties.main<br/>Local variable named main<br/>At RedisReplicaProperties.java:[line 15]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e565');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>com.example.bkjeon.base.config.redis.RedisReplicaProperties.setReplicas(List) may expose internal representation by storing an externally mutable object into RedisReplicaProperties.replicas</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e565" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.redis.RedisReplicaProperties<br/>In method com.example.bkjeon.base.config.redis.RedisReplicaProperties.setReplicas(List)<br/>Field com.example.bkjeon.base.config.redis.RedisReplicaProperties.replicas<br/>Local variable named replicas<br/>At RedisReplicaProperties.java:[line 15]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e599');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>com.example.bkjeon.base.config.shutdown.GracefulShutdownTomcatConnector.customize(Connector) may expose internal representation by storing an externally mutable object into GracefulShutdownTomcatConnector.connector</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e599" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.shutdown.GracefulShutdownTomcatConnector<br/>In method com.example.bkjeon.base.config.shutdown.GracefulShutdownTomcatConnector.customize(Connector)<br/>Field com.example.bkjeon.base.config.shutdown.GracefulShutdownTomcatConnector.connector<br/>Local variable named connector<br/>At GracefulShutdownTomcatConnector.java:[line 14]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e730');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.actuator.controller.GaugeController(QueueManager, MeterRegistry, GaugeCounterService, GaugeCounterMapService) may expose internal representation by storing an externally mutable object into GaugeController.meterRegistry</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e730" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.actuator.controller.GaugeController<br/>In method new com.example.bkjeon.base.services.api.v1.actuator.controller.GaugeController(QueueManager, MeterRegistry, GaugeCounterService, GaugeCounterMapService)<br/>Field com.example.bkjeon.base.services.api.v1.actuator.controller.GaugeController.meterRegistry<br/>Local variable named meterRegistry<br/>At GaugeController.java:[line 17]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e748');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.actuator.controller.TimerController(Timer, MeterRegistry) may expose internal representation by storing an externally mutable object into TimerController.meterRegistry</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e748" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.actuator.controller.TimerController<br/>In method new com.example.bkjeon.base.services.api.v1.actuator.controller.TimerController(Timer, MeterRegistry)<br/>Field com.example.bkjeon.base.services.api.v1.actuator.controller.TimerController.meterRegistry<br/>Local variable named meterRegistry<br/>At TimerController.java:[line 15]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e766');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.actuator.service.ApplicationRequestManager(MeterRegistry) may expose internal representation by storing an externally mutable object into ApplicationRequestManager.meterRegistry</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e766" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.actuator.service.ApplicationRequestManager<br/>In method new com.example.bkjeon.base.services.api.v1.actuator.service.ApplicationRequestManager(MeterRegistry)<br/>Field com.example.bkjeon.base.services.api.v1.actuator.service.ApplicationRequestManager.meterRegistry<br/>Local variable named meterRegistry<br/>At ApplicationRequestManager.java:[line 11]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e784');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.actuator.service.MyQueueManagerWithTags(MeterRegistry) may expose internal representation by storing an externally mutable object into MyQueueManagerWithTags.meterRegistry</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e784" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.actuator.service.MyQueueManagerWithTags<br/>In method new com.example.bkjeon.base.services.api.v1.actuator.service.MyQueueManagerWithTags(MeterRegistry)<br/>Field com.example.bkjeon.base.services.api.v1.actuator.service.MyQueueManagerWithTags.meterRegistry<br/>Local variable named meterRegistry<br/>At MyQueueManagerWithTags.java:[line 9]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e802');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.actuator.service.counter.CustomCounterService(MeterRegistry) may expose internal representation by storing an externally mutable object into CustomCounterService.meterRegistry</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e802" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.actuator.service.counter.CustomCounterService<br/>In method new com.example.bkjeon.base.services.api.v1.actuator.service.counter.CustomCounterService(MeterRegistry)<br/>Field com.example.bkjeon.base.services.api.v1.actuator.service.counter.CustomCounterService.meterRegistry<br/>Local variable named meterRegistry<br/>At CustomCounterService.java:[line 14]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e820');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterMapService(MeterRegistry) may expose internal representation by storing an externally mutable object into GaugeCounterMapService.meterRegistry</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e820" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterMapService<br/>In method new com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterMapService(MeterRegistry)<br/>Field com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterMapService.meterRegistry<br/>Local variable named meterRegistry<br/>At GaugeCounterMapService.java:[line 12]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e838');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterService(MeterRegistry) may expose internal representation by storing an externally mutable object into GaugeCounterService.meterRegistry</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e838" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterService<br/>In method new com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterService(MeterRegistry)<br/>Field com.example.bkjeon.base.services.api.v1.actuator.service.gauge.GaugeCounterService.meterRegistry<br/>Local variable named meterRegistry<br/>At GaugeCounterService.java:[line 10]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e856');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.board.BoardController(BoardService) may expose internal representation by storing an externally mutable object into BoardController.boardService</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e856" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.board.BoardController<br/>In method new com.example.bkjeon.base.services.api.v1.board.BoardController(BoardService)<br/>Field com.example.bkjeon.base.services.api.v1.board.BoardController.boardService<br/>Local variable named boardService<br/>At BoardController.java:[line 23]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e874');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.board.BoardService(BoardMapper) may expose internal representation by storing an externally mutable object into BoardService.boardMapper</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e874" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.board.BoardService<br/>In method new com.example.bkjeon.base.services.api.v1.board.BoardService(BoardMapper)<br/>Field com.example.bkjeon.base.services.api.v1.board.BoardService.boardMapper<br/>Local variable named boardMapper<br/>At BoardService.java:[line 22]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e908');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.elastic.ESSearchService(RestHighLevelClient) may expose internal representation by storing an externally mutable object into ESSearchService.restHighLevelClient</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e908" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.elastic.ESSearchService<br/>In method new com.example.bkjeon.base.services.api.v1.elastic.ESSearchService(RestHighLevelClient)<br/>Field com.example.bkjeon.base.services.api.v1.elastic.ESSearchService.restHighLevelClient<br/>Local variable named restHighLevelClient<br/>At ESSearchService.java:[line 20]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e926');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.elastic.ElasticSearchController(ESIndexService, ESSearchService) may expose internal representation by storing an externally mutable object into ElasticSearchController.esIndexService</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e926" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.elastic.ElasticSearchController<br/>In method new com.example.bkjeon.base.services.api.v1.elastic.ElasticSearchController(ESIndexService, ESSearchService)<br/>Field com.example.bkjeon.base.services.api.v1.elastic.ElasticSearchController.esIndexService<br/>Local variable named esIndexService<br/>At ElasticSearchController.java:[line 10]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e1030');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.log.CommonLogController(CommonLogService) may expose internal representation by storing an externally mutable object into CommonLogController.commonLogService</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e1030" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.log.CommonLogController<br/>In method new com.example.bkjeon.base.services.api.v1.log.CommonLogController(CommonLogService)<br/>Field com.example.bkjeon.base.services.api.v1.log.CommonLogController.commonLogService<br/>Local variable named commonLogService<br/>At CommonLogController.java:[line 20]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e1048');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.log.CommonLogESService(ESSearchConfig, ESIndexService) may expose internal representation by storing an externally mutable object into CommonLogESService.esIndexService</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e1048" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.log.CommonLogESService<br/>In method new com.example.bkjeon.base.services.api.v1.log.CommonLogESService(ESSearchConfig, ESIndexService)<br/>Field com.example.bkjeon.base.services.api.v1.log.CommonLogESService.esIndexService<br/>Local variable named esIndexService<br/>At CommonLogESService.java:[line 23]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e1066');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.log.CommonLogService(CommonLogESService) may expose internal representation by storing an externally mutable object into CommonLogService.commonLogESService</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e1066" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.log.CommonLogService<br/>In method new com.example.bkjeon.base.services.api.v1.log.CommonLogService(CommonLogESService)<br/>Field com.example.bkjeon.base.services.api.v1.log.CommonLogService.commonLogESService<br/>Local variable named commonLogESService<br/>At CommonLogService.java:[line 15]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e1084');">
+            <td>
+               <span class="priority-2">EI2</span>
+            </td>
+            <td>new com.example.bkjeon.base.services.api.v1.setting.CrudController(CrudService) may expose internal representation by storing an externally mutable object into CrudController.crudService</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e1084" style="display: none;">
+                  <a href="#EI_EXPOSE_REP2">Bug type EI_EXPOSE_REP2 (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.setting.CrudController<br/>In method new com.example.bkjeon.base.services.api.v1.setting.CrudController(CrudService)<br/>Field com.example.bkjeon.base.services.api.v1.setting.CrudController.crudService<br/>Local variable named crudService<br/>At CrudController.java:[line 16]</p>
+            </td>
+         </tr>
+      </table>
+      <h2>
+         <a name="Warnings_STYLE">Dodgy code Warnings</a>
+      </h2>
+      <table class="warningtable" width="100%" cellspacing="0">
+         <tr class="tableheader">
+            <th align="left">Code</th>
+            <th align="left">Warning</th>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e443');">
+            <td>
+               <span class="priority-2">DLS</span>
+            </td>
+            <td>Dead store to functionTimer in com.example.bkjeon.base.config.actuator.timer.TimerConfigWithMeterBinder$1.bindTo(MeterRegistry)</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e443" style="display: none;">
+                  <a href="#DLS_DEAD_LOCAL_STORE">Bug type DLS_DEAD_LOCAL_STORE (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.config.actuator.timer.TimerConfigWithMeterBinder$1<br/>In method com.example.bkjeon.base.config.actuator.timer.TimerConfigWithMeterBinder$1.bindTo(MeterRegistry)<br/>Local variable named functionTimer<br/>At TimerConfigWithMeterBinder.java:[line 31]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e944');">
+            <td>
+               <span class="priority-2">DLS</span>
+            </td>
+            <td>Dead store to responseEntity in com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.consumerSendMessageManualCommit()</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e944" style="display: none;">
+                  <a href="#DLS_DEAD_LOCAL_STORE">Bug type DLS_DEAD_LOCAL_STORE (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService<br/>In method com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.consumerSendMessageManualCommit()<br/>Local variable named responseEntity<br/>At KafkaProducerService.java:[line 182]<br/>Another occurrence at KafkaProducerService.java:[line 211]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e964');">
+            <td>
+               <span class="priority-2">DLS</span>
+            </td>
+            <td>Dead store to responseEntity in com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.getSpecificPartitionMessage()</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e964" style="display: none;">
+                  <a href="#DLS_DEAD_LOCAL_STORE">Bug type DLS_DEAD_LOCAL_STORE (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService<br/>In method com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.getSpecificPartitionMessage()<br/>Local variable named responseEntity<br/>At KafkaProducerService.java:[line 259]<br/>Another occurrence at KafkaProducerService.java:[line 285]</p>
+            </td>
+         </tr>
+         <tr class="tablerow0" onclick="toggleRow('d2e984');">
+            <td>
+               <span class="priority-2">IM</span>
+            </td>
+            <td>Check for oddness that won't work for negative numbers in com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.producerSendKeyMessage()</td>
+         </tr>
+         <tr class="detailrow0">
+            <td/>
+            <td>
+               <p id="d2e984" style="display: none;">
+                  <a href="#IM_BAD_CHECK_FOR_ODD">Bug type IM_BAD_CHECK_FOR_ODD (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService<br/>In method com.example.bkjeon.base.services.api.v1.kafka.KafkaProducerService.producerSendKeyMessage()<br/>At KafkaProducerService.java:[line 129]</p>
+            </td>
+         </tr>
+         <tr class="tablerow1" onclick="toggleRow('d2e633');">
+            <td>
+               <span class="priority-2">NP</span>
+            </td>
+            <td>Possible null pointer dereference in com.example.bkjeon.base.exception.error.ErrorResponse.of(MethodArgumentTypeMismatchException) due to return value of called method</td>
+         </tr>
+         <tr class="detailrow1">
+            <td/>
+            <td>
+               <p id="d2e633" style="display: none;">
+                  <a href="#NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE">Bug type NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE (click for details)</a>
+                  <br/>In class com.example.bkjeon.base.exception.error.ErrorResponse<br/>In method com.example.bkjeon.base.exception.error.ErrorResponse.of(MethodArgumentTypeMismatchException)<br/>Local variable stored in JVM register ?<br/>Dereferenced at ErrorResponse.java:[line 58]<br/>Known null at ErrorResponse.java:[line 58]</p>
+            </td>
+         </tr>
+      </table>
+      <h1>
+         <a name="Details">Details</a>
+      </h1>
+      <h2>
+         <a name="DLS_DEAD_LOCAL_STORE">DLS_DEAD_LOCAL_STORE: Dead store to local variable</a>
+      </h2>
+
+<p>
+This instruction assigns a value to a local variable,
+but the value is not read or used in any subsequent instruction.
+Often, this indicates an error, because the value computed is never
+used.
+</p>
+<p>
+Note that Sun's javac compiler often generates dead stores for
+final local variables. Because SpotBugs is a bytecode-based tool,
+there is no easy way to eliminate these false positives.
+</p>
+
+    <h2>
+         <a name="DMI_RANDOM_USED_ONLY_ONCE">DMI_RANDOM_USED_ONLY_ONCE: Random object created and used only once</a>
+      </h2>
+
+<p> This code creates a java.util.Random object, uses it to generate one random number, and then discards
+the Random object. This produces mediocre quality random numbers and is inefficient.
+If possible, rewrite the code so that the Random object is created once and saved, and each time a new random number
+is required invoke a method on the existing Random object to obtain it.
+</p>
+
+<p>If it is important that the generated Random numbers not be guessable, you <em>must</em> not create a new Random for each random
+number; the values are too easily guessable. You should strongly consider using a java.security.SecureRandom instead
+(and avoid allocating a new SecureRandom for each random number needed).
+</p>
+
+    <h2>
+         <a name="DM_DEFAULT_ENCODING">DM_DEFAULT_ENCODING: Reliance on default encoding</a>
+      </h2>
+
+<p> Found a call to a method which will perform a byte to String (or String to byte) conversion,
+and will assume that the default platform encoding is suitable. This will cause the application
+behavior to vary between platforms. Use an alternative API and specify a charset name or Charset
+object explicitly.</p>
+
+      <h2>
+         <a name="EI_EXPOSE_REP">EI_EXPOSE_REP: May expose internal representation by returning reference to mutable object</a>
+      </h2>
+
+  <p> Returning a reference to a mutable object value stored in one of the object's fields
+  exposes the internal representation of the object.&nbsp;
+   If instances
+   are accessed by untrusted code, and unchecked changes to
+   the mutable object would compromise security or other
+   important properties, you will need to do something different.
+  Returning a new copy of the object is better approach in many situations.</p>
+
+    <h2>
+         <a name="EI_EXPOSE_REP2">EI_EXPOSE_REP2: May expose internal representation by incorporating reference to mutable object</a>
+      </h2>
+
+  <p> This code stores a reference to an externally mutable object into the
+  internal representation of the object.&nbsp;
+   If instances
+   are accessed by untrusted code, and unchecked changes to
+   the mutable object would compromise security or other
+   important properties, you will need to do something different.
+  Storing a copy of the object is better approach in many situations.</p>
+
+    <h2>
+         <a name="VA_FORMAT_STRING_USES_NEWLINE">VA_FORMAT_STRING_USES_NEWLINE: Format string should use %n rather than \n</a>
+      </h2>
+
+<p>
+This format string includes a newline character (\n). In format strings, it is generally
+ preferable to use %n, which will produce the platform-specific line separator.
+</p>
+
+     <h2>
+         <a name="IM_BAD_CHECK_FOR_ODD">IM_BAD_CHECK_FOR_ODD: Check for oddness that won't work for negative numbers</a>
+      </h2>
+
+<p>
+The code uses x % 2 == 1 to check to see if a value is odd, but this won't work
+for negative numbers (e.g., (-5) % 2 == -1). If this code is intending to check
+for oddness, consider using (x &amp; 1) == 1, or x % 2 != 0.
+</p>
+
+    <h2>
+         <a name="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE">NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE: Possible null pointer dereference due to return value of called method</a>
+      </h2>
+      
+<p> The return value from a method is dereferenced without a null check,
+and the return value of that method is one that should generally be checked
+for null.  This may lead to a <code>NullPointerException</code> when the code is executed.
+</p>
+      
+   <h2>
+         <a name="UWF_UNWRITTEN_FIELD">UWF_UNWRITTEN_FIELD: Unwritten field</a>
+      </h2>
+
+  <p> This field is never written.&nbsp; All reads of it will return the default
+value. Check for errors (should it have been initialized?), or remove it if it is useless.</p>
+
+    </body>
+</html>
