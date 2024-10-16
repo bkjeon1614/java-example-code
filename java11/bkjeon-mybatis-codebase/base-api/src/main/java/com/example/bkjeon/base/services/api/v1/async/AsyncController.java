@@ -109,4 +109,22 @@ public class AsyncController {
         asyncService.isCompletableFutureReturnThenAcceptBoth("test thenAcceptBoth()");
     }
 
+    @ApiOperation("@Async 테스트 [병렬 + 결합] (completableFuture allOf()")
+    @GetMapping("/completableFutureAllOf")
+    public void isAsyncCompletableFutureAllOf() throws ExecutionException, InterruptedException {
+        asyncService.isCompletableFutureReturnAllOf("test allOf()");
+    }
+
+    @ApiOperation("@Async 테스트 [예외] (completableFuture handle()")
+    @GetMapping("/completableFutureHandle")
+    public void isAsyncCompletableFutureHandle() throws ExecutionException, InterruptedException {
+        asyncService.isCompletableFutureReturnHandle("test handle()");
+    }
+
+    @ApiOperation("@Async 테스트 [예외] (completableFuture completeExceptionally()")
+    @GetMapping("/completableFutureCompleteExceptionally")
+    public void isAsyncCompletableFutureCompleteExceptionally() throws ExecutionException, InterruptedException {
+        asyncService.isCompletableFutureReturnCompleteExceptionally("test completeExceptionally()");
+    }
+
 }
