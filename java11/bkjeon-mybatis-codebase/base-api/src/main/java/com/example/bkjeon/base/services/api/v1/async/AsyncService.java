@@ -3,6 +3,8 @@ package com.example.bkjeon.base.services.api.v1.async;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
@@ -127,26 +129,36 @@ public class AsyncService {
 
     public void isCompletableFutureReturnCompleteExceptionally(String message) {
         String testMessage = null;
-        CompletableFuture<String> orderInfoFuture = new CompletableFuture<>();
+        CompletableFuture<String> testInfoFuture = new CompletableFuture<>();
         if (testMessage == null) {
-            orderInfoFuture.completeExceptionally(new IllegalArgumentException("The testMessage must not be null!"));
+            testInfoFuture.completeExceptionally(new IllegalArgumentException("The testMessage must not be null!"));
         }
 
         if (testMessage != null) {
-            orderInfoFuture.complete(getAsyncTestInfo(testMessage));
+            testInfoFuture.complete(getAsyncTestInfo(testMessage));
         }
 
         try {
-            orderInfoFuture.get();
+            testInfoFuture.get();
         } catch (ExecutionException | InterruptedException ee) {
             Throwable cause = ee.getCause();
             log.error("Exception occurred: {}", cause.getMessage());
         }
     }
 
+    public void isCompletableFutureReturnCompleteTimeoutGet(String message) {
+        CompletableFuture<String> testInfoFuture = CompletableFuture.supplyAsync(() -> getAsyncTestInfo("TEST"));
+
+        try {
+            testInfoFuture.get(2000, TimeUnit.MILLISECONDS);
+        } catch (TimeoutException | InterruptedException | ExecutionException e) {
+            log.error("Timeout Exception: " + e);
+        }
+    }
+
     private String getAsyncTestInfo(String message) {
         try {
-            Thread.sleep(3000);
+            Thread.sleep(4000);
         } catch (InterruptedException ie) {
             log.error("InterruptedException", ie);
         }

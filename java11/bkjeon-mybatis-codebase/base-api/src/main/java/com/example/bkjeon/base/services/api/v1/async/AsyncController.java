@@ -123,8 +123,14 @@ public class AsyncController {
 
     @ApiOperation("@Async 테스트 [예외] (completableFuture completeExceptionally()")
     @GetMapping("/completableFutureCompleteExceptionally")
-    public void isAsyncCompletableFutureCompleteExceptionally() throws ExecutionException, InterruptedException {
+    public void isAsyncCompletableFutureCompleteExceptionally() {
         asyncService.isCompletableFutureReturnCompleteExceptionally("test completeExceptionally()");
+    }
+
+    @ApiOperation("@Async 테스트 [타임아웃] (completableFuture timeoutGet()")
+    @GetMapping("/completableFutureTimeoutGet")
+    public void isAsyncCompletableFutureCompleteTimeoutGet() {
+        asyncService.isCompletableFutureReturnCompleteTimeoutGet("test completeTimeoutGet()");
     }
 
 }
