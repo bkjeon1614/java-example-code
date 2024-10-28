@@ -156,6 +156,30 @@ public class AsyncService {
         }
     }
 
+    public void isCompletableFutureReturnCompleteOrTimeout(String message) {
+        CompletableFuture<String> testInfoFuture = CompletableFuture.supplyAsync(() -> getAsyncTestInfo("TEST"))
+            .orTimeout(2, TimeUnit.SECONDS);
+
+        try {
+            testInfoFuture.get();
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("Timeout Exception: " + e);
+        }
+    }
+
+    public void isCompletableFutureReturnCompleteCompleteOnTimeout(String message) {
+        CompletableFuture<String> testInfoFuture = CompletableFuture.supplyAsync(() -> getAsyncTestInfo("TEST"))
+            .completeOnTimeout("default value", 2, TimeUnit.SECONDS);
+        String result;
+
+        try {
+            result = testInfoFuture.get();
+            log.info(">>>>>>>>>>>>>>>>> result: " + result);
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("Timeout Exception: " + e);
+        }
+    }
+
     private String getAsyncTestInfo(String message) {
         try {
             Thread.sleep(4000);

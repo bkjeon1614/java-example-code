@@ -133,4 +133,16 @@ public class AsyncController {
         asyncService.isCompletableFutureReturnCompleteTimeoutGet("test completeTimeoutGet()");
     }
 
+    @ApiOperation("@Async 테스트 [타임아웃] (completableFuture orTimeout()")
+    @GetMapping("/completableFutureOrTimeout")
+    public void isAsyncCompletableFutureCompleteOrTimeout() {
+        asyncService.isCompletableFutureReturnCompleteOrTimeout("test completeOrTimeout()");
+    }
+
+    @ApiOperation("@Async 테스트 [타임아웃] (completableFuture CompleteOnTimeout()")
+    @GetMapping("/completableFutureCompleteOnTimeout")
+    public void isAsyncCompletableFutureCompleteCompleteOnTimeout() {
+        asyncService.isCompletableFutureReturnCompleteCompleteOnTimeout("test completeCompleteOnTimeout()");
+    }
+
 }
