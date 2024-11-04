@@ -1,9 +1,11 @@
 package com.example.bkjeon.base.exception.error;
 
+import com.example.bkjeon.enums.exception.ErrorCode;
+import com.example.bkjeon.model.response.ApiResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -11,11 +13,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
-import com.example.bkjeon.enums.exception.ErrorCode;
-import com.example.bkjeon.model.response.ApiResponse;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestControllerAdvice
 @Slf4j
@@ -27,7 +24,7 @@ public class ApiExceptionHandler {
 	 * 주로 @RequestBody, @RequestPart 어노테이션에서 발생
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	private ApiResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+	private ApiResponse<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		Map<String, String> errorMap = new HashMap<>();
 		e.getBindingResult().getAllErrors()
 			.forEach(c -> errorMap.put(((FieldError) c).getField(), c.getDefaultMessage()));
@@ -41,7 +38,7 @@ public class ApiExceptionHandler {
 		}
 		sb.append(")");
 
-		log.error("=================== MethodArgumentNotValidException Error !!: {}", e);
+		log.error("=================== MethodArgumentNotValidException Error !!: " + e);
 
 		return ApiResponse.builder()
 			.statusCode(ErrorCode.INVALID_INPUT_VALUE_BINDING_ERROR.getStatus())
@@ -54,7 +51,7 @@ public class ApiExceptionHandler {
 	 * ref https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-modelattrib-method-args
 	 */
 	@ExceptionHandler(BindException.class)
-	private ApiResponse handleBindException(BindException e) {
+	private ApiResponse<Object> handleBindException(BindException e) {
 		final List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
 
 		log.error("=================== BindException Error !!", e);
@@ -70,7 +67,7 @@ public class ApiExceptionHandler {
 	 * 주로 @RequestParam Enum binding 못했을 경우 발생
 	 */
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
-	private ApiResponse handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
+	private ApiResponse<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
 		log.error("=================== MethodArgumentTypeMismatchException Error !!", e);
 		return ApiResponse.builder()
 			.statusCode(ErrorCode.METHOD_ARGUMENT_TYPE_ENUM_BINDING_MISMATCH.getStatus())
@@ -82,7 +79,7 @@ public class ApiExceptionHandler {
 	 * 지원하지 않은 HTTP method 호출 할 경우 발생
 	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	private ApiResponse handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+	private ApiResponse<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 		log.error("=================== HttpRequestMethodNotSupportedException Error !!", e);
 		return ApiResponse.builder()
 			.statusCode(ErrorCode.METHOD_NOT_ALLOWED.getStatus())
@@ -92,14 +89,17 @@ public class ApiExceptionHandler {
 
 	/**
 	 * 게시물 관련 Custom Exception
-	 * @param e
-	 * @return
 	 */
 	@ExceptionHandler(BoardException.class)
-	private ApiResponse handleBoardException(BoardException e) {
-		log.error("=================== BoardException Error !!", e);
+	private ApiResponse<Object> handleBoardException(BoardException e) {
 		final ErrorCode errorCode = e.getErrorCode();
 		final ErrorResponse response = ErrorResponse.of(errorCode);
+
+		StackTraceElement firstElement = e.getStackTrace()[0];
+		int lineNumber = firstElement.getLineNumber();
+		String errorMessage = String.format("BoardException Error !!!! lineNumber: %d, message: %s",
+			lineNumber, e.getMessage());
+		log.error(errorMessage, e);
 
 		return ApiResponse.builder()
 			.statusCode(response.getStatus())
@@ -108,8 +108,13 @@ public class ApiExceptionHandler {
 	}
 
 	@ExceptionHandler(NullPointerException.class)
-	private ApiResponse handleException(NullPointerException e) {
-		log.error("=================== NullPointerException Error !!", e);
+	private ApiResponse<Object> handleException(NullPointerException e) {
+		StackTraceElement firstElement = e.getStackTrace()[0];
+		int lineNumber = firstElement.getLineNumber();
+		String errorMessage = String.format("NullPointerException Error !!!! lineNumber: %d, message: %s",
+			lineNumber, e.getMessage());
+		log.error(errorMessage, e);
+
 		return ApiResponse.builder()
 			.statusCode(ErrorCode.INTERNAL_SERVER_ERROR.getStatus())
 			.responseMessage(ErrorCode.INTERNAL_SERVER_ERROR.getMessage())
