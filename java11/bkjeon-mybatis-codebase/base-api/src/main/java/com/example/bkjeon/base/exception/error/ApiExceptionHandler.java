@@ -2,6 +2,7 @@ package com.example.bkjeon.base.exception.error;
 
 import com.example.bkjeon.enums.exception.ErrorCode;
 import com.example.bkjeon.model.response.ApiResponse;
+import com.example.bkjeon.util.message.MessageUtil;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,11 +96,8 @@ public class ApiExceptionHandler {
 		final ErrorCode errorCode = e.getErrorCode();
 		final ErrorResponse response = ErrorResponse.of(errorCode);
 
-		StackTraceElement firstElement = e.getStackTrace()[0];
-		int lineNumber = firstElement.getLineNumber();
-		String errorMessage = String.format("BoardException Error !!!! lineNumber: %d, message: %s",
-			lineNumber, e.getMessage());
-		log.error(errorMessage, e);
+		String traceLog = MessageUtil.getTraceLog(e);
+		log.error("BoardException Error !!!!: " + traceLog);
 
 		return ApiResponse.builder()
 			.statusCode(response.getStatus())
@@ -109,11 +107,8 @@ public class ApiExceptionHandler {
 
 	@ExceptionHandler(NullPointerException.class)
 	private ApiResponse<Object> handleException(NullPointerException e) {
-		StackTraceElement firstElement = e.getStackTrace()[0];
-		int lineNumber = firstElement.getLineNumber();
-		String errorMessage = String.format("NullPointerException Error !!!! lineNumber: %d, message: %s",
-			lineNumber, e.getMessage());
-		log.error(errorMessage, e);
+		String traceLog = MessageUtil.getTraceLog(e);
+		log.error("NullPointerException Error !!!!: " + traceLog);
 
 		return ApiResponse.builder()
 			.statusCode(ErrorCode.INTERNAL_SERVER_ERROR.getStatus())

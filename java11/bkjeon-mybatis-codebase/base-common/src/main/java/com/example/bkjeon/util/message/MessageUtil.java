@@ -1,5 +1,7 @@
 package com.example.bkjeon.util.message;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Locale;
 
 public class MessageUtil {
@@ -8,6 +10,12 @@ public class MessageUtil {
 
     private MessageUtil() {
         throw new UnsupportedOperationException();
+    }
+
+    public static String getTraceLog(Exception e) {
+        StringWriter errors = new StringWriter();
+        e.printStackTrace(new PrintWriter(errors));
+        return errors.toString();
     }
 
     /**
