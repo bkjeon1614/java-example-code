@@ -1,4 +1,4 @@
-package com.example.bkjeon.base.services.api.v1.thread;
+package com.example.bkjeon.base.services.api.v1.thread.domain;
 
 import lombok.Builder;
 import lombok.Getter;

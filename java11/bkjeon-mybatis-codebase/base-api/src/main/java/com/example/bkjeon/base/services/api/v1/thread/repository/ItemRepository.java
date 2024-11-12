@@ -1,5 +1,6 @@
-package com.example.bkjeon.base.services.api.v1.thread;
+package com.example.bkjeon.base.services.api.v1.thread.repository;
 
+import com.example.bkjeon.base.services.api.v1.thread.domain.Item;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Component;
