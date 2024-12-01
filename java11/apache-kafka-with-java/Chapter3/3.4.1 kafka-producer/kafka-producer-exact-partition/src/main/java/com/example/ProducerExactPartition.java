@@ -8,8 +8,12 @@ import java.util.Properties;
 
 public class ProducerExactPartition {
     private final static String TOPIC_NAME = "test";
-    private final static String BOOTSTRAP_SERVERS = "my-kafka:9092";
+    private final static String BOOTSTRAP_SERVERS = "localhost:9092";
 
+    /**
+     * 파티션 번호를 지정한 프로듀서
+     * - 파티션을 직접 지정하고 싶으면 토픽이름, 파티션번호, 메세지 키, 메세지 값을 순서대로 파라미터로 넣으면 된다.
+     */
     public static void main(String[] args) {
 
         Properties configs = new Properties();

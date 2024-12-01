@@ -12,10 +12,12 @@ import java.util.Properties;
 public class SimpleProducer {
     private final static Logger logger = LoggerFactory.getLogger(SimpleProducer.class);
     private final static String TOPIC_NAME = "test";
-    private final static String BOOTSTRAP_SERVERS = "54.199.208.48:9092";
+    private final static String BOOTSTRAP_SERVERS = "localhost:9092";
 
+    /**
+     * 프로듀서 기본 구현
+     */
     public static void main(String[] args) {
-
         Properties configs = new Properties();
         configs.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
