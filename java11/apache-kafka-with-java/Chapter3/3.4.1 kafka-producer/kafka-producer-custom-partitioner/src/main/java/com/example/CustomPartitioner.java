@@ -18,6 +18,8 @@ public class CustomPartitioner  implements Partitioner {
         if (keyBytes == null) {
             throw new InvalidRecordException("Need message key");
         }
+
+        // 메세지 키를 String 으로 보되 해당 값이 Pangyo 라면 파티션이 0으로만 가도록 지정
         if (((String)key).equals("Pangyo"))
             return 0;
 
