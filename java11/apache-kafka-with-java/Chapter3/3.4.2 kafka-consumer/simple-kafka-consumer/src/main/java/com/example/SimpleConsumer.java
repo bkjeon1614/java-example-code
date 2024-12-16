@@ -15,9 +15,15 @@ import java.util.Properties;
 public class SimpleConsumer {
     private final static Logger logger = LoggerFactory.getLogger(SimpleConsumer.class);
     private final static String TOPIC_NAME = "test";
-    private final static String BOOTSTRAP_SERVERS = "my-kafka:9092";
+    private final static String BOOTSTRAP_SERVERS = "localhost:9092";
     private final static String GROUP_ID = "test-group";
 
+    /**
+     * 컨슈머 기본 구현
+     * 선행: bin/kafka-console.producer.sh --bootstrap-server localhost:9092 --topic test
+     * > hello
+     * > kafka
+     */
     public static void main(String[] args) {
         Properties configs = new Properties();
         configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
@@ -30,6 +36,7 @@ public class SimpleConsumer {
         consumer.subscribe(Arrays.asList(TOPIC_NAME));
 
         while (true) {
+            // poll() 이 너무 길어지면 리밸런싱이 발생할 수 있으므로 주의하자
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
             for (ConsumerRecord<String, String> record : records) {
                 logger.info("record:{}", record);
