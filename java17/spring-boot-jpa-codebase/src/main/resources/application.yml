@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    default: local
+  application:
+    name: spring-boot-jpa-codebase
+
+server:
+  port: 9090
+  shutdown: graceful
