@@ -31,7 +31,7 @@
 ### 개발환경
 - Java 17
 - Spring Boot 3.2.3
-- Gradle 8.12.1
+- Gradle 8.14.3
 - H2 DB
 - docker 27.5.1 + docker compose v2.32.4
 
