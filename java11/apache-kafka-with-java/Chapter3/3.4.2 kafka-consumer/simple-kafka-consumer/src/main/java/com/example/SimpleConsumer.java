@@ -28,6 +28,8 @@ public class SimpleConsumer {
         Properties configs = new Properties();
         configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         configs.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
+        
+        // 역질렬화 (String)
         configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 
@@ -35,6 +37,7 @@ public class SimpleConsumer {
 
         consumer.subscribe(Arrays.asList(TOPIC_NAME));
 
+        // 데이터를 가져옴
         while (true) {
             // poll() 이 너무 길어지면 리밸런싱이 발생할 수 있으므로 주의하자
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));

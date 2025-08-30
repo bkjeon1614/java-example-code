@@ -24,7 +24,10 @@ public class ConsumerWithAutoCommit {
         configs.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
         configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+        // default 값이므로 하지 않아도됨
         configs.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        // 해당 m/s 마다 poll() 이 수행될 때 해당 시간에 커밋을 수행하게 한다.
         configs.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 60000);
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(configs);

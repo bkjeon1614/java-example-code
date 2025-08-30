@@ -23,11 +23,14 @@ public class ConsumerWithASyncCommit {
         configs.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
         configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
+        // auto commit 을 false 로 지정
         configs.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(configs);
         consumer.subscribe(Arrays.asList(TOPIC_NAME));
 
+        // 데이터를 멈추지 않고 지속적으로 처리하되 백그라운드에서 커밋을 수행하는 스레드를 돌게하는것이 commitAsync() 이다.
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
             for (ConsumerRecord<String, String> record : records) {
