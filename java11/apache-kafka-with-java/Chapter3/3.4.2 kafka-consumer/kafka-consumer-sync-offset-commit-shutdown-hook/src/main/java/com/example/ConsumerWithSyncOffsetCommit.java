@@ -19,6 +19,7 @@ public class ConsumerWithSyncOffsetCommit {
     private static KafkaConsumer<String, String> consumer;
 
     public static void main(String[] args) {
+        // 명시적으로 Shutdown Hook 을 날릴 수 있고 그 때 우리는 wakeup 메서드를 통하여 안전하게 컨슈머 애플리케이션을 종료할 수 있다.
         Runtime.getRuntime().addShutdownHook(new ShutdownThread());
 
         Properties configs = new Properties();
