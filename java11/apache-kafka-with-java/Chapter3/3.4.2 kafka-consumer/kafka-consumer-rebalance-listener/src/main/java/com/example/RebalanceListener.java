@@ -12,7 +12,6 @@ public class RebalanceListener implements ConsumerRebalanceListener {
 
     public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
         logger.warn("Partitions are assigned : " + partitions.toString());
-
     }
 
     public void onPartitionsRevoked(Collection<TopicPartition> partitions) {

@@ -25,6 +25,8 @@ public class ConsumerWithRebalanceListener {
         configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 
         consumer = new KafkaConsumer<>(configs);
+
+        // 구독을(=subscribe) 을 하고 있는 컨슈머 그룹이 어떻게 리밸런스를 하고 있는지 확인하기 위해서 파라미터로 RebalanceListener 을 추가
         consumer.subscribe(Arrays.asList(TOPIC_NAME), new RebalanceListener());
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofSeconds(1));
